@@ -1,0 +1,6 @@
+framework module Pods_Nardwuar {
+  umbrella header "Pods-Nardwuar-umbrella.h"
+
+  export *
+  module * { export * }
+}
