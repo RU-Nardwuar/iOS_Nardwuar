@@ -45,7 +45,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("in searchbar clicked")
         searchBar.resignFirstResponder()
-        
+        performSegue(withIdentifier: "fromHomeToArtist", sender: self)
     }
     
     //handlers for segues

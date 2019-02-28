@@ -189,10 +189,10 @@
             </objects>
             <point key="canvasLocation" x="1278" y="152"/>
         </scene>
-        <!--View Controller-->
+        <!--Artist View Controller-->
         <scene sceneID="ZdZ-sV-goK">
             <objects>
-                <viewController id="qNY-v0-WNX" sceneMemberID="viewController">
+                <viewController id="qNY-v0-WNX" customClass="ArtistViewController" customModule="Nardwuar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5If-vs-f5X">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -254,6 +254,12 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AeN-hJ-4hI"/>
                     </view>
+                    <connections>
+                        <outlet property="backgroundImage" destination="Cg5-bm-z2M" id="NpF-jE-Flk"/>
+                        <outlet property="profilePic" destination="o6X-dz-90Y" id="ttZ-er-LEX"/>
+                        <outlet property="quickInfo" destination="SEP-Ff-7wN" id="c84-mV-pvl"/>
+                        <outlet property="quickInfoHeader" destination="1NO-wv-E5y" id="Jot-xe-fjk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6L6-TY-9Sr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
