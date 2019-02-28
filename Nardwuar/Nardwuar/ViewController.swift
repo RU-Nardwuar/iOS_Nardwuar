@@ -24,7 +24,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var googleSignInButton: UIButton!
     func setupCustomGoogleButtons(){
         googleSignInButton.frame = CGRect(x: 16, y: 116 + 66 + 66, width: view.frame.width - 32, height: 50)
-        googleSignInButton.backgroundColor = UIColor.orange
+        googleSignInButton.backgroundColor = UIColor.white
         googleSignInButton.setTitle("Custom Google Sign In", for: .normal)
         googleSignInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 //        googleSignInButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside) //used to give the button an action when tapped
