@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
         logoutButton.setImage( UIImage(named: "icons8-cancel-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
         logoutButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
+         logoutButton.addTarget(self, action: #selector(handleLogoutSegue(sender:)), for: .touchUpInside)
         
         //searchbar
         navigationItem.searchController = searchController
@@ -42,6 +43,11 @@ class HomeViewController: UIViewController {
     @objc func handleProfileSegue(sender: UIButton){
         print("Profile segue method")
         performSegue(withIdentifier: "fromHomeToProfile", sender: self)
+    }
+    
+    @objc func handleLogoutSegue(sender: UIButton){
+        print("Logout segue method")
+        performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     
 }

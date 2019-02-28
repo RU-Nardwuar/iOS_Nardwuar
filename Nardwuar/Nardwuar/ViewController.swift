@@ -12,6 +12,9 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         //setupStandardGoogleButtons()

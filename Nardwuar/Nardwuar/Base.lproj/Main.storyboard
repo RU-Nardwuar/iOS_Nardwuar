@@ -15,7 +15,7 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Nardwuar" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzX-H8-NeU">
@@ -27,7 +27,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nardwuar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70O-vr-iqv">
-                                <rect key="frame" x="91.5" y="120" width="192" height="61"/>
+                                <rect key="frame" x="91.5" y="100" width="192" height="61"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="44"/>
                                 <color key="textColor" red="0.96862745098039216" green="1" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -85,6 +85,7 @@
                     <navigationItem key="navigationItem" id="o1A-9F-ozf"/>
                     <connections>
                         <segue destination="78P-CL-uhH" kind="show" identifier="fromHomeToProfile" id="RDE-e1-jOB"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="fromHomeToLogin" id="qQy-JG-4eM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uTp-pZ-UCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
