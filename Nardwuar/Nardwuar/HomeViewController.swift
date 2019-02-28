@@ -8,11 +8,13 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBarItems()
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.delegate = self
     }
 //making nav buttons global
     let logoutButton = UIButton(type: .system)
@@ -29,9 +31,9 @@ class HomeViewController: UIViewController {
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
-        searchController.searchBar.setImage(UIImage(named: "icons8-cancel-50"), for: UISearchBar.Icon.clear, state: .normal)
+//        searchController.searchBar.setImage(UIImage(named: "icons8-cancel-50"), for: UISearchBar.Icon.clear, state: .normal)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
-
+    
         //profile button
         profileButton.setImage( UIImage(named: "icons8-contacts-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
         profileButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -40,6 +42,13 @@ class HomeViewController: UIViewController {
         
         searchController.searchBar.tintColor = .white
     }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        print("in searchbar clicked")
+        searchBar.resignFirstResponder()
+        
+    }
+    
+    //handlers for segues
     @objc func handleProfileSegue(sender: UIButton){
         print("Profile segue method")
         performSegue(withIdentifier: "fromHomeToProfile", sender: self)
