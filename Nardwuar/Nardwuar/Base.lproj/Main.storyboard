@@ -216,7 +216,7 @@
                                 <rect key="frame" x="0.0" y="375" width="375" height="228"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="m9i-ns-IfE">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellAPI" id="m9i-ns-IfE">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="m9i-ns-IfE" id="HV4-qu-5Wj">
@@ -274,6 +274,7 @@
                         <outlet property="profilePic" destination="o6X-dz-90Y" id="ttZ-er-LEX"/>
                         <outlet property="quickInfo" destination="SEP-Ff-7wN" id="c84-mV-pvl"/>
                         <outlet property="quickInfoHeader" destination="1NO-wv-E5y" id="Jot-xe-fjk"/>
+                        <outlet property="tableView" destination="9fS-xb-Ach" id="hmE-9D-m0m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6L6-TY-9Sr" userLabel="First Responder" sceneMemberID="firstResponder"/>

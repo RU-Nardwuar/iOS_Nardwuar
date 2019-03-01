@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
         searchController.searchBar.delegate = self
         searchController.searchBar.tintColor = .white
         searchController.searchBar.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
+        searchController.definesPresentationContext = true
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     
