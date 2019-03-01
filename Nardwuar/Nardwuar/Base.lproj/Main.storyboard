@@ -18,24 +18,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzX-H8-NeU">
-                                <rect key="frame" x="164" y="318" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mzX-H8-NeU">
+                                <rect key="frame" x="80" y="339.5" width="215" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Rce-nW-W74"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="googleSignInButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="PkV-4n-ppo"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nardwuar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70O-vr-iqv">
-                                <rect key="frame" x="92" y="100" width="191.5" height="60.5"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="44"/>
+                                <rect key="frame" x="74.5" y="248" width="226.5" height="71.5"/>
+                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="52"/>
                                 <color key="textColor" red="0.96862745098039216" green="1" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo1" translatesAutoresizingMaskIntoConstraints="NO" id="Ucf-av-iex">
+                                <rect key="frame" x="67.5" y="90" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="9MY-0L-X3s"/>
+                                    <constraint firstAttribute="height" constant="128" id="Zsh-5d-qg4"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.41960784313725491" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="70O-vr-iqv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="IOE-BP-x6F"/>
+                            <constraint firstItem="70O-vr-iqv" firstAttribute="top" secondItem="Ucf-av-iex" secondAttribute="bottom" constant="30" id="0lw-K1-iSv"/>
+                            <constraint firstItem="mzX-H8-NeU" firstAttribute="top" secondItem="70O-vr-iqv" secondAttribute="bottom" constant="20" id="3nz-CB-7Nd"/>
+                            <constraint firstItem="mzX-H8-NeU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="80" id="9Mp-my-BcL"/>
+                            <constraint firstItem="Ucf-av-iex" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="90" id="UW6-Gp-gtI"/>
+                            <constraint firstItem="Ucf-av-iex" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hLd-5v-VNm"/>
+                            <constraint firstItem="mzX-H8-NeU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kU4-kz-rc6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="mzX-H8-NeU" secondAttribute="trailing" constant="80" id="pCg-yk-eF6"/>
                             <constraint firstItem="70O-vr-iqv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qbd-N8-xQG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -268,6 +283,7 @@
     </scenes>
     <resources>
         <image name="background1" width="5400" height="3600"/>
+        <image name="logo1" width="512" height="512"/>
         <image name="profile1" width="5456" height="3632"/>
     </resources>
 </document>
