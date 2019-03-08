@@ -49,8 +49,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     }
     func signInSegue(){
         print("**** in signInSegue, performing segue for user")
-        guard let userVC = storyboard?.instantiateViewController(withIdentifier: "fromLoginToHome") else { return }
-        navigationController?.pushViewController(userVC, animated: true)
+        performSegue(withIdentifier: "fromLoginToHome", sender: self)
+//        guard let userVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") else { return }
+//        navigationController?.pushViewController(userVC, animated: true)
     }
     
     @IBAction func googleSignInButtonTapped(_ sender: Any) {

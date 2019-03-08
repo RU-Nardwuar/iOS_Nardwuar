@@ -13,11 +13,11 @@
 		2550D8A92225B53B00561EF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2550D8A82225B53B00561EF5 /* Assets.xcassets */; };
 		2550D8AC2225B53B00561EF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2550D8AA2225B53B00561EF5 /* LaunchScreen.storyboard */; };
 		2550D8B72225B53B00561EF5 /* NardwuarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2550D8B62225B53B00561EF5 /* NardwuarTests.swift */; };
-		256F86CE2225BA76007FA1C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 256F86CD2225BA76007FA1C0 /* GoogleService-Info.plist */; };
 		256F86D0222608AC007FA1C0 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86CF222608AC007FA1C0 /* HomeViewController.swift */; };
 		256F86D222262C0A007FA1C0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86D122262C0A007FA1C0 /* ProfileViewController.swift */; };
 		256F86D42227BB27007FA1C0 /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86D32227BB27007FA1C0 /* ArtistViewController.swift */; };
 		256F86D62228A65A007FA1C0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86D52228A65A007FA1C0 /* Constants.swift */; };
+		256F86DB2232ED61007FA1C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 256F86CD2225BA76007FA1C0 /* GoogleService-Info.plist */; };
 		DDF5CE2FDDE2DC41F85DA817 /* Pods_Nardwuar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD33A42142225D2795E9A1D /* Pods_Nardwuar.framework */; };
 		FCE9FB085B127AA9D332057D /* Pods_NardwuarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5086C4143878C592712FCA /* Pods_NardwuarTests.framework */; };
 /* End PBXBuildFile section */
@@ -229,7 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2550D8AC2225B53B00561EF5 /* LaunchScreen.storyboard in Resources */,
-				256F86CE2225BA76007FA1C0 /* GoogleService-Info.plist in Resources */,
+				256F86DB2232ED61007FA1C0 /* GoogleService-Info.plist in Resources */,
 				2550D8A92225B53B00561EF5 /* Assets.xcassets in Resources */,
 				2550D8A72225B53A00561EF5 /* Main.storyboard in Resources */,
 			);
