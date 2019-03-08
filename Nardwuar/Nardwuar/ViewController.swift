@@ -15,9 +15,18 @@ import GoogleSignIn
 class ViewController: UIViewController, GIDSignInUIDelegate {
     
     override func viewDidLoad() {
-        print("**** in viewDidLoad")
         super.viewDidLoad()
+        print("**** in viewDidLoad")
+        GIDSignIn.sharedInstance()?.uiDelegate = self
+        GIDSignIn.sharedInstance().delegate = self
         setupCustomGoogleButtons()
+        print("**** checking if user is already signed in or not")
+        if let user = Auth.auth().currentUser { //if there is present the UserViewController
+            print("current user:\(user) will begin segue")
+            signInSegue()
+        } else {
+            print("no user") //otherwise do nothingt
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
@@ -36,16 +45,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         googleSignInButton.layer.cornerRadius = 10
         
         print("**** setting GID uiDelegate and delegate")
-        GIDSignIn.sharedInstance()?.uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
         
-        print("**** checking if user is already signed in or not")
-        if let user = Auth.auth().currentUser { //if there is present the UserViewController
-            print("current user:\(user) will begin segue")
-            signInSegue()
-        } else {
-            print("no user") //otherwise do nothingt
-        }
     }
     func signInSegue(){
         print("**** in signInSegue, performing segue for user")
@@ -68,23 +68,28 @@ extension ViewController: GIDSignInDelegate {
         if let error = error {
             print("**** Sign in error\(error)")
             return
-        }
+        } else{
         
-        //get google idToken and accessToken, and exchange them for firebase credentials
-        guard let authentication = user.authentication else { return }
-        let credentials = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        
-        
-        //Use firebase credentials to authenticate
-        Auth.auth().signInAndRetrieveData(with: credentials) { (authResult, error) in
-            if let error = error {
-                print("**** Sign in error\(error)")
-                return
-            }
-            print("**** Signed in user " + user.profile.name)
-            self.signInSegue()
+            //get google idToken and accessToken, and exchange them for firebase credentials
+            guard let authentication = user.authentication else { return }
+            let credentials = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
             
+            
+            //Use firebase credentials to authenticate
+            Auth.auth().signInAndRetrieveData(with: credentials) { (authResult, error) in
+                if let error = error {
+                    print("**** Sign in error\(error)")
+                    return
+                }
+                print("**** Signed in user " + user.profile.name)
+                self.signInSegue()
+                
+            }
         }
+    }
+    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+        // Perform any operations when the user disconnects from app here.
+        // ...
     }
 }
 
