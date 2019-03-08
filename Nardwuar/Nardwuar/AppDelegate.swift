@@ -11,6 +11,9 @@ import Firebase
 import GoogleSignIn
 
 @UIApplicationMain
+//Global Variables
+
+
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
 
     var window: UIWindow?
@@ -33,12 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
             Auth.auth().signInAndRetrieveData(with: credential){ (result, error) in
                 if error == nil{//success to make a firebase user with google account
+                    guard let email = result?.user.email else {return}
+                    guard let displayName = result?.user.displayName else {return}
                     guard let uid = result?.user.uid else {return}
-                    print(result?.user.email)
-                    print(result?.user.displayName)
+                    print(email)
+                    print(displayName)
                     print("Unique User ID: \(uid)")
                 }else{//failed to make a firebase user with google account
-                    print(error?.localizedDescription)
+                    guard let errorDescription = error?.localizedDescription else {return}
+                    print(errorDescription)
                 }
             }
         }

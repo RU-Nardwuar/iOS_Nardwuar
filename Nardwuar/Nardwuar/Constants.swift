@@ -17,5 +17,13 @@ enum DefaultUI {
     static let secondaryColor = UIColor(red:0.97, green:1.00, blue:0.97, alpha:1.0)
     //green color
     static let highlightColor = UIColor(red:0.53, green:1.00, blue:0.68, alpha:1.0)
+}
 
+struct UserDetails{
+    //UI email
+    let email: String
+    //UI name
+    let displayName: String
+    //UI uid
+    let UID: String
 }

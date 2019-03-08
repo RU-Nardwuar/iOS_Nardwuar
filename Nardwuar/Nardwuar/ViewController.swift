@@ -6,6 +6,8 @@
 //  Copyright © 2019 Xavier La Rosa. All rights reserved.
 //
 
+
+//3.7.19: sign in button leads to connection with server
 import UIKit
 import Firebase
 import GoogleSignIn
