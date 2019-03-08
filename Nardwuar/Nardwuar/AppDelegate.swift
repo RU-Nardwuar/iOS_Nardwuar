@@ -11,9 +11,11 @@ import Firebase
 import GoogleSignIn
 
 //Global Variables
-var email = ""
-var displayName = ""
-var uid = ""
+
+    var emailGlobal = ""
+    var displayNameGlobal = ""
+    var uidGlobal = ""
+
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
@@ -42,9 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
                     guard let displayName = result?.user.displayName else {return}
                     guard let uid = result?.user.uid else {return}
                     print(email)
+                    emailGlobal = email
                     print(displayName)
+                    displayNameGlobal = displayName
                     print("Unique User ID: \(uid)")
-                    
+                    uidGlobal = uid
+                    //call function to grab id token only used for backend
                 }else{//failed to make a firebase user with google account
                     guard let errorDescription = error?.localizedDescription else {return}
                     print(errorDescription)

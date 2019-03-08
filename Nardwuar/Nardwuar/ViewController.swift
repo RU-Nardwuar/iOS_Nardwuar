@@ -37,7 +37,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         googleSignInButton.layer.shadowOpacity = 0.5
         googleSignInButton.layer.cornerRadius = 10
         
-//        googleSignInButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside) //used to give the button an action when tapped
+//      googleSignInButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside) //used to give the button an action when tapped
         GIDSignIn.sharedInstance()?.uiDelegate = self
     }
     

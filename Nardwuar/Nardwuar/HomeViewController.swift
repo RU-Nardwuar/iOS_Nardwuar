@@ -7,14 +7,30 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
-class HomeViewController: UIViewController, UISearchBarDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBarItems()
+        setupPage()
     }
 //SETUP UI
+    func setupPage(){
+        setUpUserData()
+        setupNavigationBarItems()
+    }
+    var email = ""
+    var displayName = ""
+    var uid = ""
+    
+    func setUpUserData(){
+        email = emailGlobal
+        displayName = displayNameGlobal
+        uid = uidGlobal
+        print("*************\(email)\(displayName)\(uid)")
+    }
     func setupNavigationBarItems(){
         setupLogoutButton()
         setupSearchBar()
@@ -63,6 +79,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate {
     
     @objc func handleLogoutSegue(sender: UIButton){
         print("Logout segue method")
+        GIDSignIn.sharedInstance().signOut()
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     
