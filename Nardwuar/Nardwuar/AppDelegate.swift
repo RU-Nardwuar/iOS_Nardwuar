@@ -12,14 +12,15 @@ import GoogleSignIn
 
 //Global Variables
 
-    var emailGlobal = ""
-    var displayNameGlobal = ""
-    var uidGlobal = ""
 
 @UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
 
+    var emailGlobal = ""
+    var displayNameGlobal = ""
+    var uidGlobal = ""
+    
     var window: UIWindow?
 
 
@@ -43,13 +44,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
                     guard let email = result?.user.email else {return}
                     guard let displayName = result?.user.displayName else {return}
                     guard let uid = result?.user.uid else {return}
-                    print(email)
-                    emailGlobal = email
-                    print(displayName)
-                    displayNameGlobal = displayName
-                    print("Unique User ID: \(uid)")
-                    uidGlobal = uid
+                    print("**** Data for Global")
+                    self.emailGlobal = email
+                    print(self.emailGlobal)
+                    self.displayNameGlobal = displayName
+                    print(self.displayNameGlobal)
+                    self.uidGlobal = uid
+                    print("Unique User ID: \(self.uidGlobal)")
                     //call function to grab id token only used for backend
+                    let currentUser = Auth.auth().currentUser
+                    currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+                        if let error = error {
+                            print("**** could not retrieve ID TOKEN\(error)")
+                            return;
+                        }
+                        print("***** ID TOKEN\(String(describing: idToken))")
+                        // Send token to your backend via HTTPS
+                        // ...
+                    }
                 }else{//failed to make a firebase user with google account
                     guard let errorDescription = error?.localizedDescription else {return}
                     print(errorDescription)

@@ -12,13 +12,20 @@ import GoogleSignIn
 
 class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
 
+    override func viewWillAppear(_ animated: Bool) {
+        //setUpUserData()
+        if(GIDSignIn.sharedInstance().hasAuthInKeychain()){
+        guard let email = GIDSignIn.sharedInstance()?.currentUser.profile.email else {return}
+        guard let displayName = GIDSignIn.sharedInstance()?.currentUser.profile.name else {return}
+        print("**** Global Data sent to Home Page: \(email)\(displayName)\(uid)")
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPage()
     }
 //SETUP UI
     func setupPage(){
-        setUpUserData()
         setupNavigationBarItems()
     }
     var email = ""
@@ -26,10 +33,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     var uid = ""
     
     func setUpUserData(){
-        email = emailGlobal
-        displayName = displayNameGlobal
-        uid = uidGlobal
-        print("*************\(email)\(displayName)\(uid)")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        //appDelegate.emailGlobal
+        email = appDelegate.emailGlobal
+        displayName = appDelegate.displayNameGlobal
+        uid = appDelegate.uidGlobal
     }
     func setupNavigationBarItems(){
         setupLogoutButton()
