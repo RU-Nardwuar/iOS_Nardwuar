@@ -10,9 +10,11 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-@UIApplicationMain
 //Global Variables
-
+var email = ""
+var displayName = ""
+var uid = ""
+@UIApplicationMain
 
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
 
@@ -42,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
                     print(email)
                     print(displayName)
                     print("Unique User ID: \(uid)")
+                    
                 }else{//failed to make a firebase user with google account
                     guard let errorDescription = error?.localizedDescription else {return}
                     print(errorDescription)
