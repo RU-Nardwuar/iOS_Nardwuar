@@ -23,7 +23,7 @@ class ProfileViewController: UIViewController {
     func setupNavigationButtons(){
         
         let fullName = UILabel()
-        fullName.text = "User Fullname Here"
+        fullName.text = structUserData.globalDisplayName
         navigationItem.title = fullName.text
     }
     

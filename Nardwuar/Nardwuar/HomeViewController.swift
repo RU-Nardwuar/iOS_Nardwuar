@@ -10,6 +10,11 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
+struct structUserData {
+    static var globalDisplayName: String?
+    static var globalEmail: String?
+}
+
 class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
 //************
     //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
@@ -41,7 +46,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
         })
         
         print("**** User Data: \(email)\(displayName)")
-
+        structUserData.globalDisplayName = displayName
+        structUserData.globalEmail = email
     }
     func setupNavigationBarItems(){
         setupLogoutButton()
