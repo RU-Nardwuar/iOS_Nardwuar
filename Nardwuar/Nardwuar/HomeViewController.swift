@@ -14,40 +14,34 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
 //************
     //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupPage()
+    }
+    func setupPage(){
+        setUpUserData()
+        setupNavigationBarItems()
+    }
 //SETUP UI
     var email = ""
     var displayName = ""
-//    var uid = ""
     var userIdToken: String?
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//
-//            DispatchQueue.main.async {
-//                GIDSignIn.sharedInstance().signInSilently()
-//            }
+    func setUpUserData(){
         email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
-        setupPage()
         displayName = (Auth.auth().currentUser?.displayName!)!
-        print("**** hello \(displayName)")
-//        //This is how we get the idToken to send to the server
+        setupNavigationBarItems()
+        //This is how we get the idToken to send to the server
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
             if let error = error {
                 print(error)
                 return
             }
+            print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
         })
-    }
-    func setupPage(){
-        setupNavigationBarItems()
-    }
-    
-    func setUpUserData(){
-        //email = emailGlobal
-        //displayName = displayNameGlobal
-        //uid = uidGlobal
         
-        //print("**** Global Data sent to Home Page: \(email)\(displayName)\(uid)")
+        print("**** User Data: \(email)\(displayName)")
+
     }
     func setupNavigationBarItems(){
         setupLogoutButton()
@@ -55,7 +49,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
         setupProfileButton()
     }
     
-//UI FUNCTIONS
+//SETUP NAVIGATION OBJECTS
     let logoutButton = UIButton(type: .system)
     func setupLogoutButton(){//LOGOUT
         logoutButton.setImage( UIImage(named: "icons8-cancel-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
