@@ -11,7 +11,7 @@ import Firebase
 import GoogleSignIn
 
 //Global Variables
-
+var full = ""
 
 @UIApplicationMain
 
@@ -41,16 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
             let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
             Auth.auth().signInAndRetrieveData(with: credential){ (result, error) in
                 if error == nil{//success to make a firebase user with google account
-                    guard let email = result?.user.email else {return}
-                    guard let displayName = result?.user.displayName else {return}
-                    guard let uid = result?.user.uid else {return}
-                    print("**** Data for Global")
-                    self.emailGlobal = email
-                    print(self.emailGlobal)
-                    self.displayNameGlobal = displayName
-                    print(self.displayNameGlobal)
-                    self.uidGlobal = uid
-                    print("Unique User ID: \(self.uidGlobal)")
                     //call function to grab id token only used for backend
                     let currentUser = Auth.auth().currentUser
                     currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
@@ -60,7 +50,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
                         }
                         print("***** ID TOKEN\(String(describing: idToken))")
                         // Send token to your backend via HTTPS
-                        // ...
+                        // User is now signed in
+                        
+                        //data approach 1
+                        guard let email = result?.user.email else {return}
+                        guard let displayName = result?.user.displayName else {return}
+                        guard let uid = result?.user.uid else {return}
+                        print("**** Data for Global Approach 1")
+                        self.emailGlobal = email
+                        print(self.emailGlobal)
+                        self.displayNameGlobal = displayName
+                        print(self.displayNameGlobal)
+                        self.uidGlobal = uid
+                        print("Unique User ID: \(self.uidGlobal)")
+                        
+                        //data approach 2
+                        print("**** Data for Global Approach 1")
+                        guard let homeViewController = UIApplication.shared.delegate as? HomeViewController else {return}
+                        guard let userId = user.userID else {return}                  // For client-side use only!
+                        guard let idToken = user.authentication.idToken else {return}// Safe to send to the server
+                        guard let fullName = user.profile.name else {return}
+                        homeViewController.displayName = displayName
+                        print("The home controller: \(homeViewController.displayName)")
+                        guard let givenName = user.profile.givenName else {return}
+                        guard let familyName = user.profile.familyName else {return}
+                        guard let emailAddress = user.profile.email else {return}
                     }
                 }else{//failed to make a firebase user with google account
                     guard let errorDescription = error?.localizedDescription else {return}
@@ -69,6 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
             }
         }
     }
+    
+    
     
     @available(iOS 9.0, *)
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -82,6 +98,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate  {
                                                  sourceApplication: sourceApplication,
                                                  annotation: annotation)
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

@@ -19,42 +19,56 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        //setupStandardGoogleButtons()
         setupCustomGoogleButtons()
     }
 
     @IBOutlet weak var googleSignInButton: UIButton!
     func setupCustomGoogleButtons(){
-//        googleSignInButton.frame = CGRect(x: 16, y: 116 + 66 + 66, width: view.frame.width - 32, height: 50)
         googleSignInButton.backgroundColor = UIColor.white
         googleSignInButton.setTitle("Sign in with Google", for: .normal)
         googleSignInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        
         googleSignInButton.layer.shadowColor = UIColor.black.cgColor
         googleSignInButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         googleSignInButton.layer.masksToBounds = false
         googleSignInButton.layer.shadowRadius = 3.0
         googleSignInButton.layer.shadowOpacity = 0.5
         googleSignInButton.layer.cornerRadius = 10
-        
-//      googleSignInButton.addTarget(self, action: #selector(handleCustomGoogleSign), for: .touchUpInside) //used to give the button an action when tapped
         GIDSignIn.sharedInstance()?.uiDelegate = self
     }
     
     @IBAction func googleSignInButtonTapped(_ sender: Any) {
         handleCustomGoogleSign()
-        performSegue(withIdentifier: "fromLoginToHome", sender: self)
-    }
-    func setupStandardGoogleButtons(){
-        //google sign in button
-        let googleButton = GIDSignInButton() //if you want to use google's button
-        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
-        view.addSubview(googleButton)
-        
-        GIDSignIn.sharedInstance()?.uiDelegate = self
     }
     @objc func handleCustomGoogleSign(){
         GIDSignIn.sharedInstance()?.signIn()
+        performSegue(withIdentifier: "fromLoginToHome", sender: self)
     }
+    
+    
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//        if let authentication = user.authentication {
+//            let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+//
+//            Auth.auth().signInAndRetrieveData(with: credential, completion: { (user, error) -> Void in
+//                if error != nil {
+//                    print("Problem at signing in with google with error : \(String(describing: error))")
+//                } else if error == nil {
+//                    print("user successfully signed in through GOOGLE! uid:\(Auth.auth().currentUser!.uid)")
+//                    print("signed in")
+//                    self.performSegue(withIdentifier: "fromLoginToHome", sender: self)
+//                }
+//            })
+//        }
+//    }
+    
+    
+//    func setupStandardGoogleButtons(){
+//        //google sign in button
+//        let googleButton = GIDSignInButton() //if you want to use google's button
+//        googleButton.frame = CGRect(x: 16, y: 116 + 66, width: view.frame.width - 32, height: 50)
+//        view.addSubview(googleButton)
+//
+//        GIDSignIn.sharedInstance()?.uiDelegate = self
+//    }
 }
 

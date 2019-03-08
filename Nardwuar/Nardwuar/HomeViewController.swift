@@ -12,32 +12,34 @@ import GoogleSignIn
 
 class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
 
-    override func viewWillAppear(_ animated: Bool) {
-        //setUpUserData()
-        if(GIDSignIn.sharedInstance().hasAuthInKeychain()){
-        guard let email = GIDSignIn.sharedInstance()?.currentUser.profile.email else {return}
-        guard let displayName = GIDSignIn.sharedInstance()?.currentUser.profile.name else {return}
-        print("**** Global Data sent to Home Page: \(email)\(displayName)\(uid)")
-        }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupPage()
-    }
+    
 //SETUP UI
-    func setupPage(){
-        setupNavigationBarItems()
-    }
     var email = ""
     var displayName = ""
     var uid = ""
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+            DispatchQueue.main.async {
+                GIDSignIn.sharedInstance().signInSilently()
+            }
+        //displayName = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
+        setupPage()
+        print("Full NAMEEEEE\(displayName)")
+        
+        
+    }
+    func setupPage(){
+        setupNavigationBarItems()
+    }
+    
     func setUpUserData(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //appDelegate.emailGlobal
-        email = appDelegate.emailGlobal
-        displayName = appDelegate.displayNameGlobal
-        uid = appDelegate.uidGlobal
+        //email = emailGlobal
+        //displayName = displayNameGlobal
+        //uid = uidGlobal
+        
+        //print("**** Global Data sent to Home Page: \(email)\(displayName)\(uid)")
     }
     func setupNavigationBarItems(){
         setupLogoutButton()
@@ -88,6 +90,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     @objc func handleLogoutSegue(sender: UIButton){
         print("Logout segue method")
         GIDSignIn.sharedInstance().signOut()
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     
