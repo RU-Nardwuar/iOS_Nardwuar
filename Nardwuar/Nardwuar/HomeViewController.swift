@@ -17,7 +17,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     var email = ""
     var displayName = ""
     var uid = ""
-    
+    var userIdToken: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +28,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
         setupPage()
         print("Full NAMEEEEE\(displayName)")
         
-        
+        var display = "Hi " + (Auth.auth().currentUser?.displayName!)!
+        print("**** hello \(display)")
+        //This is how we get the idToken to send to the server
+        Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            self.userIdToken = token
+        })
     }
     func setupPage(){
         setupNavigationBarItems()
