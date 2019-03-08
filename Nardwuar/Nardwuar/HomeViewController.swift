@@ -15,30 +15,28 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
     
 //SETUP UI
-//    var email = ""
-//    var displayName = ""
+    var email = ""
+    var displayName = ""
 //    var uid = ""
-//    var userIdToken: String?
+    var userIdToken: String?
     override func viewDidLoad() {
         super.viewDidLoad()
 //
 //            DispatchQueue.main.async {
 //                GIDSignIn.sharedInstance().signInSilently()
 //            }
-//        //displayName = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
-//        setupPage()
-//        print("Full NAMEEEEE\(displayName)")
-//
-//        var display = "Hi " + (Auth.auth().currentUser?.displayName!)!
-//        print("**** hello \(display)")
+        email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
+        setupPage()
+        displayName = (Auth.auth().currentUser?.displayName!)!
+        print("**** hello \(displayName)")
 //        //This is how we get the idToken to send to the server
-//        Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
-//            if let error = error {
-//                print(error)
-//                return
-//            }
-//            self.userIdToken = token
-//        })
+        Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            self.userIdToken = token
+        })
     }
     func setupPage(){
         setupNavigationBarItems()
@@ -88,25 +86,25 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     
 //SEGUES
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-//        print("in searchbar clicked")
-//        searchBar.resignFirstResponder()
-//        performSegue(withIdentifier: "fromHomeToArtist", sender: self)
+        print("in searchbar clicked")
+        searchBar.resignFirstResponder()
+        performSegue(withIdentifier: "fromHomeToArtist", sender: self)
     }
     @objc func handleProfileSegue(sender: UIButton){
-//        print("Profile segue method")
-//        performSegue(withIdentifier: "fromHomeToProfile", sender: self)
+        print("Profile segue method")
+        performSegue(withIdentifier: "fromHomeToProfile", sender: self)
     }
     
     @objc func handleLogoutSegue(sender: UIButton){
-//        print("Logout segue method")
-//        GIDSignIn.sharedInstance().signOut()
-//        let firebaseAuth = Auth.auth()
-//        do {
-//            try firebaseAuth.signOut()
-//        } catch let signOutError as NSError {
-//            print ("Error signing out: %@", signOutError)
-//        }
-//        performSegue(withIdentifier: "fromHomeToLogin", sender: self)
+        print("Logout segue method")
+        GIDSignIn.sharedInstance().signOut()
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
+        performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     
 }
