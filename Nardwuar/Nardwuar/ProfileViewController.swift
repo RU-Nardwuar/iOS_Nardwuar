@@ -19,6 +19,21 @@ class ProfileViewController: UIViewController {
 
         setupNavigationButtons()
         setupProfilePicAndQuickInfo()
+        downloadImage(from: structUserData.globalPhoto!)
+    }
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    func downloadImage(from url: URL) {
+        print("Download Started")
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            print(response?.suggestedFilename ?? url.lastPathComponent)
+            print("Download Finished")
+            DispatchQueue.main.async() {
+                self.profilePic.image = UIImage(data: data)
+            }
+        }
     }
     func setupNavigationButtons(){
         
@@ -26,7 +41,6 @@ class ProfileViewController: UIViewController {
         fullName.text = structUserData.globalDisplayName
         navigationItem.title = fullName.text
     }
-    
     func setupProfilePicAndQuickInfo(){
         profilePic.layer.borderWidth = 3
         profilePic.layer.masksToBounds = false

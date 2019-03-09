@@ -11,8 +11,12 @@ import Firebase
 import GoogleSignIn
 
 struct structUserData {
-    static var globalDisplayName: String?
+    static var globalUID: String?
+    static var globalPhoto: URL?
     static var globalEmail: String?
+    static var globalGivenName: String?
+    static var globalFamilyName: String?
+    static var globalDisplayName: String?
 }
 
 class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
@@ -34,6 +38,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     func setUpUserData(){
         email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         displayName = (Auth.auth().currentUser?.displayName!)!
+        structUserData.globalUID = (Auth.auth().currentUser?.uid)!
+        structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         setupNavigationBarItems()
         //This is how we get the idToken to send to the server
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
