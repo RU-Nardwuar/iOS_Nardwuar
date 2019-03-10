@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-struct structUserData {
+struct structUserData {//Global Variables for User
     static var globalUID: String?
     static var globalPhoto: URL?
     static var globalEmail: String?
@@ -21,42 +21,21 @@ struct structUserData {
 }
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
-//************
-    //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
-    
+
+    //tab bar buttons
     @IBOutlet weak var logoutButton: UITabBarItem!
     @IBOutlet weak var profileButton: UITabBarItem!
     @IBOutlet weak var infoButton: UITabBarItem!
-    
+    //tableview
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.isHidden = true
-        setupPage()
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
-        
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) {
-            return 0.0
-        }
-        return UITableView.automaticDimension
-    }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(structUserData.globalFollowedArtists.count == 0){
             tableView.isHidden = true
-            
-            return 0
         }
-        return 0
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        setupPage()
     }
     func setupPage(){
         setUpUserData()
@@ -144,7 +123,24 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         }
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
-    
+//TABLEVIEW
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return 0.0
+        }
+        return UITableView.automaticDimension
+    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 10
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
 }
 extension UIBarButtonItem {
     func addTargetForAction(target: AnyObject, action: Selector) {
@@ -152,7 +148,3 @@ extension UIBarButtonItem {
         self.action = action
     }
 }
-//extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
-//
-//
-//}
