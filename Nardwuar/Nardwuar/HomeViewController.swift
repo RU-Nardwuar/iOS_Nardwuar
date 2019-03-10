@@ -17,9 +17,10 @@ struct structUserData {
     static var globalGivenName: String?
     static var globalFamilyName: String?
     static var globalDisplayName: String?
+    static var globalFollowedArtists:[String] = []
 }
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, GIDSignInUIDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
 //************
     //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
     
@@ -27,14 +28,35 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     @IBOutlet weak var profileButton: UITabBarItem!
     @IBOutlet weak var infoButton: UITabBarItem!
     
+    @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.isHidden = true
         setupPage()
-
-        //tabBar(tabBar: , didSelectItem: logoutButton)
     }
-    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
-
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return 0.0
+        }
+        return UITableView.automaticDimension
+    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if(structUserData.globalFollowedArtists.count == 0){
+            tableView.isHidden = true
+            
+            return 0
+        }
+        return 0
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
     }
     func setupPage(){
         setUpUserData()
@@ -56,7 +78,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 print(error)
                 return
             }
-            print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
+            //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
         })
         
@@ -85,10 +107,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.showsScopeBar = true
         searchController.searchBar.delegate = self
-        searchController.searchBar.tintColor = .white
+        searchController.searchBar.tintColor = .black
         searchController.searchBar.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
         searchController.definesPresentationContext = true
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
+            ])
     }
     
     //let profileButton = UIButton(type: .system)
@@ -129,19 +152,7 @@ extension UIBarButtonItem {
         self.action = action
     }
 }
-extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath as IndexPath)
-        cell.textLabel!.text = "it works"
-        return cell
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-}
+//extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
+//
+//
+//}
