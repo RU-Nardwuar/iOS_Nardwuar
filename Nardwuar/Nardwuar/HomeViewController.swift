@@ -19,13 +19,22 @@ struct structUserData {
     static var globalDisplayName: String?
 }
 
-class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, GIDSignInUIDelegate {
 //************
     //3.8.19: UNCOMMENT ALL COMMENTS ONCE LOGIN CONTROLLER IS FIXED
+    
+    @IBOutlet weak var logoutButton: UITabBarItem!
+    @IBOutlet weak var profileButton: UITabBarItem!
+    @IBOutlet weak var infoButton: UITabBarItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPage()
+
+        //tabBar(tabBar: , didSelectItem: logoutButton)
+    }
+    func tabBar(tabBar: UITabBar, didSelectItem item: UITabBarItem) {
+
     }
     func setupPage(){
         setUpUserData()
@@ -62,12 +71,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
     }
     
 //SETUP NAVIGATION OBJECTS
-    let logoutButton = UIButton(type: .system)
+    //let logoutButton = UIButton(type: .system)
     func setupLogoutButton(){//LOGOUT
-        logoutButton.setImage( UIImage(named: "icons8-cancel-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        logoutButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
-        logoutButton.addTarget(self, action: #selector(handleLogoutSegue(sender:)), for: .touchUpInside)
+//        logoutButton.setImage( UIImage(named: "icons8-cancel-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
+//        logoutButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
+//        logoutButton.addTarget(self, action: #selector(handleLogoutSegue(sender:)), for: .touchUpInside)
     }
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -82,12 +91,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.white])
     }
     
-    let profileButton = UIButton(type: .system)
+    //let profileButton = UIButton(type: .system)
     func setupProfileButton(){//PROFILE
-        profileButton.setImage( UIImage(named: "icons8-contacts-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        profileButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
-        profileButton.addTarget(self, action: #selector(handleProfileSegue(sender:)), for: .touchUpInside)
+//        profileButton.setImage( UIImage(named: "icons8-contacts-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
+//        profileButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
+//        profileButton.addTarget(self, action: #selector(handleProfileSegue(sender:)), for: .touchUpInside)
     }
     
 //SEGUES
@@ -113,4 +122,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, GIDSignInUIDele
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     
+}
+extension UIBarButtonItem {
+    func addTargetForAction(target: AnyObject, action: Selector) {
+        self.target = target
+        self.action = action
+    }
+}
+extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath as IndexPath)
+        cell.textLabel!.text = "it works"
+        return cell
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
 }
