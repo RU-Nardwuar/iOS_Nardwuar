@@ -31,7 +31,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nardwuar" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70O-vr-iqv">
                                 <rect key="frame" x="74.5" y="248" width="226.5" height="71.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="52"/>
-                                <color key="textColor" red="0.96862745098039216" green="1" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="textColor" red="0.92648458480834961" green="0.41217565536499023" blue="0.4156678318977356" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo1" translatesAutoresizingMaskIntoConstraints="NO" id="Ucf-av-iex">
@@ -42,7 +42,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.41960784313725491" blue="0.41960784313725491" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.76862745098039209" green="1" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="70O-vr-iqv" firstAttribute="top" secondItem="Ucf-av-iex" secondAttribute="bottom" constant="30" id="0lw-K1-iSv"/>
                             <constraint firstItem="mzX-H8-NeU" firstAttribute="top" secondItem="70O-vr-iqv" secondAttribute="bottom" constant="20" id="3nz-CB-7Nd"/>
@@ -82,16 +82,30 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="brs-ID-ypH" id="JMu-Al-ZvR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <color key="tintColor" red="0.76862745099999996" green="1" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1yq-gF-VLt">
+                                <rect key="frame" x="0.0" y="554" width="375" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <items>
+                                    <tabBarItem title="logout" image="cancel" id="p0Q-fI-Nxc"/>
+                                    <tabBarItem title="profile" image="user_male" id="xB1-bm-hFU"/>
+                                    <tabBarItem systemItem="more" id="iih-jF-ymf"/>
+                                </items>
+                                <color key="barTintColor" red="0.76862745099999996" green="1" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="1yq-gF-VLt" firstAttribute="trailing" secondItem="uzx-CI-Gza" secondAttribute="trailing" id="FzC-uj-neJ"/>
                             <constraint firstItem="mph-Ma-O04" firstAttribute="centerX" secondItem="A90-uI-yiG" secondAttribute="centerX" id="VDW-4T-T6E"/>
+                            <constraint firstItem="1yq-gF-VLt" firstAttribute="leading" secondItem="uzx-CI-Gza" secondAttribute="leading" id="Xbn-9b-7ux"/>
                             <constraint firstItem="mph-Ma-O04" firstAttribute="leading" secondItem="uzx-CI-Gza" secondAttribute="leading" id="aEK-J5-Rf1"/>
                             <constraint firstItem="mph-Ma-O04" firstAttribute="trailing" secondItem="uzx-CI-Gza" secondAttribute="trailing" id="fwz-TV-I0n"/>
+                            <constraint firstItem="1yq-gF-VLt" firstAttribute="bottom" secondItem="uzx-CI-Gza" secondAttribute="bottom" id="iL3-Rw-cnZ"/>
                             <constraint firstItem="mph-Ma-O04" firstAttribute="top" secondItem="uzx-CI-Gza" secondAttribute="top" id="jC2-h9-UOM"/>
                             <constraint firstItem="mph-Ma-O04" firstAttribute="bottom" secondItem="uzx-CI-Gza" secondAttribute="bottom" id="qKw-4d-nl8"/>
                         </constraints>
@@ -193,7 +207,7 @@
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.99952346086502075" green="0.3686576783657074" blue="0.39509153366088867" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="barTintColor" red="0.99952346089999999" green="0.36865767840000002" blue="0.3950915337" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.76862745098039209" green="1" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -284,7 +298,9 @@
     </scenes>
     <resources>
         <image name="background1" width="5400" height="3600"/>
+        <image name="cancel" width="30" height="30"/>
         <image name="logo1" width="512" height="512"/>
         <image name="profile1" width="5456" height="3632"/>
+        <image name="user_male" width="30" height="30"/>
     </resources>
 </document>

@@ -19,7 +19,6 @@ class ProfileViewController: UIViewController {
 
         setupNavigationButtons()
         setupProfilePicAndQuickInfo()
-        downloadImage(from: structUserData.globalPhoto!)
     }
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
@@ -47,7 +46,7 @@ class ProfileViewController: UIViewController {
         profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.cornerRadius = profilePic.frame.height/2
         profilePic.clipsToBounds = true
-        
+        downloadImage(from: structUserData.globalPhoto!)
         quickInfoHeader.text = "Following 35 Artists"
         quickInfo.text = "Likes Jazz, Country, and Pop music"
         
