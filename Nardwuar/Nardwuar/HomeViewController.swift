@@ -23,6 +23,7 @@ struct structUserData {//Global Variables for User
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
 
     //tab bar buttons
+    @IBOutlet weak var tabBar: UITabBar!
     @IBOutlet weak var logoutButton: UITabBarItem!
     @IBOutlet weak var profileButton: UITabBarItem!
     @IBOutlet weak var infoButton: UITabBarItem!
@@ -36,10 +37,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             tableView.isHidden = true
         }
         setupPage()
+        self.tabBar.delegate = self
     }
     func setupPage(){
         setUpUserData()
         setupNavigationBarItems()
+        setupSearchBar()
     }
 //SETUP UI
     var email = ""
@@ -65,21 +68,28 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         structUserData.globalDisplayName = displayName
         structUserData.globalEmail = email
     }
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        switch item.tag  {
+        case 0:
+            handleLogoutSegue()
+            break
+        case 1:
+            handleProfileSegue()
+            break
+        case 2:
+            handleSettingSegue()
+            break
+        default:
+            handleLogoutSegue()
+            break
+        }
+
+    }
     func setupNavigationBarItems(){
-        setupLogoutButton()
-        setupSearchBar()
-        setupProfileButton()
+
     }
     
 //SETUP NAVIGATION OBJECTS
-    //let logoutButton = UIButton(type: .system)
-    func setupLogoutButton(){//LOGOUT
-//        logoutButton.setImage( UIImage(named: "icons8-cancel-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
-//        logoutButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoutButton)
-//        logoutButton.addTarget(self, action: #selector(handleLogoutSegue(sender:)), for: .touchUpInside)
-    }
-    
     let searchController = UISearchController(searchResultsController: nil)
     func setupSearchBar(){//SEARCHBAR
         navigationItem.searchController = searchController
@@ -93,26 +103,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             ])
     }
     
-    //let profileButton = UIButton(type: .system)
-    func setupProfileButton(){//PROFILE
-//        profileButton.setImage( UIImage(named: "icons8-contacts-50")?.withRenderingMode(.alwaysOriginal), for: .normal)
-//        profileButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileButton)
-//        profileButton.addTarget(self, action: #selector(handleProfileSegue(sender:)), for: .touchUpInside)
-    }
-    
 //SEGUES
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("in searchbar clicked")
         searchBar.resignFirstResponder()
         performSegue(withIdentifier: "fromHomeToArtist", sender: self)
     }
-    @objc func handleProfileSegue(sender: UIButton){
-        print("Profile segue method")
-        performSegue(withIdentifier: "fromHomeToProfile", sender: self)
-    }
-    
-    @objc func handleLogoutSegue(sender: UIButton){
+    func handleLogoutSegue(){
         print("Logout segue method")
         GIDSignIn.sharedInstance().signOut()
         let firebaseAuth = Auth.auth()
@@ -122,6 +119,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             print ("Error signing out: %@", signOutError)
         }
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
+    }
+    func handleProfileSegue(){
+        print("Profile segue method")
+        performSegue(withIdentifier: "fromHomeToProfile", sender: self)
+    }
+    func handleSettingSegue(){
+        print("Setting segue method")
+        performSegue(withIdentifier: "fromHomeToSetting", sender: self)
     }
 //TABLEVIEW
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
