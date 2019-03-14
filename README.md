@@ -22,4 +22,4 @@ Directions:
 - To view Adobe XD files and images used in app> Design
 - To view assets of all images for app > Nardwaur > Nardwaur > Assets.xcassets
 
-![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Demos/version2.png)
+![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Demos/version3.png)
