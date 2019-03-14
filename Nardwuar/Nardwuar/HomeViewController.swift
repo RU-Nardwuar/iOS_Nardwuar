@@ -10,16 +10,6 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-struct structUserData {//Global Variables for User
-    static var globalUID: String?
-    static var globalPhoto: URL?
-    static var globalEmail: String?
-    static var globalGivenName: String?
-    static var globalFamilyName: String?
-    static var globalDisplayName: String?
-    static var globalFollowedArtists:[String] = []
-}
-
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
 //ON LOAD
     override func viewDidLoad() {
@@ -40,8 +30,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func setUpUserData(){
         email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         displayName = (Auth.auth().currentUser?.displayName!)!
-        structUserData.globalUID = (Auth.auth().currentUser?.uid)!
-        structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
+        Constants.structUserData.globalUID = (Auth.auth().currentUser?.uid)!
+        Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         //This is how we get the idToken to send to the server
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
             if let error = error {
@@ -53,8 +43,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         })
         
         print("**** User Data: \(email)\(displayName)")
-        structUserData.globalDisplayName = displayName
-        structUserData.globalEmail = email
+        Constants.structUserData.globalDisplayName = displayName
+        Constants.structUserData.globalEmail = email
     }
 //SEARCHBAR
     let searchController = UISearchController(searchResultsController: nil)
@@ -74,7 +64,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
-        if(structUserData.globalFollowedArtists.count == 0){
+        if(Constants.structUserData.globalFollowedArtists.count == 0){
             tableView.isHidden = true
         }
     }
@@ -102,6 +92,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     @IBOutlet weak var infoButton: UITabBarItem!
     func setupTabBar(){
         self.tabBar.delegate = self
+        tabBar.barTintColor = Constants.DefaultUI.primaryColor //Cyan
     }
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag  {

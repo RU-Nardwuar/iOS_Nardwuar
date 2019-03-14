@@ -37,7 +37,7 @@ class ProfileViewController: UIViewController {
     func setupNavigationButtons(){
         
         let fullName = UILabel()
-        fullName.text = structUserData.globalDisplayName
+        fullName.text = Constants.structUserData.globalDisplayName
         navigationItem.title = fullName.text
     }
     func setupProfilePicAndQuickInfo(){
@@ -46,7 +46,7 @@ class ProfileViewController: UIViewController {
         profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.cornerRadius = profilePic.frame.height/2
         profilePic.clipsToBounds = true
-        downloadImage(from: structUserData.globalPhoto!)
+        downloadImage(from: Constants.structUserData.globalPhoto!)
         quickInfoHeader.text = "Following 35 Artists"
         quickInfo.text = "Likes Jazz, Country, and Pop music"
         

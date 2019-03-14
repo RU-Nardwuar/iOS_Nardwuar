@@ -103,11 +103,11 @@
 			children = (
 				2550D8A12225B53A00561EF5 /* AppDelegate.swift */,
 				256F86D52228A65A007FA1C0 /* Constants.swift */,
-				256F86DC2239B641007FA1C0 /* SettingsViewController.swift */,
 				2550D8A32225B53A00561EF5 /* ViewController.swift */,
 				256F86CF222608AC007FA1C0 /* HomeViewController.swift */,
-				256F86D122262C0A007FA1C0 /* ProfileViewController.swift */,
 				256F86D32227BB27007FA1C0 /* ArtistViewController.swift */,
+				256F86D122262C0A007FA1C0 /* ProfileViewController.swift */,
+				256F86DC2239B641007FA1C0 /* SettingsViewController.swift */,
 				2550D8A52225B53A00561EF5 /* Main.storyboard */,
 				2550D8A82225B53B00561EF5 /* Assets.xcassets */,
 				2550D8AA2225B53B00561EF5 /* LaunchScreen.storyboard */,
