@@ -41,9 +41,13 @@ class ProfileViewController: UIViewController {
         navigationItem.title = fullName.text
     }
     func setupProfilePicAndQuickInfo(){
-        profilePic.layer.borderWidth = 3
+        profilePic.layer.borderWidth = 1
         profilePic.layer.masksToBounds = false
-        profilePic.layer.borderColor = UIColor.black.cgColor
+        //profilePic.layer.borderColor = UIColor.black.cgColor
+        profilePic.layer.shadowColor = UIColor.black.cgColor
+        profilePic.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        profilePic.layer.shadowRadius = 5.0
+        profilePic.layer.shadowOpacity = 0.5
         profilePic.layer.cornerRadius = profilePic.frame.height/2
         profilePic.clipsToBounds = true
         downloadImage(from: Constants.structUserData.globalPhoto!)
