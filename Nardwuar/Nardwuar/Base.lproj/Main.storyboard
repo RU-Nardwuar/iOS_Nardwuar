@@ -59,6 +59,7 @@
                     </view>
                     <connections>
                         <outlet property="googleSignInButton" destination="mzX-H8-NeU" id="Cm3-mj-dja"/>
+                        <outlet property="nameOfApp" destination="70O-vr-iqv" id="YPq-rz-B9I"/>
                         <segue destination="e4f-Wx-ei4" kind="show" identifier="fromLoginToHome" id="HSo-AT-qiW"/>
                     </connections>
                 </viewController>
@@ -145,10 +146,10 @@
                         <outlet property="profileButton" destination="xB1-bm-hFU" id="ZGM-on-7oV"/>
                         <outlet property="tabBar" destination="1yq-gF-VLt" id="Xes-Js-5Dl"/>
                         <outlet property="tableView" destination="mph-Ma-O04" id="gd8-30-xq5"/>
-                        <segue destination="78P-CL-uhH" kind="show" identifier="fromHomeToProfile" id="RDE-e1-jOB"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="fromHomeToLogin" id="qQy-JG-4eM"/>
-                        <segue destination="qNY-v0-WNX" kind="show" identifier="fromHomeToArtist" id="4PL-Fh-6jy"/>
                         <segue destination="lho-sU-biB" kind="show" identifier="fromHomeToSetting" id="GOU-Gd-geC"/>
+                        <segue destination="78P-CL-uhH" kind="show" identifier="fromHomeToProfile" id="Yag-Iv-Q2c"/>
+                        <segue destination="qNY-v0-WNX" kind="show" identifier="fromHomeToArtist" id="My2-k4-DOw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uTp-pZ-UCT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -229,7 +230,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DJD-Ca-Cvw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2161" y="878"/>
+            <point key="canvasLocation" x="1278" y="1715"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="EJs-Pl-g6d">
@@ -326,7 +327,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6L6-TY-9Sr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1277.5999999999999" y="1714.9925037481262"/>
+            <point key="canvasLocation" x="2308" y="878"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="uaT-eu-PJY">

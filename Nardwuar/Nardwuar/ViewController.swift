@@ -17,11 +17,22 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("**** in viewDidLoad")
+        setupTitle()
         setupCustomGoogleButtons()
         checkAuth()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
+    }
+//SETUP TILE
+    
+    @IBOutlet weak var nameOfApp: UILabel!
+    func setupTitle(){
+        nameOfApp.layer.shadowColor = UIColor.black.cgColor
+        nameOfApp.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        nameOfApp.layer.masksToBounds = false
+        nameOfApp.layer.shadowRadius = 0.80
+        nameOfApp.layer.shadowOpacity = 0.50
     }
 //CHECK AUTH
     func checkAuth(){
