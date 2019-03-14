@@ -21,30 +21,19 @@ struct structUserData {//Global Variables for User
 }
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
-
-    //tab bar buttons
-    @IBOutlet weak var tabBar: UITabBar!
-    @IBOutlet weak var logoutButton: UITabBarItem!
-    @IBOutlet weak var profileButton: UITabBarItem!
-    @IBOutlet weak var infoButton: UITabBarItem!
-    //tableview
-    @IBOutlet weak var tableView: UITableView!
+//ON LOAD
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        if(structUserData.globalFollowedArtists.count == 0){
-            tableView.isHidden = true
-        }
         setupPage()
-        self.tabBar.delegate = self
     }
+//SETUP PAGE
     func setupPage(){
         setUpUserData()
-        setupNavigationBarItems()
         setupSearchBar()
+        setupTableView()
+        setupTabBar()
     }
-//SETUP UI
+//SETUP USER DATA AND CONNECT TO SERVER
     var email = ""
     var displayName = ""
     var userIdToken: String?
@@ -53,7 +42,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         displayName = (Auth.auth().currentUser?.displayName!)!
         structUserData.globalUID = (Auth.auth().currentUser?.uid)!
         structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
-        setupNavigationBarItems()
         //This is how we get the idToken to send to the server
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
             if let error = error {
@@ -67,6 +55,53 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** User Data: \(email)\(displayName)")
         structUserData.globalDisplayName = displayName
         structUserData.globalEmail = email
+    }
+//SEARCHBAR
+    let searchController = UISearchController(searchResultsController: nil)
+    func setupSearchBar(){//SEARCHBAR
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.showsScopeBar = true
+        searchController.searchBar.delegate = self
+        searchController.searchBar.tintColor = .black
+        searchController.searchBar.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
+        searchController.definesPresentationContext = true
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
+            ])
+    }
+//TABLEVIEW
+    @IBOutlet weak var tableView: UITableView!
+    func setupTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        if(structUserData.globalFollowedArtists.count == 0){
+            tableView.isHidden = true
+        }
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return 0.0
+        }
+        return UITableView.automaticDimension
+    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 10
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+//TAB BAR
+    @IBOutlet weak var tabBar: UITabBar!
+    @IBOutlet weak var logoutButton: UITabBarItem!
+    @IBOutlet weak var profileButton: UITabBarItem!
+    @IBOutlet weak var infoButton: UITabBarItem!
+    func setupTabBar(){
+        self.tabBar.delegate = self
     }
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag  {
@@ -83,27 +118,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             handleLogoutSegue()
             break
         }
-
     }
-    func setupNavigationBarItems(){
-
-    }
-    
-//SETUP NAVIGATION OBJECTS
-    let searchController = UISearchController(searchResultsController: nil)
-    func setupSearchBar(){//SEARCHBAR
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.searchBar.showsScopeBar = true
-        searchController.searchBar.delegate = self
-        searchController.searchBar.tintColor = .black
-        searchController.searchBar.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
-        searchController.definesPresentationContext = true
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
-            ])
-    }
-    
-//SEGUES
+//SEGUES FOR SEARCHBAR AND TAB BAR BUTTONS
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("in searchbar clicked")
         searchBar.resignFirstResponder()
@@ -127,29 +143,5 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func handleSettingSegue(){
         print("Setting segue method")
         performSegue(withIdentifier: "fromHomeToSetting", sender: self)
-    }
-//TABLEVIEW
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
-        
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) {
-            return 0.0
-        }
-        return UITableView.automaticDimension
-    }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 10
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-}
-extension UIBarButtonItem {
-    func addTargetForAction(target: AnyObject, action: Selector) {
-        self.target = target
-        self.action = action
     }
 }
