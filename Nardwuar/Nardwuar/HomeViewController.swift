@@ -16,6 +16,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         super.viewDidLoad()
         setupPage()
     }
+    
 //SETUP PAGE
     @IBOutlet weak var emptyTableText: UILabel!
     func setupPage(){
@@ -30,6 +31,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     var email = ""
     var displayName = ""
     var userIdToken: String?
+    var userData = [AccountDetails]()
     func setUpUserData(){
         email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         displayName = (Auth.auth().currentUser?.displayName!)!
@@ -41,8 +43,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 print(error)
                 return
             }
-            //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
+            print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
+            
+                let accountObject = self.userData
+                AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
+                    
+                    if let userStructData = results{
+                        print("*****Passed final if statement")
+                        self.userData = userStructData
+                        print(self.userData)
+                        print("-----------\(self.userData[0])")
+                    }
+                })
+                
         })
         
         print("**** User Data: \(email)\(displayName)")
