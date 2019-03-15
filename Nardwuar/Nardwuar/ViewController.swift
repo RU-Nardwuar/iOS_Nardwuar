@@ -14,6 +14,7 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
 //ON LOAD
+    @IBOutlet weak var boxView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         print("**** in viewDidLoad")
@@ -21,6 +22,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         setupCustomGoogleButtons()
         checkAuth()
         self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
+        boxView.layer.cornerRadius = boxView.frame.height/40
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true

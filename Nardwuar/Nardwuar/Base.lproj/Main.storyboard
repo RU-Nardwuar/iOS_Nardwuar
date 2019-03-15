@@ -85,6 +85,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="boxView" destination="bUM-YI-9aL" id="Oqo-lz-s03"/>
                         <outlet property="googleSignInButton" destination="mzX-H8-NeU" id="Cm3-mj-dja"/>
                         <outlet property="nameOfApp" destination="70O-vr-iqv" id="YPq-rz-B9I"/>
                         <segue destination="e4f-Wx-ei4" kind="show" identifier="fromLoginToHome" id="HSo-AT-qiW"/>
