@@ -20,6 +20,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         setupTitle()
         setupCustomGoogleButtons()
         checkAuth()
+        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true

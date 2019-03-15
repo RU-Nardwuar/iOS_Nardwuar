@@ -41,7 +41,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         navigationItem.title = fullName.text
     }
     func setupProfilePicAndQuickInfo(){
-        profilePic.layer.borderWidth = 1
+        profilePic.layer.borderWidth = 0.5
         profilePic.layer.masksToBounds = false
         //profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.shadowColor = UIColor.black.cgColor
