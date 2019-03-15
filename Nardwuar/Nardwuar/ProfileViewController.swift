@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var profilePic: UIImageView!
     @IBOutlet weak var quickInfoHeader: UILabel!
@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var backgroundImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupTableView()
         setupNavigationButtons()
         setupProfilePicAndQuickInfo()
     }
@@ -58,5 +58,43 @@ class ProfileViewController: UIViewController {
         
 
     }
-
+    @IBOutlet weak var tableView: UITableView!
+    func setupTableView(){
+        tableView.delegate = self
+        tableView.dataSource = self
+        self.view.backgroundColor = Constants.DefaultUI.primaryColor
+        tableView.backgroundColor = Constants.DefaultUI.primaryColor
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120.00
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath)
+        cell.backgroundColor = Constants.DefaultUI.primaryColor
+        cell.imageView?.layer.shadowColor = UIColor.black.cgColor
+        cell.imageView?.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        cell.imageView?.layer.masksToBounds = false
+        cell.imageView?.layer.shadowRadius = 3.0
+        cell.imageView?.layer.shadowOpacity = 0.5
+        cell.imageView?.layer.cornerRadius = ((cell.imageView?.layer.frame.height)!)/2
+        cell.imageView?.clipsToBounds = true
+        cell.textLabel?.textColor = Constants.DefaultUI.textColor
+        if(indexPath.row == 0){
+            cell.textLabel?.text = "Drake"
+            cell.imageView?.image = UIImage(named: "drakejpg")
+        } else if(indexPath.row == 1){
+            cell.textLabel?.text = "Ed Sheeran"
+            cell.imageView?.image = UIImage(named: "edSheeranjpg")
+        } else if(indexPath.row == 2){
+            cell.textLabel?.text = "Sabrina Claudio"
+            cell.imageView?.image = UIImage(named: "sabrinaClaudio100")
+        } else if(indexPath.row == 3){
+            cell.textLabel?.text = "Hozier"
+            cell.imageView?.image = UIImage(named: "hozierjpg")
+        }
+        return cell
+    }
 }

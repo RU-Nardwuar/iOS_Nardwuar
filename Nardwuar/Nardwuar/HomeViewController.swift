@@ -17,7 +17,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         setupPage()
     }
 //SETUP PAGE
+    @IBOutlet weak var emptyTableText: UILabel!
     func setupPage(){
+        self.view.backgroundColor = Constants.DefaultUI.primaryColor
+        emptyTableText.textColor = Constants.DefaultUI.textColor
         setUpUserData()
         setupSearchBar()
         setupTableView()
@@ -93,6 +96,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func setupTabBar(){
         self.tabBar.delegate = self
         tabBar.barTintColor = Constants.DefaultUI.primaryColor //Cyan
+        tabBar.backgroundColor = Constants.DefaultUI.primaryColor
     }
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         switch item.tag  {
