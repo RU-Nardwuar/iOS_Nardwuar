@@ -36,14 +36,14 @@ struct AccountDetails {
     //makes unique path refer to users input
     static func registerFirstTimeUser(token:String, completion: @escaping ([AccountDetails]?) -> ()){
         print("*** in register function! with token: \(token)")
-        let url = URL(string: "https://nardwuar.herokuapp.com")!
+        let url = URL(string: "https://nardwuar.herokuapp.com/register")!
         var request = URLRequest(url: url)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         request.httpMethod = "POST"
         
         
-        let postString = "/\(token)"
+        let postString = "\(token)"
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
