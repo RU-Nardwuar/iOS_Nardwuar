@@ -13,6 +13,7 @@ struct AccountDetails {
     //variables you can access per day
     let summary:String
     let icon:String
+    let artistsFollow:[String]
     //catch errors
     enum errorType:Error {
         case dataPieceIsMissing(String)
@@ -27,6 +28,7 @@ struct AccountDetails {
         self.firstTimeRegistered = true
         self.summary = summary
         self.icon = icon
+        self.artistsFollow = ["Drake","Ed Sheeran","Sabrina Claudio","Hozier"]
     }
     //standard path for darksky api
     static let basePath = "https://nardwuar.herokuapp.com"
