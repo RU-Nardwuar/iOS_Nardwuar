@@ -59,14 +59,14 @@ struct AccountDetails {
             }
             
             let responseString = String(data: data, encoding: .utf8)
-            print("**** responseString = \(responseString)")
-            
-            print("Request has submitted successfully.\nPlease wait for a while")
+//            print("**** responseString = \(responseString)")
+//
+//            print("Request has submitted successfully.\nPlease wait for a while")
             DispatchQueue.main.async {
                 
                 
                 
-                print("**** inside dispatch queue where the code will be")
+                //print("**** inside dispatch queue where the code will be")
                 
                 
             }
