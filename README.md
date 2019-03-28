@@ -2,7 +2,7 @@
 
 Nardwuar is an app on iOS and Android platform created from a team of one android, ios, and backend developer.
 
-Our mission is to provide users a smooth experience and a one spot destination for all information an artist has.
+Our mission is to provide users a one spot and smooth destination for all information concerning a music artist.
 
 This is aimed to be a 2 month long project.
 
