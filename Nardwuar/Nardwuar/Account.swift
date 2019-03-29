@@ -23,7 +23,7 @@ Notes
         Artist Page > use all data from json to fill page
 */
 
-
+//new comment to check branch
 import Foundation
 
 struct AccountDetails {
