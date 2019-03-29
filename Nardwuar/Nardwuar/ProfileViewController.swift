@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -19,7 +20,55 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
         setupTableView()
         setupNavigationButtons()
         setupProfilePicAndQuickInfo()
+        
+        //testing api request with trivia
+        let sendMe = "amount=10&category=12&difficulty=medium&type=multiple"
+        testGetRequestAPICall(artistID: sendMe)
     }
+    
+    func testGetRequestAPICall(artistID: String)  {
+        print("****IN GET REQUEST")
+        let todosEndpoint: String = "https://opentdb.com/api.php?" + "parameterName=\(artistID)"
+        
+        Alamofire.request(todosEndpoint, method: .get, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                debugPrint(response)
+                
+                if let data = response.result.value{
+                    // Response type-1
+                    if  (data as? [[String : AnyObject]]) != nil{
+                        print("data_1: \(data)")
+                    }
+                    // Response type-2
+                    if  (data as? [String : AnyObject]) != nil{
+                        print("data_2: \(data)")
+                    }
+                }
+            print("**** \(response.data)")
+        }
+    }
+    
+    func getRequestAPICall(artistID: String)  {
+        
+        let todosEndpoint: String = "https://nardwuar.herokuapp.com/Artist/" + "parameterName=\(artistID)"
+        
+        Alamofire.request(todosEndpoint, method: .get, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                debugPrint(response)
+                
+                if let data = response.result.value{
+                    // Response type-1
+                    if  (data as? [[String : AnyObject]]) != nil{
+                        print("data_1: \(data)")
+                    }
+                    // Response type-2
+                    if  (data as? [String : AnyObject]) != nil{
+                        print("data_2: \(data)")
+                    }
+                }
+        }
+    }
+    
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }

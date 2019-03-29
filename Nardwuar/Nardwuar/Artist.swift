@@ -26,4 +26,3 @@ struct artistData{
     let mostPopularSong:String
 }
 
-

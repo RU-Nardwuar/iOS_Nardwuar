@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import Alamofire
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
 //ON LOAD
@@ -45,10 +46,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             }
             print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
-            
                 let accountObject = self.userData
                 AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
-                    
+
                     if let userStructData = results{
                         print("*****Passed final if statement")
                         self.userData = userStructData
@@ -56,13 +56,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                         print("-----------\(self.userData[0])")
                     }
                 })
-                
+            
         })
         
         print("**** User Data: \(email)\(displayName)")
         Constants.structUserData.globalDisplayName = displayName
         Constants.structUserData.globalEmail = email
     }
+
 //SEARCHBAR
     let searchController = UISearchController(searchResultsController: nil)
     func setupSearchBar(){//SEARCHBAR

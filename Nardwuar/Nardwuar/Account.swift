@@ -6,6 +6,24 @@
 //  Copyright © 2019 Xavier La Rosa. All rights reserved.
 //
 
+/*
+Notes
+ James' routes:
+    1.) post request to register user
+    2.) request for user information (artist array)
+    3.) request for artist array
+    4.) post request to follow an artist
+ 
+ Login > user has array of all artists they follow (name, id)
+ 
+ Hompage > tableview of array of all artists they follow
+    i.) user tap on artist they follow > send id token to route > Artist Page
+        Artist Page > use all data from json to fill page
+    ii.) user tap searchbar and search > hit enter > output array of top 5 artists (name, id) > tap artist
+        Artist Page > use all data from json to fill page
+*/
+
+
 import Foundation
 
 struct AccountDetails {

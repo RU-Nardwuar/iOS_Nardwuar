@@ -14,21 +14,25 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
 //ON LOAD
-    @IBOutlet weak var boxView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         print("**** in viewDidLoad")
-        setupTitle()
-        setupCustomGoogleButtons()
-        checkAuth()
-        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
-        boxView.layer.cornerRadius = boxView.frame.height/50
+        setupUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
     }
-//SETUP TILE
     
+//UI SECTION////////////////////////////////////
+    @IBOutlet weak var boxView: UIView!
+    func setupUI(){
+        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
+        boxView.layer.cornerRadius = boxView.frame.height/50
+        setupTitle()
+        setupCustomGoogleButtons()
+        checkAuth()
+    }
+//SETUP TILE
     @IBOutlet weak var nameOfApp: UILabel!
     func setupTitle(){
         nameOfApp.layer.shadowColor = UIColor.black.cgColor
@@ -36,16 +40,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         nameOfApp.layer.masksToBounds = false
         nameOfApp.layer.shadowRadius = 0.80
         nameOfApp.layer.shadowOpacity = 0.50
-    }
-//CHECK AUTH
-    func checkAuth(){
-        print("**** checking if user is already signed in or not")
-        if let user = Auth.auth().currentUser { //if there is present the UserViewController
-            print("current user:\(user) will begin segue")
-            signInSegue()
-        } else {
-            print("no user") //otherwise do nothingt
-        }
     }
 //SETUP GOOGLE SIGN IN BUTTON
     @IBOutlet weak var googleSignInButton: UIButton!
@@ -65,10 +59,22 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         print("**** setting GID uiDelegate and delegate")
         
     }
+    
+//ACTION SECTION////////////////////////////////////
 //GOOGLE SIGNIN BUTTON TAPPED
     @IBAction func googleSignInButtonTapped(_ sender: Any) {
         print("**** in google sign in button tappedr, going to use GID.signIn()")
         GIDSignIn.sharedInstance()?.signIn()
+    }
+//CHECK AUTH
+    func checkAuth(){
+        print("**** checking if user is already signed in or not")
+        if let user = Auth.auth().currentUser {
+            print("**** current user:\(user) will begin segue")
+            signInSegue()
+        } else {
+            print("**** no user")
+        }
     }
     func signInSegue(){
         print("**** in signInSegue, performing segue for user")
