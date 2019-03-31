@@ -44,12 +44,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     }
 //SETUP USER DATA AND CONNECT TO SERVER
     var email = ""
+    var firstName = ""
     var displayName = ""
     var userIdToken: String?
     var userData = [AccountDetails]()
     func setUpUserData(){
         email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
+        firstName = (GIDSignIn.sharedInstance()?.currentUser.profile.givenName!)!
         displayName = (Auth.auth().currentUser?.displayName!)!
+        print("**** User Data: \(email)\(firstName)\(displayName)")
+        Constants.structUserData.globalEmail = email
+        Constants.structUserData.globalDisplayName = displayName
         Constants.structUserData.globalUID = (Auth.auth().currentUser?.uid)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         //This is how we get the idToken to send to the server
@@ -60,22 +65,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             }
             //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
-                let _ = self.userData
-                AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
-
-                    if let userStructData = results{
-                        print("*****Passed final if statement")
-                        self.userData = userStructData
-                        print(self.userData)
-                        print("-----------\(self.userData[0])")
-                    }
-                })
+            self.networkingClient.POSTfirstTimeUser(uid: token!, name: self.firstName, username: self.displayName)
+//                let _ = self.userData
+//                AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
+//
+//                    if let userStructData = results{
+//                        print("*****Passed final if statement")
+//                        self.userData = userStructData
+//                        print(self.userData)
+//                        print("-----------\(self.userData[0])")
+//                    }
+//                })
             
         })
         
-        print("**** User Data: \(email)\(displayName)")
-        Constants.structUserData.globalDisplayName = displayName
-        Constants.structUserData.globalEmail = email
     }
 
 //SEARCHBAR
