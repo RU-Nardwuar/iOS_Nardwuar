@@ -16,8 +16,22 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPage()
+        getUserData()
     }
+//API REQUEST FOR ACCOUNT DATA
+    private let networkingClient = NetworkingClient()
     
+    func getUserData(){
+        guard let urlToExecute = URL (string: "https://jsonplaceholder.typicode.com/posts") else {return}
+
+        networkingClient.GETaccountData(urlToExecute) {(json, error) in
+            if let error = error {
+                print("**** ACCOUNT DETAIL: \(error.localizedDescription)")
+            } else if let json = json {
+                print("**** ACCOUNT DETAIL: \(json.description)")
+            }
+        }
+    }
 //SETUP PAGE
     @IBOutlet weak var emptyTableText: UILabel!
     func setupPage(){
@@ -44,9 +58,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 print(error)
                 return
             }
-            print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
+            //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
-                let accountObject = self.userData
+                let _ = self.userData
                 AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
 
                     if let userStructData = results{

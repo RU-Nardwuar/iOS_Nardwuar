@@ -19,10 +19,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         print("**** in viewDidLoad")
         setupUI()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
 //UI SECTION////////////////////////////////////
     @IBOutlet weak var boxView: UIView!
     func setupUI(){
@@ -59,7 +55,9 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         print("**** setting GID uiDelegate and delegate")
         
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+    }
 //ACTION SECTION////////////////////////////////////
 //GOOGLE SIGNIN BUTTON TAPPED
     @IBAction func googleSignInButtonTapped(_ sender: Any) {

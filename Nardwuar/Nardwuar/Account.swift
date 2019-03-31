@@ -21,6 +21,11 @@ Notes
         Artist Page > use all data from json to fill page
     ii.) user tap searchbar and search > hit enter > output array of top 5 artists (name, id) > tap artist
         Artist Page > use all data from json to fill page
+ 
+ //NEW USER
+    //google sign in > POST with id, name, username to backend > now in login page > GET with id > retrieve empty follow array > use search bar hit send uses POST with artistName > tap artist from list > GET with artistName and id > lead to artist page with json data
+//EXISTING USER
+    //google signi in > POST with id, name, username to backend > already exists throws error > GET with id > retrieve artists they follow
 */
 
 //new comment to check branch
@@ -32,25 +37,10 @@ struct AccountDetails {
     let summary:String
     let icon:String
     let artistsFollow:[String]
-    //catch errors
-    enum errorType:Error {
-        case dataPieceIsMissing(String)
-        case invalid(String, Any)
-    }
-    
-    //grabbing specific json data
-    init(json:[String:Any]) throws {
-        print("**** inside json constructor")
-        guard let summary = json["summary"] as? String else {throw errorType.dataPieceIsMissing("summary is missing")}
-        guard let icon = json["icon"] as? String else {throw errorType.dataPieceIsMissing("icon is missing")}
-        self.firstTimeRegistered = true
-        self.summary = summary
-        self.icon = icon
-        self.artistsFollow = ["Drake","Ed Sheeran","Sabrina Claudio","Hozier"]
-    }
+
     //standard path for darksky api
     static let basePath = "https://nardwuar.herokuapp.com"
-    
+      
     //makes unique path refer to users input
     static func registerFirstTimeUser(token:String, completion: @escaping ([AccountDetails]?) -> ()){
         print("*** in register function! with token: \(token)")
