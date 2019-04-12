@@ -27,9 +27,19 @@ struct structUserData {//Global Variables for User
     static var globalPhoto: URL?
     static var globalEmail: String?
     static var globalGivenName: String?
-    static var globalFamilyName: String?
     static var globalDisplayName: String?
     static var globalFollowedArtists:[String] = []
 }
 
+
 }
+
+//struct structUserData {//Global Variables for User
+//    static var globalUID: String?
+//    static var globalPhoto: URL?
+//    static var globalEmail: String?
+//    static var globalGivenName: String?
+//    static var globalFamilyName: String?
+//    static var globalDisplayName: String?
+//    static var globalFollowedArtists:[String] = []
+//}
