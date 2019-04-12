@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 
+
 let ArtistJsonData = """
 {[
 {
@@ -68,7 +69,7 @@ let ArtistJsonData = """
 ]}
 """.data(using: .utf8)!
 
-
+public class Artist{
 struct Welcome: Codable {
     let pitchfork: Pitchfork
     let spotify: Spotify
@@ -118,7 +119,7 @@ struct Spotify: Codable {
     }
 }
 
-func makeJSON(){
+public func makeJSON(){
 let albumOwnerDecoder = JSONDecoder()
 do{
     let albumOwner = try albumOwnerDecoder.decode(Welcome.self, from: ArtistJsonData)
@@ -131,13 +132,13 @@ do{
     print(albumOwner.pitchfork.albums as Any)
     
 } catch{
-    print("Failed to decode JSON data \(error.localizedDescription)")
+    print("**** Failed to decode JSON data \(error.localizedDescription)")
 }
 
 }
 
 
-
+}
 
 
 

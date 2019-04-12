@@ -8,7 +8,7 @@ let ArtistJsonData = """
 {
     "Pitchfork": [
         {
-            "Album description": "The psychic bond between Kanye West and Kid Cudi yields a spacious and melancholy album about brokenness—thoughts are fragmented, relationships are ended, and societal ties are cut.\n",
+            "Album description": "The psychic bond between Kanye West and Kid Cudi yields a spacious and melancholy album about brokenness—thoughts are fragmented, relationships are ended, and societal ties are cut.",
             "Album name": "KIDS SEE GHOSTS",
             "Album score": 7.6,
             "Album year": "2018",
@@ -16,7 +16,7 @@ let ArtistJsonData = """
             "Label": "G.O.O.D. Music / Def Jam"
         },
         {
-            "Album description": "Kanye West’s stint in Wyoming created an album born from chaos for chaos’ sake. Though it can be somewhat fascinating, it is undoubtedly a low point in his career.\n",
+            "Album description": "Kanye West’s stint in Wyoming created an album born from chaos for chaos’ sake. Though it can be somewhat fascinating, it is undoubtedly a low point in his career.",
             "Album name": "ye",
             "Album score": 7.1,
             "Album year": "2018",
@@ -24,7 +24,7 @@ let ArtistJsonData = """
             "Label": "G.O.O.D. Music / Def Jam"
         },
         {
-            "Album description": "Finally, after a protracted and often chaotic roll-out, the new Kanye West album is here. The Life of Pablo is the first Kanye West album that's just an album: No major statements, no reinventions, no zeitgeist wheelie-popping. But a madcap sense of humor animates all his best work, and the new record has a freewheeling energy that is infectious and unique to his discography.\n",
+            "Album description": "Finally, after a protracted and often chaotic roll-out, the new Kanye West album is here. The Life of Pablo is the first Kanye West album that's just an album: No major statements, no reinventions, no zeitgeist wheelie-popping. But a madcap sense of humor animates all his best work, and the new record has a freewheeling energy that is infectious and unique to his discography.",
             "Album name": "The Life Of Pablo",
             "Album score": 9,
             "Album year": "2016",
@@ -101,8 +101,8 @@ struct Spotify: Codable {
 }
 
 let artist = try? JSONDecoder().decode(Artist.self, from: ArtistJsonData)
-print(artist?.pitchfork[0] as Any) //change to artist? after implementation
-print(artist?.spotify as Any)
+print(artist!.pitchfork[0] as Any) //change to artist? after implementation
+print(artist!.spotify as Any)
 
 
 //////////////////////////////////// USER JSON DATA ////////////////////////////////////////////////////////

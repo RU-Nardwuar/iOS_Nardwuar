@@ -31,88 +31,52 @@ Notes
 //new comment to check branch
 import Foundation
 
-struct AccountDetails {
-    let firstTimeRegistered:Bool
-    //variables you can access per day
-    let summary:String
-    let icon:String
-    let artistsFollow:[String]
+let userJSONData = """
+    {
+    "id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImZmMWRmNWExNWI1Y2Y1ODJiNjFhMjEzODVjMGNmYWVkZmRiNmE3NDgiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiWGF2aWVyIExhIFJvc2EiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1EX0FVYW5WaWdZRS9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBQS9BQ0hpM3JlZzN0cGJHbF81T1ppdHBYOWtjZkROT1RpejVBL3M5Ni1jL3Bob3RvLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9uYXJkd3Vhci03ZTZmYyIsImF1ZCI6Im5hcmR3dWFyLTdlNmZjIiwiYXV0aF90aW1lIjoxNTU0MDQyMzcyLCJ1c2VyX2lkIjoiVTY1QkljdW80T1pySWIxMGxaQ2tUdjY1Y0Q0MiIsInN1YiI6IlU2NUJJY3VvNE9ackliMTBsWkNrVHY2NWNENDIiLCJpYXQiOjE1NTQwNDIzNzMsImV4cCI6MTU1NDA0NTk3MywiZW1haWwiOiJsYXJvc2EueGF2aWVyQHN0dWRlbnQuY2NtLmVkdSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA3OTQ0MjE4MjQ5NjE3NDc2MTc3Il0sImVtYWlsIjpbImxhcm9zYS54YXZpZXJAc3R1ZGVudC5jY20uZWR1Il19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.eWk-_FjZexQ0q_5RruM_PenIXUWpZKX4OtnOkbeiEEwAd5J4eeHD7f_f-Xs0siONA4bUGlD9CZkcklS_QqEEw6VmfwX_iCuthc2F6LPEIPDTSdgeuwPK6e3_fmU31kRhyJeIs2qZPs5L__w3yOXB0tVWpT4XCsRFAXX-w00b9cCKTQHohG9o-4TMtmM_sZLHrZsahwqyH5XKeoTfq3_2nggBVwmPGfAc71FJbm_uy5Ag6XWVR01JMpEGRQAbp1w9qtK0eXbIDWlfqCdQXLtt2lizgND43w1t4U4lotkjDCHYHRgpB99etxvbpPtWKkvEGJ4Iw3Jd2ao06FUHenOXUQ",
+        "name":"Xavier",
+        "username":"Xavier La Rosa",
+        "following" : [
+            {
+                "Artist name": "Drake",
+                "Artist id": "123454362341"
+            }
+        ]
+    }
+""".data(using: .utf8)!
 
-    //standard path for darksky api
-    static let basePath = "https://nardwuar.herokuapp.com"
-      
-    //makes unique path refer to users input
-    static func registerFirstTimeUser(token:String, completion: @escaping ([AccountDetails]?) -> ()){
-        print("*** in register function! with token: \(token)")
-        let url = URL(string: "https://nardwuar.herokuapp.com/register")!
-        var request = URLRequest(url: url)
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.httpMethod = "POST"
-        
-        
-        let postString = "\(token)"
-        request.httpBody = postString.data(using: .utf8)
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("***** error=\(error)")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
-                print("**** statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("**** response = \(response)")
-                
-                print("Request has not submitted successfully.\nPlease try after some time")
-            }
-            
-            let responseString = String(data: data, encoding: .utf8)
-//            print("**** responseString = \(responseString)")
-//
-//            print("Request has submitted successfully.\nPlease wait for a while")
-            DispatchQueue.main.async {
-                
-                
-                
-                //print("**** inside dispatch queue where the code will be")
-                
-                
-            }
-            
-        }
-        task.resume()
-    }
+struct User: Codable {
+    let idToken, name, username: String
+    let following: [Following]
     
-    static func getAccountDetails(token:String, completion: @escaping ([AccountDetails]?) -> ()){
-        print("**** inside getAccountDetails function")
-        var url = basePath
-        url = basePath
-        print("**** specific url: \(url)")
-        let request = URLRequest(url: URL(string: url)!)
-        let task = URLSession.shared.dataTask(with: request) { (data:Data?, response:URLResponse?, error:Error?) in
-            var accountArray:[AccountDetails] = []
-            if let data = data {
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-                        if let dailyForecasts = json["daily"] as? [String:Any] { // first directory
-                            if let dailyData = dailyForecasts["data"] as? [[String:Any]] { //second directory
-                                for dataPoint in dailyData {
-//                                  //adding object to accountArray
-//                                    if let accountObject = try? AccountDetails(json: dataPoint) {
-//                                        accountArray.append(accountObject)
-//                                    }
-                                }
-                            }
-                        }
-                    }
-                }catch {
-                    print(error.localizedDescription)
-                }
-                completion(accountArray)
-                print("**** Account Array Completed: \(accountArray)")
-            }
-        }
-        task.resume()
+    enum CodingKeys: String, CodingKey {
+        case idToken = "id_token"
+        case name, username, following
     }
+}
+
+struct Following: Codable {
+    let artistName, artistID: String
     
+    enum CodingKeys: String, CodingKey {
+        case artistName = "Artist name"
+        case artistID = "Artist id"
+    }
+}
+
+public class Account{
+func addDecodedJSONToConstantsStruct(){
+    let user = try? JSONDecoder().decode(User.self, from: userJSONData)
+    print(user!.following[0] as Any)
+    print(user!.idToken as Any)
+    print(user!.name as Any)
+    print(user!.username as Any) // make them user? when implementing
+    print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD BUT BEFORE CHANGING DATA\(Constants.structUserData.globalIdToken)")
+    print(Constants.structUserData.globalName)
+    print(Constants.structUserData.globalUsername)
+    Constants.structUserData.globalIdToken = user!.idToken
+    Constants.structUserData.globalName = user!.name
+    Constants.structUserData.globalUsername = user!.username
+    //Constants.structUserData.globalFollowing = user!.following
+}
 }

@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-class NetworkingClient{
+public class NetworkingClient{
     //https://jsonplaceholder.typicode.com/posts
     
     typealias WebServiceResponse = ([[String: Any]]?, Error?) -> Void
@@ -36,7 +36,7 @@ class NetworkingClient{
     
 //GET REQUESTS
     //get request is working for accountData
-    func GETaccountData(_ uid: URL, completion: @escaping WebServiceResponse){
+    func GETaccountData(_ uid: String){ //4.12.19 commented out ", completion: @escaping WebServiceResponse" in func
         
         let urlString = "https://nardwuar.herokuapp.com/users"
         let url = URL(string: urlString)!
@@ -61,7 +61,7 @@ class NetworkingClient{
             urlRequest = try URLEncoding.default.encode(urlRequest, with: params)
             print(urlRequest)
         } catch{
-            print("**** was not able to retrieve get uesr: \(error.localizedDescription)")
+            print("**** was not able to retrieve get uesr METHOD 2: \(error.localizedDescription)")
         }
         
 //METHOD 3 ... best
@@ -70,12 +70,15 @@ class NetworkingClient{
             case .success(let JSON):
                 print(JSON)
                 //parse your response here
-                
             case .failure(let error):
-                print(error)
+                print("**** was not able to retrieve get user METHOD 3\(error)")
             }
         }
-
+        let account = Account()
+        account.addDecodedJSONToConstantsStruct()
+        print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD WENT TO ACCOUNT STRUCT\(Constants.structUserData.globalIdToken)")
+        print(Constants.structUserData.globalName)
+        print(Constants.structUserData.globalUsername)
 //METHOD 4
 //        Alamofire.request(urlString).validate().responseJSON { response in
 //            if let error = response.error {

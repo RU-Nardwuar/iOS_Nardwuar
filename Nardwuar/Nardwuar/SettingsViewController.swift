@@ -13,7 +13,6 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var postLabel: UIButton!
     @IBAction func postTapped(_ sender: Any) {
     }
-    var userData = AccountDetails.self
     override func viewDidLoad() {
         super.viewDidLoad()
        // makeRegistrationConnection()

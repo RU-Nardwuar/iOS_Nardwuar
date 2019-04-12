@@ -16,21 +16,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPage()
-        getUserData()
     }
 //API REQUEST FOR ACCOUNT DATA
     private let networkingClient = NetworkingClient()
     
-    func getUserData(){
-        guard let urlToExecute = URL (string: "https://jsonplaceholder.typicode.com/posts") else {return}
-
-        networkingClient.GETaccountData(urlToExecute) {(json, error) in
-            if let error = error {
-                print("**** ACCOUNT DETAIL: \(error.localizedDescription)")
-            } else if let json = json {
-                print("**** ACCOUNT DETAIL: \(json.description)")
-            }
-        }
+    func getUserData(token:String){
+        self.networkingClient.GETaccountData(token)
+        //constants should all be set now, you can then use user data for any page!
     }
 //SETUP PAGE
     @IBOutlet weak var emptyTableText: UILabel!
@@ -43,30 +35,25 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         setupTabBar()
     }
 //SETUP USER DATA AND CONNECT TO SERVER
-    var email = ""
-    var firstName = ""
-    var displayName = ""
-    var userIdToken: String?
-    var userData = [AccountDetails]()
     func setUpUserData(){
-        email = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
-        firstName = (GIDSignIn.sharedInstance()?.currentUser.profile.givenName!)!
-        displayName = (Auth.auth().currentUser?.displayName!)!
-        print("**** User Data: \(email)\(firstName)\(displayName)")
-        Constants.structUserData.globalEmail = email
-        Constants.structUserData.globalUsername = displayName
-        Constants.structUserData.globalIdToken = (Auth.auth().currentUser?.uid)!
+        //set misc constants
+        Constants.structUserData.globalEmail = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
-        //This is how we get the idToken to send to the server
+        
+
+        //send token, firstname, displayname to post request
+        //call getUserData function with token
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
             if let error = error {
                 print(error)
                 return
             }
             //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
-            self.userIdToken = token
-            self.networkingClient.POSTfirstTimeUser(uid: token!, name: self.firstName, username: self.displayName)
-            self.networkingClient.GETaccountData(<#T##url: URL##URL#>, completion: <#T##NetworkingClient.WebServiceResponse##NetworkingClient.WebServiceResponse##([[String : Any]]?, Error?) -> Void#>)
+            let userIdToken = token
+            let firstName = (GIDSignIn.sharedInstance()?.currentUser.profile.givenName!)!
+            let displayName = (Auth.auth().currentUser?.displayName!)!
+            self.networkingClient.POSTfirstTimeUser(uid: userIdToken!, name: firstName, username: displayName)
+            self.getUserData(token: token!)
         })
         
     }
