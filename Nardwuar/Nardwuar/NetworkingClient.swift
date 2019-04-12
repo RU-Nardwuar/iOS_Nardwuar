@@ -39,16 +39,19 @@ class NetworkingClient{
     func GETaccountData(_ uid: URL, completion: @escaping WebServiceResponse){
         
         let urlString = "https://nardwuar.herokuapp.com/users"
+        let url = URL(string: urlString)!
+        
+//METHOD 1
 //        let json = "{\"id_token\":\"\(uid)\"}"
 //        print("**** json to pass over as string : \(json)")
-        let url = URL(string: urlString)!
 //        let jsonData = json.data(using: .utf8, allowLossyConversion: false)!
 //        print("**** json to pass over as json : \(jsonData)")
 //        var request = URLRequest(url: url)
 //        request.httpMethod = HTTPMethod.get.rawValue
 //        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
 //        request.httpBody = jsonData
-        
+
+//METHOD 2 ... second best
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = HTTPMethod.get.rawValue
         let params: Parameters = [
@@ -61,15 +64,28 @@ class NetworkingClient{
             print("**** was not able to retrieve get uesr: \(error.localizedDescription)")
         }
         
-        Alamofire.request(urlString).validate().responseJSON { response in
-            if let error = response.error {
-                completion(nil, error)
-            } else if let jsonArray = response.result.value as? [[String: Any]] {
-                completion(jsonArray, nil)
-            } else if let jsonDict = response.result.value as? [String : Any] {
-                completion([jsonDict], nil)
+//METHOD 3 ... best
+        Alamofire.request(url, method: .get, parameters: params, encoding: JSONEncoding.default).responseJSON { (response) in
+            switch response.result {
+            case .success(let JSON):
+                print(JSON)
+                //parse your response here
+                
+            case .failure(let error):
+                print(error)
             }
         }
+
+//METHOD 4
+//        Alamofire.request(urlString).validate().responseJSON { response in
+//            if let error = response.error {
+//                completion(nil, error)
+//            } else if let jsonArray = response.result.value as? [[String: Any]] {
+//                completion(jsonArray, nil)
+//            } else if let jsonDict = response.result.value as? [String : Any] {
+//                completion([jsonDict], nil)
+//            }
+//        }
     }
     
     //get request is working for artistData
