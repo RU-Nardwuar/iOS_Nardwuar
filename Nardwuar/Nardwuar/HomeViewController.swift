@@ -17,6 +17,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         super.viewDidLoad()
         setupPage()
     }
+//SETUP PAGE
+    @IBOutlet weak var emptyTableText: UILabel!
+    func setupPage(){
+        self.view.backgroundColor = Constants.DefaultUI.primaryColor
+        emptyTableText.textColor = Constants.DefaultUI.textColor
+        
+        setUpUserData()
+        setupSearchBar()
+        setupTableView()
+        setupTabBar()
+    }
 //API REQUEST FOR ACCOUNT DATA
     private let networkingClient = NetworkingClient()
     
@@ -24,23 +35,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         self.networkingClient.GETaccountData(token)
         //constants should all be set now, you can then use user data for any page!
     }
-//SETUP PAGE
-    @IBOutlet weak var emptyTableText: UILabel!
-    func setupPage(){
-        self.view.backgroundColor = Constants.DefaultUI.primaryColor
-        emptyTableText.textColor = Constants.DefaultUI.textColor
-        setUpUserData()
-        setupSearchBar()
-        setupTableView()
-        setupTabBar()
-    }
 //SETUP USER DATA AND CONNECT TO SERVER
     func setUpUserData(){
         //set misc constants
         Constants.structUserData.globalEmail = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         
-
+        
         //send token, firstname, displayname to post request
         //call getUserData function with token
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
@@ -57,7 +58,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         })
         
     }
-
 //SEARCHBAR
     let searchController = UISearchController(searchResultsController: nil)
     func setupSearchBar(){//SEARCHBAR
