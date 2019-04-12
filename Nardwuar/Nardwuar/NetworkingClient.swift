@@ -16,7 +16,7 @@ class NetworkingClient{
 //POST REQUESTS
     func POSTfirstTimeUser(uid:String, name:String, username:String){//_ url: URL, uid:String
         //var request = URLRequest(url: URL(string: "https://nardwuar.herokuapp.com/register")!)
-        let urlString = "https://nardwuar.herokuapp.com/register"
+        let urlString = "https://nardwuar.herokuapp.com/users"
         let json = "{\"id_token\":\"\(uid)\",\"name\":\"\(name)\",\"username\":\"\(username)\"}"
         print("**** json to pass over as string : \(json)")
         let url = URL(string: urlString)!

@@ -66,17 +66,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
             self.networkingClient.POSTfirstTimeUser(uid: token!, name: self.firstName, username: self.displayName)
-//                let _ = self.userData
-//                AccountDetails.registerFirstTimeUser(token: token!, completion: { (results:[AccountDetails]?) in
-//
-//                    if let userStructData = results{
-//                        print("*****Passed final if statement")
-//                        self.userData = userStructData
-//                        print(self.userData)
-//                        print("-----------\(self.userData[0])")
-//                    }
-//                })
-            
         })
         
     }
