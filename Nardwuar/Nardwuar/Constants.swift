@@ -23,12 +23,13 @@ enum DefaultUI {
 }
 
 struct structUserData {//Global Variables for User
-    static var globalUID: String?
+    static var globalIdToken: String?
+    static var globalName: String?
+    static var globalUsername: String?
+    static var globalFollowing:[String] = []
+    
     static var globalPhoto: URL?
     static var globalEmail: String?
-    static var globalGivenName: String?
-    static var globalDisplayName: String?
-    static var globalFollowedArtists:[String] = []
 }
 
 

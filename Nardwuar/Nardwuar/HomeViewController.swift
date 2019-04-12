@@ -54,8 +54,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         displayName = (Auth.auth().currentUser?.displayName!)!
         print("**** User Data: \(email)\(firstName)\(displayName)")
         Constants.structUserData.globalEmail = email
-        Constants.structUserData.globalDisplayName = displayName
-        Constants.structUserData.globalUID = (Auth.auth().currentUser?.uid)!
+        Constants.structUserData.globalUsername = displayName
+        Constants.structUserData.globalIdToken = (Auth.auth().currentUser?.uid)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         //This is how we get the idToken to send to the server
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
@@ -66,6 +66,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             //print("TOKEN TO SEND TO BACKEND:\(token)") //connect with backend in here
             self.userIdToken = token
             self.networkingClient.POSTfirstTimeUser(uid: token!, name: self.firstName, username: self.displayName)
+            self.networkingClient.GETaccountData(<#T##url: URL##URL#>, completion: <#T##NetworkingClient.WebServiceResponse##NetworkingClient.WebServiceResponse##([[String : Any]]?, Error?) -> Void#>)
         })
         
     }
@@ -88,7 +89,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func setupTableView(){
         tableView.delegate = self
         tableView.dataSource = self
-        if(Constants.structUserData.globalFollowedArtists.count == 0){
+        if(Constants.structUserData.globalFollowing.count == 0){
             tableView.isHidden = true
         }
     }

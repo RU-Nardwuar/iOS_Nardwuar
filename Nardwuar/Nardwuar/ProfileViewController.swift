@@ -86,7 +86,7 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
     func setupNavigationButtons(){
         
         let fullName = UILabel()
-        fullName.text = Constants.structUserData.globalDisplayName
+        fullName.text = Constants.structUserData.globalUsername
         navigationItem.title = fullName.text
     }
     func setupProfilePicAndQuickInfo(){
