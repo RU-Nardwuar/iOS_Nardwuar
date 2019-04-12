@@ -7,8 +7,7 @@ import Foundation
 let ArtistJsonData = """
 {[
 {
-   "Pitchfork": {
-       "Albums": [
+   "Pitchfork": [
            {
                "Album name": "KIDS SEE GHOSTS",
                "Album description": "The psychic bond between Kanye West and Kid Cudi yields a spacious and melancholy album about brokenness—thoughts are fragmented, relationships are ended, and societal ties are cut.\n",
@@ -33,8 +32,7 @@ let ArtistJsonData = """
                "Best New Music": false,
                "Label": "G.O.O.D. Music / Def Jam"
            }
-       ]
-   },
+   ],
    "Spotify": {
        "Albums": [
        "KIDS SEE GHOSTS",
@@ -66,7 +64,7 @@ let ArtistJsonData = """
 import Foundation
 
 struct Artist: Codable {
-    let pitchfork: Pitchfork
+    let pitchfork: [Pitchfork]
     let spotify: Spotify
     
     enum CodingKeys: String, CodingKey {
@@ -76,14 +74,6 @@ struct Artist: Codable {
 }
 
 struct Pitchfork: Codable {
-    let albums: [Album]
-    
-    enum CodingKeys: String, CodingKey {
-        case albums = "Albums"
-    }
-}
-
-struct Album: Codable {
     let albumName, albumDescription: String
     let albumScore: Double
     let albumYear: String
