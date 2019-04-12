@@ -10,68 +10,26 @@ import UIKit
 import Alamofire
 
 class ProfileViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    @IBOutlet weak var profilePic: UIImageView!
-    @IBOutlet weak var quickInfoHeader: UILabel!
-    @IBOutlet weak var quickInfo: UILabel!
-    @IBOutlet weak var backgroundImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        setupNavigationButtons()
+        getUserData(token: Constants.structUserData.globalIdToken!)
+        downloadImage(from: Constants.structUserData.globalPhoto!)
         setupProfilePicAndQuickInfo()
-        
-        //testing api request with trivia
-        let sendMe = "amount=10&category=12&difficulty=medium&type=multiple"
-        testGetRequestAPICall(artistID: sendMe)
+        setupNavigationBar()
+        setupTableView()
     }
-    
-    func testGetRequestAPICall(artistID: String)  {
-        print("****IN GET REQUEST")
-        let todosEndpoint: String = "https://opentdb.com/api.php?" + "parameterName=\(artistID)"
-        
-        Alamofire.request(todosEndpoint, method: .get, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                debugPrint(response)
-                
-                if let data = response.result.value{
-                    // Response type-1
-                    if  (data as? [[String : AnyObject]]) != nil{
-                        print("data_1: \(data)")
-                    }
-                    // Response type-2
-                    if  (data as? [String : AnyObject]) != nil{
-                        print("data_2: \(data)")
-                    }
-                }
-            print("**** \(response.data)")
-        }
+//GET USER DATA
+    private let networkingClient = NetworkingClient()
+    func getUserData(token:String){
+        self.networkingClient.GETaccountData(token)
+        //constants should all be set now, you can then use user data for any page!
+        print("**** ProfileView, updated user info to put into UI: ")
+        print(Constants.structUserData.globalIdToken as Any)
+        print(Constants.structUserData.globalName as Any)
+        print(Constants.structUserData.globalUsername as Any)
     }
-    
-    func getRequestAPICall(artistID: String)  {
-        
-        let todosEndpoint: String = "https://nardwuar.herokuapp.com/Artist/" + "parameterName=\(artistID)"
-        
-        Alamofire.request(todosEndpoint, method: .get, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                debugPrint(response)
-                
-                if let data = response.result.value{
-                    // Response type-1
-                    if  (data as? [[String : AnyObject]]) != nil{
-                        print("data_1: \(data)")
-                    }
-                    // Response type-2
-                    if  (data as? [String : AnyObject]) != nil{
-                        print("data_2: \(data)")
-                    }
-                }
-        }
-    }
-    
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
+//GET PROFILE PIC
     func downloadImage(from url: URL) {
         print("Download Started")
         getData(from: url) { data, response, error in
@@ -83,30 +41,34 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
     }
-    func setupNavigationButtons(){
-        
-        let fullName = UILabel()
-        fullName.text = Constants.structUserData.globalUsername
-        navigationItem.title = fullName.text
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
+//SETUP PICTURE STYLE AND QUICK INFO
+    @IBOutlet weak var profilePic: UIImageView!
+    @IBOutlet weak var quickInfoHeader: UILabel!
+    @IBOutlet weak var quickInfo: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
     func setupProfilePicAndQuickInfo(){
         profilePic.layer.borderWidth = 0.5
         profilePic.layer.masksToBounds = false
-        //profilePic.layer.borderColor = UIColor.black.cgColor
         profilePic.layer.shadowColor = UIColor.black.cgColor
         profilePic.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
         profilePic.layer.shadowRadius = 5.0
         profilePic.layer.shadowOpacity = 0.5
         profilePic.layer.cornerRadius = profilePic.frame.height/2
         profilePic.clipsToBounds = true
-        downloadImage(from: Constants.structUserData.globalPhoto!)
         quickInfoHeader.text = "Following 35 Artists"
         quickInfo.text = "Likes Jazz, Country, and Pop music"
-        
         backgroundImage.alpha = 0.85
-        
-
     }
+//SETUP NAV BAR
+    func setupNavigationBar(){
+        let fullName = UILabel()
+        fullName.text = Constants.structUserData.globalUsername
+        navigationItem.title = fullName.text
+    }
+//TABLIEVIEW
     @IBOutlet weak var tableView: UITableView!
     func setupTableView(){
         tableView.delegate = self

@@ -143,3 +143,38 @@ print(user!.following[0] as Any)
 print(user!.idToken as Any)
 print(user!.name as Any)
 print(user!.username as Any) // make them user? when implementing
+
+
+let userJSONData = """
+[
+    "Kanye West",
+    "Young Jeezy & Kanye",
+    "Kanye West for KanMan Productions, Inc. and Krazy Kat Catalogue, Inc.",
+    "Kanye Omari West",
+    "Kanye West prod. B.o.B"
+]
+""".data(using: .utf8)!
+
+struct User: Codable {
+    let idToken, name, username: String
+    let following: [Following]
+    
+    enum CodingKeys: String, CodingKey {
+        case idToken = "id_token"
+        case name, username, following
+    }
+}
+
+struct Following: Codable {
+    let artistName, artistID: String
+    
+    enum CodingKeys: String, CodingKey {
+        case artistName = "Artist name"
+        case artistID = "Artist id"
+    }
+}
+let user = try? JSONDecoder().decode(User.self, from: userJSONData)
+print(user!.following[0] as Any)
+print(user!.idToken as Any)
+print(user!.name as Any)
+print(user!.username as Any) // make them user? when implementing

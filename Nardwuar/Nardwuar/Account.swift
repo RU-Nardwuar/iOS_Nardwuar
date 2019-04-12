@@ -71,9 +71,9 @@ func addDecodedJSONToConstantsStruct(){
     print(user!.idToken as Any)
     print(user!.name as Any)
     print(user!.username as Any) // make them user? when implementing
-    print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD BUT BEFORE CHANGING DATA\(Constants.structUserData.globalIdToken)")
-    print(Constants.structUserData.globalName)
-    print(Constants.structUserData.globalUsername)
+    print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD BUT BEFORE CHANGING DATA\n\(String(describing: Constants.structUserData.globalIdToken))")
+    print(Constants.structUserData.globalName as Any)
+    print(Constants.structUserData.globalUsername as Any)
     Constants.structUserData.globalIdToken = user!.idToken
     Constants.structUserData.globalName = user!.name
     Constants.structUserData.globalUsername = user!.username
