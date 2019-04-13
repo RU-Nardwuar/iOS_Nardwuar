@@ -23,3 +23,4 @@ Directions:
 - To view assets of all images for app > Nardwaur > Nardwaur > Assets.xcassets
 
 ![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Demos/version3.png)
+![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Design/MockUp/MockUp0%402x.png)
