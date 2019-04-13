@@ -69,73 +69,74 @@ let ArtistJsonData = """
 ]}
 """.data(using: .utf8)!
 
-public class Artist{
-struct Welcome: Codable {
-    let pitchfork: Pitchfork
-    let spotify: Spotify
+public class Artist {
     
-    enum CodingKeys: String, CodingKey {
-        case pitchfork = "Pitchfork"
-        case spotify = "Spotify"
+    struct Artist: Codable {
+        let pitchfork: Pitchfork
+        let spotify: Spotify
+        
+        enum CodingKeys: String, CodingKey {
+            case pitchfork = "Pitchfork"
+            case spotify = "Spotify"
+        }
     }
-}
 
-struct Pitchfork: Codable {
-    let albums: [Album]
-    
-    enum CodingKeys: String, CodingKey {
-        case albums = "Albums"
+    struct Pitchfork: Codable {
+        let albums: [Album]
+        
+        enum CodingKeys: String, CodingKey {
+            case albums = "Albums"
+        }
     }
-}
 
-struct Album: Codable {
-    let albumName, albumDescription: String
-    let albumScore: Double
-    let albumYear: String
-    let bestNewMusic: Bool
-    let label: String
-    
-    enum CodingKeys: String, CodingKey {
-        case albumName = "Album name"
-        case albumDescription = "Album description"
-        case albumScore = "Album score"
-        case albumYear = "Album year"
-        case bestNewMusic = "Best New Music"
-        case label = "Label"
+    struct Album: Codable {
+        let albumName, albumDescription: String
+        let albumScore: Double
+        let albumYear: String
+        let bestNewMusic: Bool
+        let label: String
+        
+        enum CodingKeys: String, CodingKey {
+            case albumName = "Album name"
+            case albumDescription = "Album description"
+            case albumScore = "Album score"
+            case albumYear = "Album year"
+            case bestNewMusic = "Best New Music"
+            case label = "Label"
+        }
     }
-}
 
-struct Spotify: Codable {
-    let albums: [String]
-    let artistName: String
-    let genres: [String]
-    let totalNumberOfSpotifyFollowers: Int
-    
-    enum CodingKeys: String, CodingKey {
-        case albums = "Albums"
-        case artistName = "Artist Name"
-        case genres = "Genres"
-        case totalNumberOfSpotifyFollowers = "Total Number of Spotify Followers"
+    struct Spotify: Codable {
+        let albums: [String]
+        let artistName: String
+        let genres: [String]
+        let totalNumberOfSpotifyFollowers: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case albums = "Albums"
+            case artistName = "Artist Name"
+            case genres = "Genres"
+            case totalNumberOfSpotifyFollowers = "Total Number of Spotify Followers"
+        }
     }
-}
 
-public func makeJSON(){
-let albumOwnerDecoder = JSONDecoder()
-do{
-    let albumOwner = try albumOwnerDecoder.decode(Welcome.self, from: ArtistJsonData)
-    
-    print(albumOwner.spotify.albums)
-    print(albumOwner.spotify.artistName)
-    print(albumOwner.spotify.genres)
-    print(albumOwner.spotify.totalNumberOfSpotifyFollowers)
-    
-    print(albumOwner.pitchfork.albums as Any)
-    
-} catch{
-    print("**** Failed to decode JSON data \(error.localizedDescription)")
-}
+    public func makeJSON(){
+    let albumOwnerDecoder = JSONDecoder()
+    do{
+        let albumOwner = try albumOwnerDecoder.decode(Artist.self, from: ArtistJsonData)
+        
+        print(albumOwner.spotify.albums)
+        print(albumOwner.spotify.artistName)
+        print(albumOwner.spotify.genres)
+        print(albumOwner.spotify.totalNumberOfSpotifyFollowers)
+        
+        print(albumOwner.pitchfork.albums as Any)
+        
+    } catch{
+        print("**** Failed to decode JSON data \(error.localizedDescription)")
+    }
 
-}
+    }
 
 
 }

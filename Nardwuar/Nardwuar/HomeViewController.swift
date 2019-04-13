@@ -126,6 +126,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
 //SEGUES FOR SEARCHBAR AND TAB BAR BUTTONS
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("in searchbar clicked")
+        networkingClient.GETfirstFiveArtistData(searchBar.text!)
         searchBar.resignFirstResponder()
         performSegue(withIdentifier: "fromHomeToArtist", sender: self)
     }

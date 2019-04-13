@@ -10,37 +10,25 @@ import Foundation
 import UIKit
 
 public class Constants{
-enum DefaultUI {
-    
-    //cyan color
-    static let primaryColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.0) //cyan
-    //cyan color
-    static let primaryColorOpacity = UIColor(red:0.77, green:1.00, blue:0.98, alpha:0.5) //cyan
-    //green color
-    static let secondaryColor = UIColor(red:0.03, green:0.75, blue:0.72, alpha:1.0) //darker cyan
-    //grey color
-    static let textColor = UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0) //grey
+    enum DefaultUI {
+        
+        //cyan color
+        static let primaryColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.0) //cyan
+        //cyan color
+        static let primaryColorOpacity = UIColor(red:0.77, green:1.00, blue:0.98, alpha:0.5) //cyan
+        //green color
+        static let secondaryColor = UIColor(red:0.03, green:0.75, blue:0.72, alpha:1.0) //darker cyan
+        //grey color
+        static let textColor = UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0) //grey
+    }
+
+    struct structUserData {//Global Variables for User
+        static var globalIdToken: String?
+        static var globalName: String?
+        static var globalUsername: String?
+        static var globalFollowing:[String] = []
+        
+        static var globalPhoto: URL?
+        static var globalEmail: String?
+    }
 }
-
-struct structUserData {//Global Variables for User
-    static var globalIdToken: String?
-    static var globalName: String?
-    static var globalUsername: String?
-    static var globalFollowing:[String] = []
-    
-    static var globalPhoto: URL?
-    static var globalEmail: String?
-}
-
-
-}
-
-//struct structUserData {//Global Variables for User
-//    static var globalUID: String?
-//    static var globalPhoto: URL?
-//    static var globalEmail: String?
-//    static var globalGivenName: String?
-//    static var globalFamilyName: String?
-//    static var globalDisplayName: String?
-//    static var globalFollowedArtists:[String] = []
-//}

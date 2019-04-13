@@ -6,29 +6,6 @@
 //  Copyright © 2019 Xavier La Rosa. All rights reserved.
 //
 
-/*
-Notes
- James' routes:
-    1.) post request to register user
-    2.) request for user information (artist array)
-    3.) request for artist array
-    4.) post request to follow an artist
- 
- Login > user has array of all artists they follow (name, id)
- 
- Hompage > tableview of array of all artists they follow
-    i.) user tap on artist they follow > send id token to route > Artist Page
-        Artist Page > use all data from json to fill page
-    ii.) user tap searchbar and search > hit enter > output array of top 5 artists (name, id) > tap artist
-        Artist Page > use all data from json to fill page
- 
- //NEW USER
-    //google sign in > POST with id, name, username to backend > now in login page > GET with id > retrieve empty follow array > use search bar hit send uses POST with artistName > tap artist from list > GET with artistName and id > lead to artist page with json data
-//EXISTING USER
-    //google signi in > POST with id, name, username to backend > already exists throws error > GET with id > retrieve artists they follow
-*/
-
-//new comment to check branch
 import Foundation
 
 let userJSONData = """
@@ -65,7 +42,7 @@ struct Following: Codable {
 }
 
 public class Account{
-func addDecodedJSONToConstantsStruct(){
+func addDecodedJSONToConstantsStruct(){ //change this to take in json once connections are good
     let user = try? JSONDecoder().decode(User.self, from: userJSONData)
     print(user!.following[0] as Any)
     print(user!.idToken as Any)
