@@ -5,7 +5,18 @@
 //  Created by Xavier La Rosa on 3/13/19.
 //  Copyright © 2019 Xavier La Rosa. All rights reserved.
 //
-
+/*
+    GOALS as of 4.12.19
+    - get user/<key>
+    - put user/<key> with body
+    - get artist-info/key
+    - get artist-info?query="name"
+    - design artist page
+    - design home page
+    - code home page, artist page, then profile page
+    - make settings page under construction
+ 
+ */
 import Foundation
 
 let userJSONData = """
