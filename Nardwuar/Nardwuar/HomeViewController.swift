@@ -236,7 +236,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         } else if route == "artist"{
             for _ in 0 ..< 5 {
                 myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/search?query=\(artistName))"
+                let urlString = "https://nardwuar.herokuapp.com/search?query=\(artistName)"
                 print("**** Home Controller: get artist query link... \(urlString)")
                 guard let url = URL(string: urlString) else { return }
                 URLSession.shared.dataTask(with: url) { (data, _, err) in
