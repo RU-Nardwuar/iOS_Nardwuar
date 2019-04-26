@@ -11,32 +11,24 @@ import Firebase
 import GoogleSignIn
 import Alamofire
 
-
-
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
-//Debug function
-    func debug(){
-        print("**** Home Controller: DEBUG \(String(describing: currentUser?.followedArtists))")
-    }
-//Setup Tablview
-    func setupTableView(){
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
 //Load page
     override func viewDidLoad() {
-        print("**** Home Controller: loading page")
+        print("**** Home Controller: viewDidLoad(), loading page")
         super.viewDidLoad()
         assignUserFromGoogle()
     }
     override func viewWillAppear(_ animated: Bool) {
-        tappedArtistID = ""
+        print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
+        artistID = ""
+        artistName = ""
     }
-//Get user from google, send to token to backend function
+//Post User / Get User
     func assignUserFromGoogle(){
         Constants.structUserData.globalEmail = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
         
+        print("**** Home Controller: assignUserFromGoogle(), trying to register user/get user info")
         Auth.auth().currentUser?.getIDTokenForcingRefresh(true, completion: { (token, error) in
             if let error = error {
                 print("**** Home Controller: could not get user token from google\(error)")
@@ -49,19 +41,38 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 //let displayName = (Auth.auth().currentUser?.displayName!)!
                 ////************ get correct arguments for post request
                 //self.networkingClient.POSTfirstTimeUser(uid: self.userToken, name: firstName, username: displayName)
-                self.startDispatch(route: "user")
+                self.startDispatch(route: "user") //after finish calls setupTableView() and setupUI()
             }
         })
     }
-//SEGUES FOR SEARCHBAR AND TAB BAR BUTTONS
-    var artistName = "Kanye West"
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        print("**** Home Controller: in searchbar clicked ... \(searchBar.text!)")
-        artistName = searchBar.text!
-        print("**** Home Controller: artistName ... \(artistName)")
-        print("**** Home Controller: starting dispatch with artist route")
-        startDispatch(route: "artist")
-        searchBar.resignFirstResponder()
+//Setup Tableview
+    @IBOutlet weak var tableView: UITableView!
+    func setupTableView(){
+        print("**** Home Controller: setupTableView(), setting table delegates")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        cell.textLabel?.text = currentUser?.followedArtists[indexPath.row].artistName
+        cell.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
+        cell.textLabel?.textColor = UIColor.white
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.contentView.backgroundColor = UIColor.clear
+        
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (currentUser?.followedArtists.count == 0) {
+            return 0.0
+        }
+        return 80.0
+    }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (currentUser?.followedArtists.count)!
     }
 //Setup UI
     @IBOutlet weak var emptyTableText: UILabel!
@@ -92,57 +103,44 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         }
         tableView.backgroundColor = UIColor.clear
     }
- 
-//Tableview
-    @IBOutlet weak var tableView: UITableView!
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
-        cell.textLabel?.text = currentUser?.followedArtists[indexPath.row].artistName
-        cell.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        cell.textLabel?.textColor = UIColor.white
-        cell.layer.backgroundColor = UIColor.clear.cgColor
-        cell.contentView.backgroundColor = UIColor.clear
 
-        return cell
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (currentUser?.followedArtists.count == 0) {
-            return 0.0
-        }
-        return 80.0
-    }
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (currentUser?.followedArtists.count)!
+//Two ways to get to Artist Page, case i) user -> searchbar ... case ii) user -> tableview cell
+    var artistID:String?
+    var artistName:String?
+    var userToken:String?
+    var currentUser: HomeViewController.UserInfo?
+    var artistList: HomeViewController.ArtistQueryList?
+    //case i
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
+        print("**** Home Controller: in searchbar clicked ... \(searchBar.text!)")
+        artistName = searchBar.text!
+        print("**** Home Controller: artistName ... \(String(describing: artistName))")
+        print("**** Home Controller: starting dispatch with artist route")
+        startDispatch(route: "artist") //after finish calls setQuery()
+        searchBar.resignFirstResponder()
     }
     
-//Cell or view button tapped
-    var tappedArtistID = ""
+    //case ii
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        setQuery(artistID: (currentUser?.followedArtists[indexPath.row].artistID)!)
+        setQuery(ID: (currentUser?.followedArtists[indexPath.row].artistID)!)
     }
-    func setQuery(artistID:String){
-        tappedArtistID = artistID
-        print("**** Home Controller: setQuery() with tappedArtistID ... \(tappedArtistID)")
+    func setQuery(ID:String){
+        artistID = ID
+        print("**** Home Controller: setQuery() with tappedArtistID ... \(String(describing: artistID))")
         performSegue(withIdentifier: "fromHomeToArtist", sender: self)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("**** Home Controller: preparing segue for artist page")
         if segue.identifier == "fromHomeToArtist"{
             guard let destination = segue.destination as? ArtistViewController else {return}
-            destination.artistID = tappedArtistID
+            destination.artistID = artistID!
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
         }
     }
 
 //Segue Page
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        handleLogoutSegue()
-    }
-    func handleLogoutSegue(){
-        print("Logout segue method")
+        print("**** Home Controller: logout button tapped")
         GIDSignIn.sharedInstance().signOut()
         let firebaseAuth = Auth.auth()
         do {
@@ -150,17 +148,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         } catch let signOutError as NSError {
             print ("Error signing out: %@", signOutError)
         }
+        print("**** Home Controller: signed out of google, performing segue to login page")
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
     func handleProfileSegue(){
-        print("Profile segue method")
+        print("**** Home Controller: performing segue to profile page")
         performSegue(withIdentifier: "fromHomeToProfile", sender: self)
     }
     func handleSettingSegue(){
-        print("Setting segue method")
+        print("**** Home Controller: performing segue to settings page")
         performSegue(withIdentifier: "fromHomeToSetting", sender: self)
     }
-    
 //Struct for user info
     struct UserInfo: Codable {
         let followedArtists: [FollowedArtist]
@@ -197,16 +195,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     }
 
 //Get method
-    var userToken = "Default"
-    var currentUser: HomeViewController.UserInfo?
-    var artistList: HomeViewController.ArtistQueryList?
     func startDispatch(route:String){
         let myGroup = DispatchGroup()
         
         if route == "user"{
             for _ in 0 ..< 5 {
                 myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
+                let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(String(describing: userToken))"
                 guard let url = URL(string: urlString) else { return }
                 URLSession.shared.dataTask(with: url) { (data, _, err) in
                     DispatchQueue.main.async {
@@ -232,14 +227,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             
             myGroup.notify(queue: .main) {
                 print("Finished all requests.")
-                self.debug()
                 self.setupTableView()
                 self.setupUI()
             }
         } else if route == "artist"{
             for _ in 0 ..< 5 {
                 myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/search?query=\(artistName)"
+                let urlString = "https://nardwuar.herokuapp.com/search?query=\(String(describing: artistName))"
                 print("**** Home Controller: get artist query link... \(urlString)")
                 guard let url = URL(string: urlString) else { return }
                 URLSession.shared.dataTask(with: url) { (data, _, err) in
@@ -256,7 +250,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                             self.artistList = try decoder.decode(ArtistQueryList.self, from: data)
                             print("**** CURRENT ARTIST INFO: \(String(describing: self.artistList!.artistQueryList[0]))")
                             //self.tableView.reloadData()
-                            self.tappedArtistID = self.artistList!.artistQueryList[0].id
+                            self.artistID = self.artistList!.artistQueryList[0].id
                         } catch let jsonErr {
                             print("Failed to decode:", jsonErr)
                         }
@@ -267,8 +261,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             
             myGroup.notify(queue: .main) {
                 print("Finished all requests.")
-                print("**** Home Controller: artistID sent to setQuery() ... \(self.tappedArtistID)")
-                self.setQuery(artistID: self.tappedArtistID)
+                print("**** Home Controller: artistID sent to setQuery() ... \(String(describing: self.artistID))")
+                self.setQuery(ID: self.artistID!)
             }
         }
     }
