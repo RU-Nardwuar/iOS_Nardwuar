@@ -20,51 +20,108 @@
 import Foundation
 
 let userJSONData = """
+[
     {
-    "id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImZmMWRmNWExNWI1Y2Y1ODJiNjFhMjEzODVjMGNmYWVkZmRiNmE3NDgiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiWGF2aWVyIExhIFJvc2EiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1EX0FVYW5WaWdZRS9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBQS9BQ0hpM3JlZzN0cGJHbF81T1ppdHBYOWtjZkROT1RpejVBL3M5Ni1jL3Bob3RvLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9uYXJkd3Vhci03ZTZmYyIsImF1ZCI6Im5hcmR3dWFyLTdlNmZjIiwiYXV0aF90aW1lIjoxNTU0MDQyMzcyLCJ1c2VyX2lkIjoiVTY1QkljdW80T1pySWIxMGxaQ2tUdjY1Y0Q0MiIsInN1YiI6IlU2NUJJY3VvNE9ackliMTBsWkNrVHY2NWNENDIiLCJpYXQiOjE1NTQwNDIzNzMsImV4cCI6MTU1NDA0NTk3MywiZW1haWwiOiJsYXJvc2EueGF2aWVyQHN0dWRlbnQuY2NtLmVkdSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTA3OTQ0MjE4MjQ5NjE3NDc2MTc3Il0sImVtYWlsIjpbImxhcm9zYS54YXZpZXJAc3R1ZGVudC5jY20uZWR1Il19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.eWk-_FjZexQ0q_5RruM_PenIXUWpZKX4OtnOkbeiEEwAd5J4eeHD7f_f-Xs0siONA4bUGlD9CZkcklS_QqEEw6VmfwX_iCuthc2F6LPEIPDTSdgeuwPK6e3_fmU31kRhyJeIs2qZPs5L__w3yOXB0tVWpT4XCsRFAXX-w00b9cCKTQHohG9o-4TMtmM_sZLHrZsahwqyH5XKeoTfq3_2nggBVwmPGfAc71FJbm_uy5Ag6XWVR01JMpEGRQAbp1w9qtK0eXbIDWlfqCdQXLtt2lizgND43w1t4U4lotkjDCHYHRgpB99etxvbpPtWKkvEGJ4Iw3Jd2ao06FUHenOXUQ",
-        "name":"Xavier",
-        "username":"Xavier La Rosa",
-        "following" : [
+        "FollowedArtists": [
             {
-                "Artist name": "Drake",
-                "Artist id": "123454362341"
+                "artist_id": "7rCpeQgJIrKKo6gubCkMDK",
+                "artist_name": "Young Jeezy & Kanye"
+            },
+            {
+                "artist_id": "20wkVLutqVOYrc0kxFs7rA",
+                "artist_name": "Daniel Caesar"
+            },
+            {
+                "artist_id": "7n2wHs1TKAczGzO7Dd2rGr",
+                "artist_name": "Shawn Mendes"
+            },
+            {
+                "artist_id": "3fMbdgg4jU18AjLCKBhRSm",
+                "artist_name": "Michael Jackson"
+            },
+            {
+                "artist_id": "74ASZWbe4lXaubB36ztrGX",
+                "artist_name": "Bob Dylan"
+            },
+            {
+                "artist_id": "66CXWjxzNUsdJxJ2JdwvnR",
+                "artist_name": "Ariana Grande"
+            },
+            {
+                "artist_id": "3gMaNLQm7D9MornNILzdSl",
+                "artist_name": "Lionel Richie"
+            },
+            {
+                "artist_id": "5IcR3N7QB1j6KBL8eImZ8m",
+                "artist_name": "ScHoolboy Q"
+            },
+            {
+                "artist_id": "13ubrt8QOOCPljQ2FL1Kca",
+                "artist_name": "A$AP Rocky"
+            },
+            {
+                "artist_id": "7yO4IdJjCEPz7YgZMe25iS",
+                "artist_name": "A$AP Mob"
+            },
+            {
+                "artist_id": "30DhU7BDmF4PH0JVhu8ZRg",
+                "artist_name": "Sabrina Claudio"
             }
-        ]
+        ],
+        "Name": "XAVIER",
+        "Username": "XAVIER LA ROSA",
+        "_id": "MIsfgTBtvsSRPtxFavScbQZMq6A2"
     }
+]
 """.data(using: .utf8)!
 
-struct User: Codable {
-    let idToken, name, username: String
-    let following: [Following]
-    
-    enum CodingKeys: String, CodingKey {
-        case idToken = "id_token"
-        case name, username, following
-    }
-}
-
-struct Following: Codable {
-    let artistName, artistID: String
-    
-    enum CodingKeys: String, CodingKey {
-        case artistName = "Artist name"
-        case artistID = "Artist id"
-    }
-}
-
 public class Account{
-func addDecodedJSONToConstantsStruct(){ //change this to take in json once connections are good
-    let user = try? JSONDecoder().decode(User.self, from: userJSONData)
-    print(user!.following[0] as Any)
-    print(user!.idToken as Any)
-    print(user!.name as Any)
-    print(user!.username as Any) // make them user? when implementing
-    print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD BUT BEFORE CHANGING DATA\n\(String(describing: Constants.structUserData.globalIdToken))")
-    print(Constants.structUserData.globalName as Any)
-    print(Constants.structUserData.globalUsername as Any)
-    Constants.structUserData.globalIdToken = user!.idToken
-    Constants.structUserData.globalName = user!.name
-    Constants.structUserData.globalUsername = user!.username
-    //Constants.structUserData.globalFollowing = user!.following
-}
+    typealias User = [UserElement]
+    
+    struct UserElement: Decodable {
+        let followedArtists: [FollowedArtist]
+        let name, username, id: String
+        
+        enum CodingKeys: String, CodingKey {
+            case followedArtists = "FollowedArtists"
+            case name = "Name"
+            case username = "Username"
+            case id = "_id"
+        }
+    }
+    
+    struct FollowedArtist: Decodable {
+        let artistID, artistName: String
+        
+        enum CodingKeys: String, CodingKey {
+            case artistID = "artist_id"
+            case artistName = "artist_name"
+        }
+    }
+    func makeStructForAccount(){
+//        let jsonData = try? JSONSerialization.data(withJSONObject:json)
+//        let user = try? JSONDecoder().decode(User.self, from: jsonData!)
+//        print(user!)
+
+        let user = try? JSONDecoder().decode(UserElement.self, from: userJSONData)
+        
+        print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD BUT BEFORE CHANGING DATA\n\(String(describing: Constants.structUserData.globalIdToken))")
+        print(Constants.structUserData.globalName as Any)
+        print(Constants.structUserData.globalUsername as Any)
+//        print(user!)
+        
+        print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD")
+        Constants.structUserData.globalName = user?.name
+        Constants.structUserData.globalIdToken = user?.id
+        Constants.structUserData.globalFollowing = user?.followedArtists
+        Constants.structUserData.globalUsername = user?.username
+        
+        print((String(describing: Constants.structUserData.globalIdToken)))
+        print(Constants.structUserData.globalName as Any)
+        print(Constants.structUserData.globalUsername as Any)
+        print(Constants.structUserData.globalFollowing as Any)
+        print(Constants.structUserData.globalIdToken as Any)
+//        print(user!)
+
+    }
 }

@@ -35,38 +35,31 @@ public class NetworkingClient{
     
     //GET ACCOUNT
     func GETaccountData(_ uid: String){
-        let urlString = "https://nardwuar.herokuapp.com/users?query=\"\(uid)\""
+        let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(uid)"
         print("**** get account data under construction")
         print("**** query: \(uid) \n urlString: \(urlString)")
-        Alamofire.request(urlString)
+        Alamofire.request(urlString,
+                          parameters: nil,
+                          headers: nil)
             .responseJSON { response in
-                //error
-                guard response.result.error == nil else {
-                    print("error calling GET")
-                    print(response.result.error!)
-                    return
+                // 2
+                guard response.result.isSuccess,
+                    let value = response.result.value else {
+                        print("Error while fetching: \(String(describing: response.result.error))")
+                        return
+                        
                 }
-                //success
-                guard let json = response.result.value as? [String: Any] else {
-                    print("didn't get todo object as JSON from API")
-                    if let error = response.result.error {
-                        print("Error: \(error)")
-                    }
-                    return
-                }
-                print(json)
+                //let json = try? JSONSerialization.jsonObject(with: data, options: [value])
+                print("**** GET USER SUCCESS \(value)")
+                //4.22.19 current error where json is acting weird hard code json for now
+                let account = Account()
+                account.makeStructForAccount()
         }
-        //no matter what, we do this at the end of successful method
-        let account = Account()
-        account.addDecodedJSONToConstantsStruct() //later we want the function to take in a json variable from here
-        print("**** AFTER NETWORKING CLIENT WENT TO GET METHOD WENT TO ACCOUNT STRUCT\n\(String(describing: Constants.structUserData.globalIdToken))")
-        print(Constants.structUserData.globalName as Any)
-        print(Constants.structUserData.globalUsername as Any)
     }
     
     //GET FIRST FIVE
     func GETfirstFiveArtistData(_ query:String){
-        let urlString = "https://nardwuar.herokuapp.com/search?query=\"\(query)\""
+        let urlString = "https://nardwuar.herokuapp.com/search?query=\(query)"
         print("**** first five get under construction")
         print("**** query: \(query) \n urlString: \(urlString)")
         Alamofire.request(urlString)
@@ -79,6 +72,8 @@ public class NetworkingClient{
                 }
                 //success
                 guard let json = response.result.value as? [String: Any] else {
+                    let artist = Artist()
+                    artist.makeStructForArtistQuery()
                     print("didn't get todo object as JSON from API")
                     if let error = response.result.error {
                         print("Error: \(error)")
@@ -86,20 +81,36 @@ public class NetworkingClient{
                     return
                 }
                 print(json)
+                
+                let artist = Artist()
+                artist.makeStructForArtistQuery()
         }
     }
 
     //GET ARTIST
-    func GETartistData(_ url: URL, completion: @escaping WebServiceResponse){
-        Alamofire.request(url).validate().responseJSON { response in
-            if let error = response.error {
-                completion(nil, error)
-            } else if let jsonArray = response.result.value as? [[String: Any]] {
-                completion(jsonArray, nil)
-            } else if let jsonDict = response.result.value as? [String : Any] {
-                completion([jsonDict], nil)
-            }
+    func GETartistData(artistID:String){
+        let urlString = "https://nardwuar.herokuapp.com/artist-info/\(artistID)"
+        let artist = Artist()
+        artist.makeStructForArtist()
+        print("**** get account data under construction")
+        print("**** query: \(artistID) \n urlString: \(urlString)")
+        Alamofire.request(urlString,
+                          parameters: nil,
+                          headers: nil)
+            .responseJSON { response in
+                // 2
+                guard response.result.isSuccess,
+                    let value = response.result.value else {
+                        print("Error while fetching: \(String(describing: response.result.error))")
+                        return
+                        
+                }
+                //let json = try? JSONSerialization.jsonObject(with: data, options: [value])
+                print("**** GET ARTIST SUCCESS \(value)")
+                //4.22.19 current error where json is acting weird hard code json for now
+                let artist = Artist()
+                artist.makeStructForArtist()
         }
+        
     }
-
 }

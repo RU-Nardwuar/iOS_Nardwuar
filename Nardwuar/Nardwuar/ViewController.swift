@@ -19,42 +19,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         print("**** in viewDidLoad")
         setupUI()
     }
-//UI SECTION////////////////////////////////////
-    @IBOutlet weak var boxView: UIView!
-    func setupUI(){
-        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
-        boxView.layer.cornerRadius = boxView.frame.height/50
-        setupTitle()
-        setupCustomGoogleButtons()
-        checkAuth()
-    }
-//SETUP TILE
-    @IBOutlet weak var nameOfApp: UILabel!
-    func setupTitle(){
-        nameOfApp.layer.shadowColor = UIColor.black.cgColor
-        nameOfApp.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        nameOfApp.layer.masksToBounds = false
-        nameOfApp.layer.shadowRadius = 0.80
-        nameOfApp.layer.shadowOpacity = 0.50
-    }
-//SETUP GOOGLE SIGN IN BUTTON
-    @IBOutlet weak var googleSignInButton: UIButton!
-    func setupCustomGoogleButtons(){
-        print("**** in setup custom google button")
-        GIDSignIn.sharedInstance()?.uiDelegate = self
-        GIDSignIn.sharedInstance().delegate = self
-        googleSignInButton.backgroundColor = UIColor.white
-        googleSignInButton.setTitle("Sign in with Google", for: .normal)
-        googleSignInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-        googleSignInButton.layer.shadowColor = UIColor.black.cgColor
-        googleSignInButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
-        googleSignInButton.layer.masksToBounds = false
-        googleSignInButton.layer.shadowRadius = 3.0
-        googleSignInButton.layer.shadowOpacity = 0.5
-        googleSignInButton.layer.cornerRadius = 10
-        print("**** setting GID uiDelegate and delegate")
-        
-    }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
     }
@@ -78,7 +42,58 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         print("**** in signInSegue, performing segue for user")
         performSegue(withIdentifier: "fromLoginToHome", sender: self)
     }
+    
+    
+    
+    
+    
+    
+    
+    //UI SECTION////////////////////////////////////
+    @IBOutlet weak var boxView: UIView!
+    func setupUI(){
+        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
+        boxView.layer.cornerRadius = boxView.frame.height/50
+        setupTitle()
+        setupCustomGoogleButtons()
+        checkAuth()
+    }
+    //SETUP TILE
+    @IBOutlet weak var nameOfApp: UILabel!
+    func setupTitle(){
+        nameOfApp.layer.shadowColor = UIColor.black.cgColor
+        nameOfApp.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        nameOfApp.layer.masksToBounds = false
+        nameOfApp.layer.shadowRadius = 0.80
+        nameOfApp.layer.shadowOpacity = 0.50
+        nameOfApp.textColor = Constants.DefaultUI.textColor
+    }
+    //SETUP GOOGLE SIGN IN BUTTON
+    @IBOutlet weak var googleSignInButton: UIButton!
+    func setupCustomGoogleButtons(){
+        print("**** in setup custom google button")
+        GIDSignIn.sharedInstance()?.uiDelegate = self
+        GIDSignIn.sharedInstance().delegate = self
+        googleSignInButton.backgroundColor = UIColor.white
+        googleSignInButton.setTitle("Sign in with Google", for: .normal)
+        googleSignInButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        googleSignInButton.layer.shadowColor = UIColor.black.cgColor
+        googleSignInButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        googleSignInButton.layer.masksToBounds = false
+        googleSignInButton.layer.shadowRadius = 3.0
+        googleSignInButton.layer.shadowOpacity = 0.5
+        googleSignInButton.layer.cornerRadius = 10
+        print("**** setting GID uiDelegate and delegate")
+        
+    }
 }
+
+
+
+
+
+
+
 extension ViewController: GIDSignInDelegate {
     // This function gets called after the google sign in was succesful
     // However we still need to sign in with firebase using the credentials from the google sign in

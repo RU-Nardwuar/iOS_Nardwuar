@@ -26,9 +26,19 @@ public class Constants{
         static var globalIdToken: String?
         static var globalName: String?
         static var globalUsername: String?
-        static var globalFollowing:[String] = []
-        
+        static var globalFollowing:[Account.FollowedArtist]?
         static var globalPhoto: URL?
         static var globalEmail: String?
     }
+    
+    struct structArtistData {
+        static var artistPhoto: String?
+        static var artistName: String?
+        static var artistFollowers: Int?
+        static var artistGenres: [String]?
+        static var artistTopAlbums: [Artist.Pitchfork]?
+        static var artistTopAlbumsPictures: [String]?
+        static var artistAlbums: [String]?
+    }
+    
 }
