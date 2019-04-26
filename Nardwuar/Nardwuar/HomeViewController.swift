@@ -105,9 +105,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     }
 
 //Two ways to get to Artist Page, case i) user -> searchbar ... case ii) user -> tableview cell
-    var artistID:String?
-    var artistName:String?
-    var userToken:String?
+    var artistID = ""
+    var artistName = ""
+    var userToken = ""
     var currentUser: HomeViewController.UserInfo?
     var artistList: HomeViewController.ArtistQueryList?
     //case i
@@ -133,7 +133,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: preparing segue for artist page")
         if segue.identifier == "fromHomeToArtist"{
             guard let destination = segue.destination as? ArtistViewController else {return}
-            destination.artistID = artistID!
+            destination.artistID = artistID
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
         }
     }
@@ -196,12 +196,15 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
 
 //Get method
     func startDispatch(route:String){
+        print("**** Home Controller: startDispatch() with route \(route)")
         let myGroup = DispatchGroup()
         
         if route == "user"{
-            for _ in 0 ..< 5 {
+            for _ in 0 ..< 2 {
+                print("**** Home Controller: in user route with link ... ")
                 myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(String(describing: userToken))"
+                let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
+                print("**** Home Controller: in user route with link ... \(urlString)****")
                 guard let url = URL(string: urlString) else { return }
                 URLSession.shared.dataTask(with: url) { (data, _, err) in
                     DispatchQueue.main.async {
@@ -233,7 +236,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         } else if route == "artist"{
             for _ in 0 ..< 5 {
                 myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/search?query=\(String(describing: artistName))"
+                let urlString = "https://nardwuar.herokuapp.com/search?query=\(artistName))"
                 print("**** Home Controller: get artist query link... \(urlString)")
                 guard let url = URL(string: urlString) else { return }
                 URLSession.shared.dataTask(with: url) { (data, _, err) in
@@ -262,7 +265,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             myGroup.notify(queue: .main) {
                 print("Finished all requests.")
                 print("**** Home Controller: artistID sent to setQuery() ... \(String(describing: self.artistID))")
-                self.setQuery(ID: self.artistID!)
+                self.setQuery(ID: self.artistID)
             }
         }
     }
