@@ -19,6 +19,7 @@ class HomeViewHeadlineTableViewCell: UITableViewCell {
     
     }
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
+//Struct Section
     struct CurrentUser: Codable {
         let followedArtists: [FollowedArtist]
         let name, username, id: String
@@ -39,7 +40,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             case artistName = "artist_name"
         }
     }
-    //ON LOAD
+//load page
     override func viewDidLoad() {
         super.viewDidLoad()
         assignVarFromGoogle()

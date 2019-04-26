@@ -13,65 +13,49 @@ import Firebase
 import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
-//ON LOAD
+//Load page
     override func viewDidLoad() {
+        print("**** View Controller: in load, going to setupUI() and checkAuth()")
         super.viewDidLoad()
-        print("**** in viewDidLoad")
         setupUI()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-//ACTION SECTION////////////////////////////////////
-//GOOGLE SIGNIN BUTTON TAPPED
-    @IBAction func googleSignInButtonTapped(_ sender: Any) {
-        print("**** in google sign in button tappedr, going to use GID.signIn()")
-        GIDSignIn.sharedInstance()?.signIn()
-    }
-//CHECK AUTH
-    func checkAuth(){
-        print("**** checking if user is already signed in or not")
-        if let user = Auth.auth().currentUser {
-            print("**** current user:\(user) will begin segue")
-            signInSegue()
-        } else {
-            print("**** no user")
-        }
-    }
-    func signInSegue(){
-        print("**** in signInSegue, performing segue for user")
-        performSegue(withIdentifier: "fromLoginToHome", sender: self)
-    }
-    
-    
-    
-    
-    
-    
-    
-    //UI SECTION////////////////////////////////////
-    @IBOutlet weak var boxView: UIView!
-    func setupUI(){
-        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
-        boxView.layer.cornerRadius = boxView.frame.height/50
-        setupTitle()
-        setupCustomGoogleButtons()
         checkAuth()
     }
-    //SETUP TILE
+    override func viewWillAppear(_ animated: Bool) {
+        print("**** View Controller: in viewWillAppear, hide navbar")
+        self.navigationController?.navigationBar.isHidden = true
+    }
+//Action: Google button tapped
+    @IBAction func googleSignInButtonTapped(_ sender: Any) {
+        print("**** View Controller: google signin button tapped, going to attempt signin")
+        GIDSignIn.sharedInstance()?.signIn()
+    }
+//Check Auth
+    func checkAuth(){
+        print("**** View Controller: checkAuth(), checking if user is already signed in or not")
+        if let user = Auth.auth().currentUser {
+            print("**** View Controller: current user:\(user) will now segue to home page")
+            performSegue(withIdentifier: "fromLoginToHome", sender: self)
+        } else {
+            print("**** View Controller: no current user")
+        }
+    }
+//Setup UI
+    @IBOutlet weak var boxView: UIView!
     @IBOutlet weak var nameOfApp: UILabel!
-    func setupTitle(){
+    @IBOutlet weak var googleSignInButton: UIButton!
+    func setupUI(){
+        print("**** View Controller: setting up UI")
+        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
+        boxView.layer.cornerRadius = boxView.frame.height/50
+        
         nameOfApp.layer.shadowColor = UIColor.black.cgColor
         nameOfApp.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         nameOfApp.layer.masksToBounds = false
         nameOfApp.layer.shadowRadius = 0.80
         nameOfApp.layer.shadowOpacity = 0.50
+        
         nameOfApp.textColor = Constants.DefaultUI.textColor
-    }
-    //SETUP GOOGLE SIGN IN BUTTON
-    @IBOutlet weak var googleSignInButton: UIButton!
-    func setupCustomGoogleButtons(){
-        print("**** in setup custom google button")
+        
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
         googleSignInButton.backgroundColor = UIColor.white
@@ -83,40 +67,32 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         googleSignInButton.layer.shadowRadius = 3.0
         googleSignInButton.layer.shadowOpacity = 0.5
         googleSignInButton.layer.cornerRadius = 10
-        print("**** setting GID uiDelegate and delegate")
-        
     }
 }
 
-
-
-
-
-
-
+//Google Sign In
 extension ViewController: GIDSignInDelegate {
-    // This function gets called after the google sign in was succesful
-    // However we still need to sign in with firebase using the credentials from the google sign in
+    
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        print("**** in extension")
-        print("**** Signing in...")
+        print("**** View Controller: GIDSignInDelegate extension, attempting to sign in via Google")
         if let error = error {
-            print("**** Sign in error\(error)")
+            print("**** View Controller: Google Sign in ERROR, error: \(error)")
             return
         } else{
             //get google idToken and accessToken, and exchange them for firebase credentials
             guard let authentication = user.authentication else { return }
             let credentials = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-            
+
             //Use firebase credentials to authenticate
             Auth.auth().signInAndRetrieveData(with: credentials) { (authResult, error) in
                 if let error = error {
-                    print("**** Sign in error\(error)")
+                    print("**** View Controller: Google Sign in with credentials ERROR, error: \(error)")
                     return
                 }
-                print("**** Signed in user " + user.profile.name)
-                self.signInSegue()
+                print("**** View Controller: Google Sign in with credentials SUCCESS, user: " + user.profile.name)
+                self.performSegue(withIdentifier: "fromLoginToHome", sender: self)
             }
         }
     }
+    
 }
