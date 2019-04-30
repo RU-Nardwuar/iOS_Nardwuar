@@ -12,6 +12,7 @@ import GoogleSignIn
 import Alamofire
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
+    var artistKeyArray:[String]?
 //Load page
     override func viewDidLoad() {
         print("**** Home Controller: viewDidLoad(), loading page")
@@ -58,12 +59,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        let id = currentUser?.followedArtists[indexPath.row].artistID
         cell.textLabel?.text = currentUser?.followedArtists[indexPath.row].artistName
         cell.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
         cell.textLabel?.textColor = UIColor.white
         cell.layer.backgroundColor = UIColor.clear.cgColor
         cell.contentView.backgroundColor = UIColor.clear
         
+        //guard let newKeyToAdd = currentUser?.followedArtists[indexPath.row].artistName else {}
+        print("**** Home Controller: going to add key \(String(describing: currentUser?.followedArtists[indexPath.row].artistID)) into the array used to compare followed/unfollowed artist page")
+        if artistKeyArray?.append(id!) == nil {
+            artistKeyArray = ([id] as! [String])
+        }
+        print("**** Home Controller: current key array \(artistKeyArray)")
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -140,6 +148,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             destination.artistID = artistID
             destination.currentUserToken = currentUser?.id
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
+            
+            print("**** Home Controller: checking if artist page will be someone they are already following")
+            print("**** Home Controller: what I am comparing ... \(artistKeyArray) ... and ... \(artistID)")
+            guard let isUserFollowingAlready = artistKeyArray?.contains(artistID) else { print("**** Home Controller: failed to return a bool for if artist is followed already");return}
+            print("**** Home Controller: artist followed already? \(isUserFollowingAlready)")
+            if(isUserFollowingAlready == true){
+                destination.isArtistAlreadyFollowed = true
+            }
         }
     }
 

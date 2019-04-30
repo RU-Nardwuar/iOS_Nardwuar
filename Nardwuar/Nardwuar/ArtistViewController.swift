@@ -23,15 +23,17 @@ class HeadlineTableViewCell: UITableViewCell {
 class ArtistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     @IBOutlet weak var followButton: UIButton!
     var currentUserToken:String?
+    var isArtistAlreadyFollowed = false
     @IBAction func followButtonTapped(_ sender: Any) {
+        let networkingClient = NetworkingClient()
+        guard let token = Constants.structUserData.globalIdToken else {return}
+        guard let artistName = currentArtist?.spotify.artistName else {return}
         if(isButtonHollow == true){
             fillButton()
-            let networkingClient = NetworkingClient()
-            guard let token = Constants.structUserData.globalIdToken else {return}
-            guard let artistName = currentArtist?.spotify.artistName else {return}
             networkingClient.POSTfollowNewArtist(token: token, artistName: artistName, artistId: artistID)
         } else{
             hollowButton()
+            networkingClient.POSTunfollowNewArtist(token: token, artistName: artistName, artistId: artistID)
         }
     }
     var isButtonHollow = false
@@ -53,7 +55,6 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
-        hollowButton()
         startDispatch()
     }
     func setupTableView(){
@@ -127,6 +128,11 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         }
         func setupProfilePicAndQuickInfo(){
             
+            if(isArtistAlreadyFollowed == true){
+                fillButton()
+            } else{
+                hollowButton()
+            }
             followButton.layer.borderWidth = 1.0
             followButton.layer.borderColor = Constants.DefaultUI.buttonColor.cgColor
             
@@ -137,7 +143,7 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             guard let followers = currentArtist?.spotify.totalNumberOfSpotifyFollowers else {return}
             let numberFormatter = NumberFormatter()
             numberFormatter.numberStyle = .decimal
-            guard let formattedNumber = numberFormatter.string(from: NSNumber(value:(currentArtist?.spotify.totalNumberOfSpotifyFollowers)!)) else {return}
+            guard let formattedNumber = numberFormatter.string(from: NSNumber(value: followers)) else {return}
             let followersString = String(formattedNumber)
             spotifyLabel.text = "Spotify Followers | \(followersString)"
             spotifyLabel.textColor = UIColor.white
