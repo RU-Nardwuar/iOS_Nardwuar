@@ -139,6 +139,9 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             profilePic.clipsToBounds = true
             let imgURL = URL(string: (currentArtist?.spotify.artistPhoto600X600)!)
             downloadImage(from: imgURL!)
+            
+            followButton.layer.masksToBounds = false
+            followButton.layer.cornerRadius = followButton.frame.height/2
         }
     //GET PROFILE PIC
         func downloadImage(from url: URL) {
@@ -265,6 +268,25 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             currentArtist?.pitchfork[indexPath.row].albumDescription, preferredStyle: UIAlertController.Style.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default,handler: nil))
         self.present(alertController, animated: true, completion: nil)
+//        let albumController = AlbumViewController()
+//        albumController.descriptionText = currentArtist?.pitchfork[indexPath.row].albumDescription
+//        let url = URL(string: (currentArtist?.pitchfork[indexPath.row].albumPhoto640X640)!)
+//        print("Download Started")
+//        getData(from: url!) { data, response, error in
+//            guard let data = data, error == nil else { return }
+//            print(response?.suggestedFilename ?? url!.lastPathComponent)
+//            print("Download Finished")
+//            DispatchQueue.main.async() {
+//                print("**** Artist Controller: image \(data)")
+//                let image = UIImage(data: data)
+//                print("**** Artist Controller: image\(image)")
+//                albumController.imagePassedOver = image
+//                //albumController.backgroundImage.image = UIImage(data: data)
+//            }
+//        }
+//
+//        self.performSegue(withIdentifier: "fromArtistToAlbum", sender: self)
+        
     }
     //STRUCTS
     struct ArtistInfo: Codable {
