@@ -87,8 +87,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         searchController.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
             ])
-        navigationController?.navigationBar.barTintColor = Constants.DefaultUI.primaryColor
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.textColor]
+        navigationController?.navigationBar.barTintColor = Constants.DefaultUI.textColor
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.primaryColor]
         for subView in searchController.subviews {
             for view in subView.subviews {
                 if view.isKind(of: NSClassFromString("UINavigationButton")!) {

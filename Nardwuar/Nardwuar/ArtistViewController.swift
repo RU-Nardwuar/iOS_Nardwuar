@@ -23,14 +23,25 @@ class HeadlineTableViewCell: UITableViewCell {
 class ArtistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     @IBOutlet weak var followButton: UIButton!
     @IBAction func followButtonTapped(_ sender: Any) {
+        if(isButtonHollow == true){
+            fillButton()
+        } else{
+            hollowButton()
+        }
     }
+    var isButtonHollow = false
     func hollowButton(){
-       // followButton.layer.borderColor = (Constants.DefaultUI.buttonColor as! CGColor)
         followButton.backgroundColor = UIColor.clear
+        followButton.setTitle("Follow", for: .normal)
+        followButton.setTitleColor(Constants.DefaultUI.buttonColor, for: .normal)
+        isButtonHollow = true
     }
     func fillButton(){
         //followButton.layer.borderColor = (Constants.DefaultUI.buttonColor as! CGColor)
         followButton.backgroundColor = Constants.DefaultUI.buttonColor
+        followButton.setTitle("Following", for: .normal)
+        followButton.setTitleColor(Constants.DefaultUI.textColor, for: .normal)
+        isButtonHollow = false
     }
     //ON LOAD
     var artistID = "30DhU7BDmF4PH0JVhu8ZRg"
@@ -111,21 +122,34 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         }
         func setupProfilePicAndQuickInfo(){
             
+            followButton.layer.borderWidth = 1.0
+            followButton.layer.borderColor = Constants.DefaultUI.buttonColor.cgColor
+            
             artistLabel.text = currentArtist?.spotify.artistName
             artistLabel.textColor = UIColor.white
             artistLabel.font = UIFont(name: "Avenir", size: 20.0)
             
             guard let followers = currentArtist?.spotify.totalNumberOfSpotifyFollowers else {return}
-            let followersString = String(followers)
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .decimal
+            guard let formattedNumber = numberFormatter.string(from: NSNumber(value:(currentArtist?.spotify.totalNumberOfSpotifyFollowers)!)) else {return}
+            let followersString = String(formattedNumber)
             spotifyLabel.text = "Spotify Followers | \(followersString)"
             spotifyLabel.textColor = UIColor.white
+            
+            let strNumber: NSString = "Hello Test" as NSString // you must set your
+            let range = (strNumber).range(of: "Test")
+            let attribute = NSMutableAttributedString.init(string: strNumber as String)
+            attribute.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
+            genreLabel.attributedText = attribute
             
             guard let genres = currentArtist?.spotify.genres else {return}
             genreLabel.text = genres[0]
             genreLabel.textColor = UIColor.white
             
-            navigationController?.navigationBar.barTintColor = Constants.DefaultUI.primaryColor
-            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.textColor]
+            navigationController?.navigationBar.barTintColor = Constants.DefaultUI.textColor
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.primaryColor]
+            
             
             tableView.backgroundColor = UIColor.clear
             
@@ -162,35 +186,37 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var tableView: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0){
-            return (currentArtist?.pitchfork.count)!
-        } else {
-            return (currentArtist?.spotify.albumsSingles.count)!
-        }
+        guard let sectionSize = currentArtist?.pitchfork.count else {return 0}
+            return sectionSize
     }
-    
-//    @IBOutlet weak var scoreLabel: UILabel!
-//    @IBOutlet weak var albumNameLabel: UILabel!
-//    @IBOutlet weak var yearLabel: UILabel!
-//    @IBOutlet weak var labelLabel: UILabel!
-//    @IBOutlet weak var bestNewMusicLabel: UILabel!
-   // @IBOutlet weak var albumImage: UIImageView!
-//    override func viewDidAppear(_ animated: Bool) {
-//        tableView.reloadData()
-//    }
-//    override func viewWillDisappear(_ animated: Bool) {
-//        tableView.reloadData()
-//    }
-    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerCell = tableView.dequeueReusableCell(withIdentifier: "artistCell")
+        headerCell?.backgroundColor = Constants.DefaultUI.textColor
+        headerCell?.textLabel?.text = "Recent Albums"
+        headerCell?.textLabel?.textColor = UIColor.white
+        headerCell?.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
+
+//        let label = UILabel(frame: CGRectMake(labelX, labelY, labelWidth, labelHeight))
+//        label.text = self.sectionHeaderTitleArray[section]
+//        returnedView.addSubview(label)
+//        
+//        return returnedView
+        return headerCell
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("**** IN TABLEVIEW")
         let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath) as! HeadlineTableViewCell
-        if(indexPath.section == 0){//best rated
-            //cell.textLabel?.text = currentArtist?.pitchfork[indexPath.row].albumName
-            //cell.detailTextLabel?.text = currentArtist?.pitchfork[indexPath.row].albumYear
+        
             let current = currentArtist?.pitchfork[indexPath.row]
+        
             let score:String = String(format:"%.1f", (currentArtist?.pitchfork[indexPath.row].albumScore)!)
             cell.scoreCell?.text = score
+//            cell.scoreCell?.shadowColor = UIColor.black
+//            cell.scoreCell?.layer.shadowRadius = 3.0
+//            cell.scoreCell?.layer.shadowOpacity = 1.0
+//            cell.scoreCell?.layer.shadowOffset = CGSize(width: 4, height: 4)
+//            cell.scoreCell?.layer.masksToBounds = false
+        
             cell.albumNameCell?.text = current?.albumName
             cell.albumYearCell?.text = current?.albumYear
             cell.albumLabelCell?.text = current?.label
@@ -228,40 +254,20 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
                 print("Download Finished")
                 DispatchQueue.main.async() {
                     cell.albumImage.image = UIImage(data: data)
+                    let tintView = UIView()
+                    tintView.backgroundColor = UIColor(white: 0, alpha: 0.3) //change to your liking
+                    tintView.frame = CGRect(x: 0, y: 0, width: cell.albumImage.frame.width, height: cell.albumImage.frame.height)
+                    
+                    cell.albumImage.addSubview(tintView)
                 }
             }
-            
-            //cell.imageCell.isHidden = true
-        } else{
-            cell.scoreCell?.isHidden = true
-            cell.albumNameCell?.isHidden = true
-            cell.albumYearCell?.isHidden = true
-            cell.albumLabelCell?.isHidden = true
-            cell.albumAwardCell?.isHidden = true
-            cell.staticScoreLabel?.isHidden = true
-            //cell.imageCell.isHidden = true
-            cell.textLabel?.text = currentArtist?.spotify.albumsSingles[indexPath.row]
-        }
-        
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-    }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if(section == 0){
-            return "Most Recent Albums"
-        } else {
-            return "All Albums"
-        }
+        return 1
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if(indexPath.section == 1){
-            return 80.00
-        }
-        else{
          return 180.00
-        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alertController = UIAlertController(title: "", message:

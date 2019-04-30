@@ -17,9 +17,9 @@ public class Constants{
         //cyan color
         static let primaryColorOpacity = UIColor(red:0.77, green:1.00, blue:0.98, alpha:0.5) //cyan
         //green color
-        static let buttonColor = UIColor(red:0.63, green:0.96, blue:0.58, alpha:1.0) //darker cyan
+        static let buttonColor = UIColor(red:0.63, green:0.96, blue:0.58, alpha:1.0) //green
         //grey color
-        static let textColor = UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0) //grey
+        static let textColor = UIColor(red:0.25, green:0.21, blue:0.21, alpha:1.0) //grey
     }
 
     struct structUserData {//Global Variables for User
