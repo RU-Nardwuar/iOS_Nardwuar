@@ -22,7 +22,6 @@ class ProfileViewController: UIViewController, UITableViewDataSource, UITableVie
 //GET USER DATA
     private let networkingClient = NetworkingClient()
     func getUserData(token:String){
-        self.networkingClient.GETaccountData(token)
         //constants should all be set now, you can then use user data for any page!
         print("**** ProfileView, updated user info to put into UI: ")
         print(Constants.structUserData.globalIdToken as Any)

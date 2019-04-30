@@ -22,6 +22,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
         artistID = ""
         artistName = ""
+        print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
+        tableView.reloadData()
     }
 //Post User / Get User
     func assignUserFromGoogle(){
@@ -37,6 +39,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             else{
                 print("**** Home Controller: token to register user... \(String(describing: token))")
                 self.userToken = token!
+                Constants.structUserData.globalIdToken = token!
                 //let firstName = (GIDSignIn.sharedInstance()?.currentUser.profile.givenName!)!
                 //let displayName = (Auth.auth().currentUser?.displayName!)!
                 ////************ get correct arguments for post request
@@ -134,6 +137,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         if segue.identifier == "fromHomeToArtist"{
             guard let destination = segue.destination as? ArtistViewController else {return}
             destination.artistID = artistID
+            destination.currentUserToken = currentUser?.id
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
         }
     }

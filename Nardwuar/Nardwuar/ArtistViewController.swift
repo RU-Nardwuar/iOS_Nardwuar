@@ -22,9 +22,14 @@ class HeadlineTableViewCell: UITableViewCell {
 }
 class ArtistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
     @IBOutlet weak var followButton: UIButton!
+    var currentUserToken:String?
     @IBAction func followButtonTapped(_ sender: Any) {
         if(isButtonHollow == true){
             fillButton()
+            let networkingClient = NetworkingClient()
+            guard let token = Constants.structUserData.globalIdToken else {return}
+            guard let artistName = currentArtist?.spotify.artistName else {return}
+            networkingClient.POSTfollowNewArtist(token: token, artistName: artistName, artistId: artistID)
         } else{
             hollowButton()
         }
