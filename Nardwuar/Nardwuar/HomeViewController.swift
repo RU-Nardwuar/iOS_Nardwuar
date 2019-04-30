@@ -24,6 +24,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         artistName = ""
         print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
         tableView.reloadData()
+        self.startDispatch(route: "user")
     }
 //Post User / Get User
     func assignUserFromGoogle(){
