@@ -5,13 +5,14 @@ Nardwuar is an app on iOS platform created from a team of one iOS and Backend De
 Our mission is to provide users a one spot and smooth destination for all information concerning a music artist.
 
 This is aimed to be a 2 month long project.
-As of 5/1 after presentation, the team decided to continue this project and plan on creating an MVP by the end of August 2019.
+As of 5/1/19 after presentation, the team decided to continue this project and plan on creating an MVP by the end of August 2019.
 
 iOS Developer Tools and References:
 - Xcode
 - Swift 4
 - Google Firebase
 - Alamofire
+- Postman
 - Adobe XD
 - Color scheme: https://coolors.co/
 - UIColor Scheme: https://www.uicolor.xyz/#/hex-to-ui
@@ -33,6 +34,3 @@ Functionalities:
 
 Running Version:
 ![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Demos/version4.png)
-
-Mockup Design:
-![alt text](https://github.com/RU-Nardwuar/iOS_Nardwuar/blob/master/Design/MockUp/MockUp0%402x.png)
