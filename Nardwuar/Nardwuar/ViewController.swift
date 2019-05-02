@@ -25,9 +25,19 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         self.navigationController?.navigationBar.isHidden = true
     }
 //Action: Google button tapped
-    @IBAction func googleSignInButtonTapped(_ sender: Any) {
+    @IBAction func googleSignInButtonTapped(_ sender: UIButton) {
         print("**** View Controller: google signin button tapped, going to attempt signin")
         GIDSignIn.sharedInstance()?.signIn()
+        
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            sender.transform = CGAffineTransform(scaleX: 0.975, y: 0.96)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                sender.transform = CGAffineTransform.identity
+                            })
+        })
     }
 //Check Auth
     func checkAuth(){
@@ -40,15 +50,19 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         }
     }
 //Setup UI
-    @IBOutlet weak var boxView: UIView!
     @IBOutlet weak var nameOfApp: UILabel!
     @IBOutlet weak var googleSignInButton: UIButton!
     func setupUI(){
         print("**** View Controller: setting up UI")
-        self.view.backgroundColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.00)
-        boxView.layer.cornerRadius = boxView.frame.height/50
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        let gradient = CAGradientLayer()
         
-        nameOfApp.layer.shadowColor = UIColor.black.cgColor
+        gradient.frame = view.bounds
+        gradient.colors = [UIColor.white.cgColor, UIColor.black.cgColor]
+        
+        view.layer.insertSublayer(gradient, at: 0)
+        
+        nameOfApp.layer.shadowColor = Constants.DefaultUI.buttonColor.cgColor
         nameOfApp.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         nameOfApp.layer.masksToBounds = false
         nameOfApp.layer.shadowRadius = 0.80

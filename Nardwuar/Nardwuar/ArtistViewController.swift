@@ -24,7 +24,7 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var followButton: UIButton!
     var currentUserToken:String?
     var isArtistAlreadyFollowed = false
-    @IBAction func followButtonTapped(_ sender: Any) {
+    @IBAction func followButtonTapped(_ sender: UIButton) {
         let networkingClient = NetworkingClient()
         guard let token = Constants.structUserData.globalIdToken else {return}
         guard let artistName = currentArtist?.spotify.artistName else {return}
@@ -35,6 +35,15 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             hollowButton()
             networkingClient.POSTunfollowNewArtist(token: token, artistName: artistName, artistId: artistID)
         }
+        UIButton.animate(withDuration: 0.3,
+                         animations: {
+                            sender.transform = CGAffineTransform(scaleX: 0.975, y: 0.96)
+        },
+                         completion: { finish in
+                            UIButton.animate(withDuration: 0.2, animations: {
+                                sender.transform = CGAffineTransform.identity
+                            })
+        })
     }
     var isButtonHollow = false
     func hollowButton(){
