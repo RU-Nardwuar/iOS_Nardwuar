@@ -62,14 +62,8 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         //tableView.backgroundView = UIImageView(image: UIImage(named: "homeBackground1"))
     }
-    @IBOutlet weak var loadingImage: UIImageView!
-    @IBOutlet weak var blur: UIVisualEffectView!
-    @IBOutlet weak var loadingLabel: UILabel!
     func pageDoneLoading(){
-        blur.isHidden = true
         self.navigationController?.navigationBar.isHidden = false
-        loadingImage.isHidden = true
-        loadingLabel.isHidden = true
     }
     //FETCH
     var currentArtist: ArtistViewController.ArtistInfo?
@@ -201,18 +195,23 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             return sectionSize
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "artistCell")
-        headerCell?.backgroundColor = Constants.DefaultUI.textColor
-        headerCell?.textLabel?.text = "Recent Albums"
-        headerCell?.textLabel?.textColor = UIColor.white
-        headerCell?.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
-
-//        let label = UILabel(frame: CGRectMake(labelX, labelY, labelWidth, labelHeight))
-//        label.text = self.sectionHeaderTitleArray[section]
-//        returnedView.addSubview(label)
-//        
-//        return returnedView
-        return headerCell
+//        let headerCell = tableView.dequeueReusableCell(withIdentifier: "artistCell")
+//        headerCell?.backgroundColor = Constants.DefaultUI.textColor
+//        headerCell?.textLabel?.text = "Recent Albums"
+//        headerCell?.textLabel?.textColor = UIColor.white
+//        headerCell?.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 35))
+        headerView.backgroundColor = Constants.DefaultUI.textColor
+        headerView.layer.borderWidth = 0.25
+        let label = UILabel(frame: CGRect(x: 16, y: 0, width: tableView.bounds.size.width, height: 30))
+        label.text = "Recent Albums"
+        label.textColor = UIColor.white
+        label.font = UIFont(name: "Avenir", size: 25.0)
+        headerView.addSubview(label)
+        return headerView
+        
+        //return headerCell
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("**** IN TABLEVIEW")

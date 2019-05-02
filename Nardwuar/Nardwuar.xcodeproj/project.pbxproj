@@ -23,6 +23,7 @@
 		256F86DF2239E162007FA1C0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86DE2239E162007FA1C0 /* Account.swift */; };
 		25EEF7FA223C862700BC1D90 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EEF7F9223C862700BC1D90 /* Artist.swift */; };
 		25F4691E2275187800AD376D /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4691D2275187800AD376D /* AlbumViewController.swift */; };
+		25F46920227B788000AD376D /* LoadingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4691F227B788000AD376D /* LoadingPageViewController.swift */; };
 		DDF5CE2FDDE2DC41F85DA817 /* Pods_Nardwuar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAD33A42142225D2795E9A1D /* Pods_Nardwuar.framework */; };
 		FCE9FB085B127AA9D332057D /* Pods_NardwuarTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5086C4143878C592712FCA /* Pods_NardwuarTests.framework */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		256F86DE2239E162007FA1C0 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		25EEF7F9223C862700BC1D90 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		25F4691D2275187800AD376D /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		25F4691F227B788000AD376D /* LoadingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPageViewController.swift; sourceTree = "<group>"; };
 		3C8185F553AFFC9EA4BFCCC3 /* Pods-Nardwuar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nardwuar.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nardwuar/Pods-Nardwuar.release.xcconfig"; sourceTree = "<group>"; };
 		8F65B740B1880681C0AF4663 /* Pods-NardwuarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NardwuarTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NardwuarTests/Pods-NardwuarTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AB5086C4143878C592712FCA /* Pods_NardwuarTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NardwuarTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +116,7 @@
 				25EEF7F9223C862700BC1D90 /* Artist.swift */,
 				256F86D52228A65A007FA1C0 /* Constants.swift */,
 				255379772250F0D000654F89 /* NetworkingClient.swift */,
+				25F4691F227B788000AD376D /* LoadingPageViewController.swift */,
 				2550D8A32225B53A00561EF5 /* ViewController.swift */,
 				256F86CF222608AC007FA1C0 /* HomeViewController.swift */,
 				256F86D32227BB27007FA1C0 /* ArtistViewController.swift */,
@@ -363,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F46920227B788000AD376D /* LoadingPageViewController.swift in Sources */,
 				2550D8A42225B53A00561EF5 /* ViewController.swift in Sources */,
 				2550D8A22225B53A00561EF5 /* AppDelegate.swift in Sources */,
 				256F86DD2239B641007FA1C0 /* SettingsViewController.swift in Sources */,
