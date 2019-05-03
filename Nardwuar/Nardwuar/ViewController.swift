@@ -15,6 +15,7 @@ import GoogleSignIn
 class ViewController: UIViewController, GIDSignInUIDelegate {
 //Load page
     @IBOutlet weak var gradientView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
     override func viewDidLoad() {
         print("**** View Controller: in load, going to setupUI() and checkAuth()")
         super.viewDidLoad()
@@ -26,11 +27,33 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.frame = view.bounds
         gradientView.layer.addSublayer(gradientLayer)
+        fadeViewInThenOut(view: self.stackView, delay: 1.5)
     }
-    
+    func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
+        
+        let animationDuration = 0.5
+        
+        // Fade in the view
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            view.alpha = 0
+        }) { (Bool) -> Void in
+            
+            // After the animation completes, fade out the view after a delay
+            
+            UIView.animate(withDuration: animationDuration, delay: delay, options: [], animations: { () -> Void in
+                view.alpha = 1
+            },
+                                       completion: nil)
+        }
+    }
     override func viewWillAppear(_ animated: Bool) {
         print("**** View Controller: in viewWillAppear, hide navbar")
         self.navigationController?.navigationBar.isHidden = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 1.5, animations: {
+            self.stackView.alpha = 1
+        })
     }
 //Action: Google button tapped
     @IBAction func googleSignInButtonTapped(_ sender: UIButton) {

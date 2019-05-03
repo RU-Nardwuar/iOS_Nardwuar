@@ -13,15 +13,19 @@ public class Constants{
     enum DefaultUI {
         
         //cyan color
-        static let primaryColor = UIColor(red:0.77, green:1.00, blue:0.98, alpha:1.0) //cyan
-        //cyan color
-        static let primaryColorOpacity = UIColor(red:0.77, green:1.00, blue:0.98, alpha:0.5) //cyan
-        //green color
-        static let buttonColor = UIColor(red:0.63, green:0.96, blue:0.58, alpha:1.0) //green
+        static let primaryColor = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0) //orange
+
         //grey color
-        static let textColor = UIColor(red:0.25, green:0.21, blue:0.21, alpha:1.0) //grey
+        static let textColor = UIColor(red:0.90, green:0.90, blue:0.90, alpha:1.0) //platinum
         
-        
+        //for buttons
+        static let buttonColor = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0) //orange
+        static let buttonText = UIColor(red:0.25, green:0.21, blue:0.21, alpha:1.0) //grey
+        //for navigation bar
+        static let navBarBackground = UIColor(red:0.25, green:0.21, blue:0.21, alpha:1.0) //grey
+        static let navBarLabelActive = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0) //orange
+        static let navBarLabelPassive = UIColor(red:0.90, green:0.90, blue:0.90, alpha:1.0) //platinum
+        //for gradients
         static let princetonOrange = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0).cgColor
         static let oxfordBlue = UIColor(red:1.00, green:0.82, blue:0.30, alpha:1.0).cgColor
         static let rajah = UIColor(red:1.00, green:0.73, blue:0.37, alpha:1.0).cgColor

@@ -56,7 +56,7 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         //followButton.layer.borderColor = (Constants.DefaultUI.buttonColor as! CGColor)
         followButton.backgroundColor = Constants.DefaultUI.buttonColor
         followButton.setTitle("Following", for: .normal)
-        followButton.setTitleColor(Constants.DefaultUI.textColor, for: .normal)
+        followButton.setTitleColor(Constants.DefaultUI.buttonText, for: .normal)
         isButtonHollow = false
     }
     //ON LOAD
@@ -161,8 +161,8 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
             genreLabel.text = genres[0]
             genreLabel.textColor = UIColor.white
             
-            navigationController?.navigationBar.barTintColor = Constants.DefaultUI.textColor
-            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.primaryColor]
+            navigationController?.navigationBar.barTintColor = Constants.DefaultUI.navBarBackground
+            navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.navBarLabelPassive]
             
             
             tableView.backgroundColor = UIColor.clear
