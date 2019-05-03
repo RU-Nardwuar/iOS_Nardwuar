@@ -150,6 +150,15 @@
                                     <action selector="logoutButtonTapped:" destination="SVU-PD-7mp" eventType="touchUpInside" id="QBX-Mo-IfZ"/>
                                 </connections>
                             </button>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zYC-J0-cpN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="FzU-D6-ApB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.74325788021087646" green="0.96906036138534546" blue="0.94509929418563843" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -179,6 +188,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="3c6-OC-28G"/>
                     <connections>
+                        <outlet property="blurBackground" destination="zYC-J0-cpN" id="9Zl-gd-fzG"/>
                         <outlet property="emptyTableText" destination="9dn-XE-Psx" id="3HF-HS-cMg"/>
                         <outlet property="searchController" destination="RUi-Ha-2MV" id="dKr-Ht-zwk"/>
                         <outlet property="tableView" destination="HsT-Y2-vzT" id="Gz9-ve-ntx"/>
@@ -188,7 +198,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eEj-IS-eCX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1721" y="-3434"/>
+            <point key="canvasLocation" x="1720.8" y="-3434.0329835082462"/>
         </scene>
         <!--Artist View Controller-->
         <scene sceneID="3BC-UG-1c4">

@@ -12,6 +12,8 @@ import GoogleSignIn
 import Alamofire
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
+
+    @IBOutlet weak var blurBackground: UIVisualEffectView!
     var artistKeyArray:[String]?
 //Load page
     override func viewDidLoad() {
@@ -25,6 +27,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         artistName = ""
         print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
         tableView.reloadData()
+        blurBackground.isHidden = false
         self.startDispatch(route: "user")
     }
 //Post User / Get User
@@ -256,6 +259,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 print("Finished all requests.")
                 self.setupTableView()
                 self.setupUI()
+                self.blurBackground.isHidden = true
             }
         } else if route == "artist"{
             for _ in 0 ..< 5 {
