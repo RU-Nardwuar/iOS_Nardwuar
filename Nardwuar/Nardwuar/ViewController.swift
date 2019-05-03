@@ -14,12 +14,20 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
 //Load page
+    @IBOutlet weak var gradientView: UIView!
     override func viewDidLoad() {
         print("**** View Controller: in load, going to setupUI() and checkAuth()")
         super.viewDidLoad()
         setupUI()
         checkAuth()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [Constants.DefaultUI.oxfordBlue, Constants.DefaultUI.princetonOrange]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.frame = view.bounds
+        gradientView.layer.addSublayer(gradientLayer)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         print("**** View Controller: in viewWillAppear, hide navbar")
         self.navigationController?.navigationBar.isHidden = true
@@ -68,7 +76,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         nameOfApp.layer.shadowRadius = 0.80
         nameOfApp.layer.shadowOpacity = 0.50
         
-        nameOfApp.textColor = Constants.DefaultUI.textColor
+        nameOfApp.textColor = UIColor.white
         
         GIDSignIn.sharedInstance()?.uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self

@@ -20,6 +20,11 @@ public class Constants{
         static let buttonColor = UIColor(red:0.63, green:0.96, blue:0.58, alpha:1.0) //green
         //grey color
         static let textColor = UIColor(red:0.25, green:0.21, blue:0.21, alpha:1.0) //grey
+        
+        
+        static let princetonOrange = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0).cgColor
+        static let oxfordBlue = UIColor(red:1.00, green:0.82, blue:0.30, alpha:1.0).cgColor
+        static let rajah = UIColor(red:1.00, green:0.73, blue:0.37, alpha:1.0).cgColor
     }
 
     struct structUserData {//Global Variables for User

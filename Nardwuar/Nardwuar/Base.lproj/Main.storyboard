@@ -33,6 +33,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u20-x8-35H">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="9ru-yB-oyC">
                                 <rect key="frame" x="67.5" y="164" width="240" height="289.5"/>
                                 <subviews>
@@ -67,20 +71,25 @@
                         </subviews>
                         <color key="backgroundColor" red="0.76862745098039209" green="1" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
+                            <constraint firstItem="u20-x8-35H" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="8xj-jy-4Fz"/>
+                            <constraint firstItem="u20-x8-35H" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qwe-xx-rMl"/>
+                            <constraint firstItem="u20-x8-35H" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Y0a-cq-UB4"/>
                             <constraint firstItem="9ru-yB-oyC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="akw-nO-ccd"/>
                             <constraint firstItem="9ru-yB-oyC" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="jw4-Qb-Oz8"/>
+                            <constraint firstItem="u20-x8-35H" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wGb-QR-i4o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="googleSignInButton" destination="mzX-H8-NeU" id="Cm3-mj-dja"/>
+                        <outlet property="gradientView" destination="u20-x8-35H" id="nc0-QK-oQK"/>
                         <outlet property="nameOfApp" destination="70O-vr-iqv" id="YPq-rz-B9I"/>
                         <segue destination="s8q-EE-1tS" kind="show" identifier="fromLoginToHome" id="02h-el-yr0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-295" y="-3434"/>
+            <point key="canvasLocation" x="-295.19999999999999" y="-3434.0329835082462"/>
         </scene>
         <!--Home-->
         <scene sceneID="32J-gf-6im">
