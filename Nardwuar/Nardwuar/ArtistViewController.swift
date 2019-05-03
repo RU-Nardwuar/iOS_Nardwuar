@@ -20,7 +20,10 @@ class HeadlineTableViewCell: UITableViewCell {
     @IBOutlet weak var albumImage: UIImageView!
     
 }
+
 class ArtistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
+    @IBOutlet weak var loadingText: UILabel!
+    @IBOutlet weak var blurBackground: UIVisualEffectView!
     @IBOutlet weak var followButton: UIButton!
     var currentUserToken:String?
     var isArtistAlreadyFollowed = false
@@ -64,9 +67,11 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = true
+        loadingText.textColor = Constants.DefaultUI.primaryColor
         startDispatch()
     }
     func setupTableView(){
+        blurBackground.isHidden = true
         tableView.delegate = self
         tableView.dataSource = self
         //tableView.backgroundView = UIImageView(image: UIImage(named: "homeBackground1"))

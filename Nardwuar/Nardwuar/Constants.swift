@@ -27,7 +27,7 @@ public class Constants{
         static let navBarLabelPassive = UIColor(red:0.90, green:0.90, blue:0.90, alpha:1.0) //platinum
         //for gradients
         static let princetonOrange = UIColor(red:1.00, green:0.62, blue:0.00, alpha:1.0).cgColor
-        static let oxfordBlue = UIColor(red:1.00, green:0.82, blue:0.30, alpha:1.0).cgColor
+        static let oxfordBlue = UIColor(red:1.00, green:0.85, blue:0.42, alpha:1.0).cgColor
         static let rajah = UIColor(red:1.00, green:0.73, blue:0.37, alpha:1.0).cgColor
     }
 

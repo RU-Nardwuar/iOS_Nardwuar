@@ -100,15 +100,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zYC-J0-cpN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="FzU-D6-ApB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <blurEffect style="light"/>
-                            </visualEffectView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looks like you're not following anybody. Go ahead and search!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dn-XE-Psx">
                                 <rect key="frame" x="25" y="168.5" width="325" height="98.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="24"/>
@@ -170,6 +161,15 @@
                                     <action selector="logoutButtonTapped:" destination="SVU-PD-7mp" eventType="touchUpInside" id="QBX-Mo-IfZ"/>
                                 </connections>
                             </button>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zYC-J0-cpN">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="FzU-D6-ApB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" red="0.74325788021087646" green="0.96906036138534546" blue="0.94509929418563843" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
@@ -392,20 +392,58 @@
                                     <constraint firstAttribute="bottom" secondItem="eXY-US-ikk" secondAttribute="bottom" id="va5-hR-8oJ"/>
                                 </constraints>
                             </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EvM-P6-1sg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="TSs-rd-p5N">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo1" translatesAutoresizingMaskIntoConstraints="NO" id="6qF-9Q-1R6">
+                                            <rect key="frame" x="67.5" y="269.5" width="240" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="240" id="7Uk-jW-Cdf"/>
+                                                <constraint firstAttribute="height" constant="128" id="CTi-o4-mDH"/>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="P7k-Zf-b5z"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="240" id="xCf-qy-FdG"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading ..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pSy-Ms-LNn">
+                                            <rect key="frame" x="20" y="427.5" width="335" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="6qF-9Q-1R6" firstAttribute="centerX" secondItem="TSs-rd-p5N" secondAttribute="centerX" id="6wx-QU-XQ0"/>
+                                        <constraint firstItem="6qF-9Q-1R6" firstAttribute="centerY" secondItem="TSs-rd-p5N" secondAttribute="centerY" id="P46-lL-WGK"/>
+                                        <constraint firstAttribute="trailing" secondItem="pSy-Ms-LNn" secondAttribute="trailing" constant="20" id="T5D-Zf-bkE"/>
+                                        <constraint firstItem="pSy-Ms-LNn" firstAttribute="leading" secondItem="TSs-rd-p5N" secondAttribute="leading" constant="20" id="VwZ-jh-Pdl"/>
+                                        <constraint firstItem="pSy-Ms-LNn" firstAttribute="top" secondItem="6qF-9Q-1R6" secondAttribute="bottom" constant="30" id="gVy-Nd-7Xt"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="trailing" secondItem="YTx-TO-8uq" secondAttribute="trailing" id="9Ur-aU-fWO"/>
+                            <constraint firstItem="EvM-P6-1sg" firstAttribute="top" secondItem="Bmc-sj-mrh" secondAttribute="top" id="H14-JN-Npz"/>
+                            <constraint firstItem="EvM-P6-1sg" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="Lcy-rc-Qoa"/>
                             <constraint firstItem="YTx-TO-8uq" firstAttribute="top" secondItem="yC4-33-CGs" secondAttribute="top" id="OCP-uQ-W9R"/>
                             <constraint firstItem="YTx-TO-8uq" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="ZBd-2A-Jn5"/>
+                            <constraint firstItem="EvM-P6-1sg" firstAttribute="trailing" secondItem="yC4-33-CGs" secondAttribute="trailing" id="a8g-ev-Y3W"/>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="bottom" secondItem="YTx-TO-8uq" secondAttribute="bottom" id="bql-nK-WLL"/>
+                            <constraint firstItem="EvM-P6-1sg" firstAttribute="bottom" secondItem="yC4-33-CGs" secondAttribute="bottom" id="wLd-KY-ekX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yC4-33-CGs"/>
                     </view>
                     <connections>
                         <outlet property="artistLabel" destination="8tW-eC-VjQ" id="GHD-Ih-Wnl"/>
+                        <outlet property="blurBackground" destination="EvM-P6-1sg" id="gAb-Zw-7xq"/>
                         <outlet property="followButton" destination="7tT-TA-jyz" id="8bN-Ew-lph"/>
                         <outlet property="genreLabel" destination="3F3-mW-Abo" id="fWr-Ps-NUL"/>
+                        <outlet property="loadingText" destination="pSy-Ms-LNn" id="bes-dc-QFm"/>
                         <outlet property="profilePic" destination="StU-Bm-dCM" id="L97-tr-EPQ"/>
                         <outlet property="spotifyLabel" destination="2EW-w5-5lB" id="bDy-hA-5DV"/>
                         <outlet property="tableView" destination="eXY-US-ikk" id="7rl-Nn-ZV6"/>
@@ -414,7 +452,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7a-fT-5fk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2745" y="-3434"/>
+            <point key="canvasLocation" x="2744.8000000000002" y="-3434.0329835082462"/>
         </scene>
         <!--Album View Controller-->
         <scene sceneID="Phf-DT-wfk">
