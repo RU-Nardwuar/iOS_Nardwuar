@@ -40,7 +40,7 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
                             sender.transform = CGAffineTransform(scaleX: 0.975, y: 0.96)
         },
                          completion: { finish in
-                            UIButton.animate(withDuration: 0.2, animations: {
+                            UIButton.animate(withDuration: 0.3, animations: {
                                 sender.transform = CGAffineTransform.identity
                             })
         })

@@ -56,6 +56,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: setupTableView(), setting table delegates")
         tableView.delegate = self
         tableView.dataSource = self
+        if(currentUser?.followedArtists.count == 0){
+            tableView.isHidden = true
+        }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
