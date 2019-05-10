@@ -75,6 +75,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 ////************ get correct arguments for post request
                 //self.networkingClient.POSTfirstTimeUser(uid: self.userToken, name: firstName, username: displayName)
                 self.startDispatch(route: "user") //after finish calls setupTableView() and setupUI()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Change `2.0` to the desired number of seconds.
+                    
+                    self.percentageLabel?.text = "Welcome"
+                    self.animateLoad(view: self.loadingView, delay: 1.0)
+                    self.navigationController?.navigationBar.isHidden = false
+                    //self.loadingView.isHidden = true
+                }
             }
         })
     }
@@ -118,11 +125,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         return (currentUser?.followedArtists.count)!
     }
 //Setup UI
-    @IBOutlet weak var emptyTableText: UILabel!
     @IBOutlet weak var searchController: UISearchBar!
     func setupUI(){
         self.view.backgroundColor = Constants.DefaultUI.primaryColor
-        emptyTableText.textColor = Constants.DefaultUI.textColor
+        //emptyTableText.textColor = Constants.DefaultUI.textColor
         searchController.showsScopeBar = true
         searchController.delegate = self
         searchController.tintColor = Constants.DefaultUI.primaryColor
@@ -287,13 +293,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             self.setupTableView()
             self.setupUI()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Change `2.0` to the desired number of seconds.
-                
-                self.percentageLabel?.text = "Welcome"
-                //self.animateLoad(view: self.loadingView, delay: 1.0)
-                self.navigationController?.navigationBar.isHidden = false
-                self.loadingView.isHidden = true
-            }
+            
         }
         print(percentage)
     }
