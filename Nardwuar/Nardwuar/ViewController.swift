@@ -31,7 +31,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     }
     func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
         
-        let animationDuration = 0.5
+        let animationDuration = 0.25
         
         // Fade in the view
         UIView.animate(withDuration: animationDuration, animations: { () -> Void in
@@ -51,9 +51,7 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         self.navigationController?.navigationBar.isHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 1.5, animations: {
-            self.stackView.alpha = 1
-        })
+
     }
 //Action: Google button tapped
     @IBAction func googleSignInButtonTapped(_ sender: UIButton) {
@@ -85,6 +83,8 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
     @IBOutlet weak var googleSignInButton: UIButton!
     func setupUI(){
         print("**** View Controller: setting up UI")
+        
+
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         let gradient = CAGradientLayer()
         

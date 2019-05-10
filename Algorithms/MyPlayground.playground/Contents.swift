@@ -9,40 +9,34 @@ var genres = [
     "rap"
 ]
 
-for x in genres{
-    print(x)
-    if(genres.contains(x)){
-        print("*")
+func grabLongestGenreTag(genres:[String]) -> String{
+    var temp = genres[0]
+    for index in 0..<genres.count{
+        if(genres[index].count > temp.count){
+            temp = genres[index]
+        }
+    }
+    return temp
+}
+print(grabLongestGenreTag(genres: genres))
+var following = ["key1": "value1", "key2": "value2"]
+var tempGenre:String?
+
+var genreCount = ["pop": 1,
+                  "alternative": 1,
+                  "rap":1]
+print(responseMessages[200])
+func countGenresFromAllUsers(){
+    
+    for (id, name) in following{
+        tempGenre = getRequest(id: id)
+        print(genreCount)
     }
 }
 
-var str = "Hello, playground"
-
-let containerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 375.0, height: 667.0))
-XCPShowView(identifier: "Container View", view: containerView)
-
-
-
-
-let rectangle = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0))
-rectangle.center = containerView.center
-rectangle.layer.cornerRadius = 5.0
-
-
-
-
-let tf:UITextField = UITextField(frame: containerView.bounds)
-tf.textColor = UIColor.white;
-tf.text = "this is text"
-tf.textAlignment = NSTextAlignment.center;
-
-let gradientMaskLayer:CAGradientLayer = CAGradientLayer()
-gradientMaskLayer.frame = containerView.bounds
-gradientMaskLayer.colors = [UIColor.clear.cgColor, UIColor.red.cgColor, UIColor.red.cgColor, UIColor.clear.cgColor ]
-gradientMaskLayer.startPoint = CGPoint(x: 0.1, y: 0.0)
-gradientMaskLayer.endPoint = CGPoint(x: 0.55, y: 0.0)
-
-containerView.addSubview(tf)
-
-tf.layer.mask = gradientMaskLayer;
-//containerView.layer.insertSublayer(gradientMaskLayer, atIndex: 0);
+func getRequest(id:String) -> String{
+    
+    var fakeGenres = ["pop", "hip hop", "alternative", "pop", "alternative", "pop", "pop", "rap", "contemporary"]
+    let randomInt = Int.random(in: 0 ..< fakeGenres.count-1)
+    return fakeGenres[randomInt]
+}

@@ -21,6 +21,7 @@
 		256F86DB2232ED61007FA1C0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 256F86CD2225BA76007FA1C0 /* GoogleService-Info.plist */; };
 		256F86DD2239B641007FA1C0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86DC2239B641007FA1C0 /* SettingsViewController.swift */; };
 		256F86DF2239E162007FA1C0 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256F86DE2239E162007FA1C0 /* Account.swift */; };
+		257A30C422854A6100ECD5F5 /* loadingUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257A30C322854A6100ECD5F5 /* loadingUI.swift */; };
 		25EEF7FA223C862700BC1D90 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EEF7F9223C862700BC1D90 /* Artist.swift */; };
 		25F4691E2275187800AD376D /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4691D2275187800AD376D /* AlbumViewController.swift */; };
 		25F46920227B788000AD376D /* LoadingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F4691F227B788000AD376D /* LoadingPageViewController.swift */; };
@@ -58,6 +59,7 @@
 		256F86D52228A65A007FA1C0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		256F86DC2239B641007FA1C0 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		256F86DE2239E162007FA1C0 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		257A30C322854A6100ECD5F5 /* loadingUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadingUI.swift; sourceTree = "<group>"; };
 		25EEF7F9223C862700BC1D90 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		25F4691D2275187800AD376D /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		25F4691F227B788000AD376D /* LoadingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingPageViewController.swift; sourceTree = "<group>"; };
@@ -115,14 +117,15 @@
 				256F86DE2239E162007FA1C0 /* Account.swift */,
 				25EEF7F9223C862700BC1D90 /* Artist.swift */,
 				256F86D52228A65A007FA1C0 /* Constants.swift */,
+				257A30C322854A6100ECD5F5 /* loadingUI.swift */,
 				255379772250F0D000654F89 /* NetworkingClient.swift */,
-				25F4691F227B788000AD376D /* LoadingPageViewController.swift */,
 				2550D8A32225B53A00561EF5 /* ViewController.swift */,
 				256F86CF222608AC007FA1C0 /* HomeViewController.swift */,
 				256F86D32227BB27007FA1C0 /* ArtistViewController.swift */,
 				25F4691D2275187800AD376D /* AlbumViewController.swift */,
 				256F86D122262C0A007FA1C0 /* ProfileViewController.swift */,
 				256F86DC2239B641007FA1C0 /* SettingsViewController.swift */,
+				25F4691F227B788000AD376D /* LoadingPageViewController.swift */,
 				2550D8A52225B53A00561EF5 /* Main.storyboard */,
 				2550D8A82225B53B00561EF5 /* Assets.xcassets */,
 				2550D8AA2225B53B00561EF5 /* LaunchScreen.storyboard */,
@@ -377,6 +380,7 @@
 				256F86DF2239E162007FA1C0 /* Account.swift in Sources */,
 				256F86D42227BB27007FA1C0 /* ArtistViewController.swift in Sources */,
 				256F86D62228A65A007FA1C0 /* Constants.swift in Sources */,
+				257A30C422854A6100ECD5F5 /* loadingUI.swift in Sources */,
 				25F4691E2275187800AD376D /* AlbumViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

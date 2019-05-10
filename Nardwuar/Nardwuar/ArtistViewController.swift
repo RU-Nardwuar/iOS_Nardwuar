@@ -69,6 +69,7 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.navigationBar.isHidden = true
         loadingText.textColor = Constants.DefaultUI.primaryColor
         startDispatch()
+        
     }
     func setupTableView(){
         blurBackground.isHidden = true
@@ -133,8 +134,16 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
         @IBOutlet weak var artistLabel: UILabel!
     func setupNavigation(){
             navigationItem.title = "Artist"
+            navigationItem.backBarButtonItem?.title = ""
         }
-        func setupProfilePicAndQuickInfo(){
+    @IBOutlet weak var gradientView: UIView!
+    func setupProfilePicAndQuickInfo(){
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [Constants.DefaultUI.artistBackgroundLightGray, Constants.DefaultUI.artistBackgroundDarkGray]
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+            gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+            gradientLayer.frame = view.bounds
+            gradientView.layer.addSublayer(gradientLayer)
             
             if(isArtistAlreadyFollowed == true){
                 fillButton()
@@ -216,8 +225,8 @@ class ArtistViewController: UIViewController, UITableViewDataSource, UITableView
 //        headerCell?.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 35))
-        headerView.backgroundColor = Constants.DefaultUI.textColor
-        headerView.layer.borderWidth = 0.25
+        headerView.backgroundColor = UIColor.clear
+        //headerView.layer.borderWidth = 0.25
         let label = UILabel(frame: CGRect(x: 16, y: 0, width: tableView.bounds.size.width, height: 30))
         label.text = "Recent Albums"
         label.textColor = UIColor.white

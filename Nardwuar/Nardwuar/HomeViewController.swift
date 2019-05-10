@@ -12,7 +12,8 @@ import GoogleSignIn
 import Alamofire
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
-
+    @IBOutlet weak var blurView: UIView!
+    
     @IBOutlet weak var blurBackground: UIVisualEffectView!
     var artistKeyArray:[String]?
 //Load page
@@ -20,6 +21,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: viewDidLoad(), loading page")
         super.viewDidLoad()
         assignUserFromGoogle()
+        
+        let loader = loadingUI()
+        let percentageLabel = loader.returnPercentLabel()
+        let trackLayer = loader.returnTrackLayer()
+        let shapeLayer = loader.returnShapeLayer()
+        blurView.addSubview(percentageLabel)
+        blurView.layer.addSublayer(trackLayer)
+        blurView.layer.addSublayer(shapeLayer)
     }
     override func viewWillAppear(_ animated: Bool) {
         print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
@@ -27,7 +36,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         artistName = ""
         print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
         tableView.reloadData()
-        blurBackground.isHidden = false
+        //blurBackground.isHidden = false
         self.startDispatch(route: "user")
     }
 //Post User / Get User
@@ -259,7 +268,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 print("Finished all requests.")
                 self.setupTableView()
                 self.setupUI()
-                self.blurBackground.isHidden = true
+                //self.blurBackground.isHidden = true
             }
         } else if route == "artist"{
             for _ in 0 ..< 5 {
