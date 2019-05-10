@@ -11,6 +11,10 @@ import Firebase
 import GoogleSignIn
 import Alamofire
 
+
+
+
+
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate, URLSessionDownloadDelegate  {
 
     
@@ -96,13 +100,15 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "artistCell", for: indexPath as IndexPath) as! HeadlineTableViewCell
         let id = currentUser?.followedArtists[indexPath.row].artistID
-        cell.textLabel?.text = currentUser?.followedArtists[indexPath.row].artistName
-        cell.textLabel?.font = UIFont(name: "Avenir", size: 20.0)
-        cell.textLabel?.textColor = UIColor.white
+        cell.homeArtistLabel.text = currentUser?.followedArtists[indexPath.row].artistName
+        cell.homeArtistLabel.font = UIFont(name: "Avenir", size: 20.0)
+        cell.homeArtistLabel.textColor = UIColor.white
         cell.layer.backgroundColor = UIColor.clear.cgColor
         cell.contentView.backgroundColor = UIColor.clear
+        cell.homeViewButton.layer.masksToBounds = false
+        cell.homeViewButton.layer.cornerRadius = cell.homeViewButton.frame.height/2
         
         //guard let newKeyToAdd = currentUser?.followedArtists[indexPath.row].artistName else {}
         print("**** Home Controller: going to add key \(String(describing: currentUser?.followedArtists[indexPath.row].artistID)) into the array used to compare followed/unfollowed artist page")

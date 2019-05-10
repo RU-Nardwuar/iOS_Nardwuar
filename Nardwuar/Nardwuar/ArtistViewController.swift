@@ -19,6 +19,11 @@ class HeadlineTableViewCell: UITableViewCell {
     @IBOutlet weak var staticScoreLabel: UILabel!
     @IBOutlet weak var albumImage: UIImageView!
     
+    
+    //for home
+    @IBOutlet weak var homeViewButton: UIButton!
+    @IBOutlet weak var homeArtistLabel: UILabel!
+    
 }
 
 class ArtistViewController: UIViewController, UITableViewDataSource, UITableViewDelegate{
