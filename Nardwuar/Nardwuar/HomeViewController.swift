@@ -31,7 +31,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         super.viewDidLoad()
         assignUserFromGoogle()
         
-        self.navigationController?.navigationBar.isHidden = true
+        //self.navigationController?.navigationBar.isHidden = true
         loader = loadingUI()
         percentageLabel = loader?.returnPercentLabel()
         trackLayer = loader?.returnTrackLayer()
@@ -83,7 +83,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                     
                     self.percentageLabel?.text = "Welcome"
                     self.animateLoad(view: self.loadingView, delay: 1.0)
-                    self.navigationController?.navigationBar.isHidden = false
+                    //self.navigationController?.navigationBar.isHidden = false
                     //self.loadingView.isHidden = true
                 }
             }
