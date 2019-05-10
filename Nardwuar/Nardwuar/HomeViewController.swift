@@ -11,24 +11,62 @@ import Firebase
 import GoogleSignIn
 import Alamofire
 
-class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate {
+class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate, URLSessionDownloadDelegate  {
     @IBOutlet weak var blurView: UIView!
     
     @IBOutlet weak var blurBackground: UIVisualEffectView!
     var artistKeyArray:[String]?
 //Load page
+    var loader:loadingUI?
+    var percentageLabel:UILabel?
+    var trackLayer:CAShapeLayer?
+    var shapeLayer:CAShapeLayer?
     override func viewDidLoad() {
         print("**** Home Controller: viewDidLoad(), loading page")
         super.viewDidLoad()
         assignUserFromGoogle()
         
-        let loader = loadingUI()
-        let percentageLabel = loader.returnPercentLabel()
-        let trackLayer = loader.returnTrackLayer()
-        let shapeLayer = loader.returnShapeLayer()
-        blurView.addSubview(percentageLabel)
-        blurView.layer.addSublayer(trackLayer)
-        blurView.layer.addSublayer(shapeLayer)
+        loader = loadingUI()
+        percentageLabel = loader?.returnPercentLabel()
+        trackLayer = loader?.returnTrackLayer()
+        shapeLayer = loader?.returnShapeLayer()
+        guard let perc = percentageLabel else {return}
+        guard let track = trackLayer else {return}
+        guard let shape = shapeLayer else {return}
+        blurView.addSubview(perc)
+        blurView.layer.addSublayer(track)
+        blurView.layer.addSublayer(shape)
+        beginDownloadingFile()
+    }
+    let urlString = "https://nardwuar.herokuapp.com/users?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjYxZDE5OWRkZDBlZTVlNzMzZGI0YTliN2FiNDAxZGRhMzgxNTliNjIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiWGF2aWVyIExhIFJvc2EiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1CazJ4M1hFSVJMZy9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBYy9QaWY4TFVWZDZjRS9zOTYtYy9waG90by5qcGciLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbmFyZHd1YXItN2U2ZmMiLCJhdWQiOiJuYXJkd3Vhci03ZTZmYyIsImF1dGhfdGltZSI6MTU1NzQ3MDUyMSwidXNlcl9pZCI6IjQwalZzYXdBUExma2lVdXZXdlF6WXVuTW5XdTEiLCJzdWIiOiI0MGpWc2F3QVBMZmtpVXV2V3ZRell1bk1uV3UxIiwiaWF0IjoxNTU3NDcwNTIxLCJleHAiOjE1NTc0NzQxMjEsImVtYWlsIjoieGF2aWVyLmEubGFyb3NhQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE2OTY3Mzc4NzU3NTEyMjcxNTI4Il0sImVtYWlsIjpbInhhdmllci5hLmxhcm9zYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.G2HUBkiv5luV7Xc5t0ah6l09HLcAYfcZUC_gN-lGBV6tzee7n9dJuVWraC0let64qGe_dDZq4l-XgDoC_Exfc40MDtCnkJmPeQZHy1GEwKuKidqj0tLhMJZKy3Gl6L_FlaoaMxXHH_eSupHSrSqANurr3ovNyIXIr03oKDjYsDGNw_iV_OWF2IzsOzkSwdPeuaOxFCmjVcQq-ra13-ToNsaO01MvmRmTV3nrwJlA6l_kMXXGK-pir7WPRDpQHJM0NfTwJeFuxUlv-r2tXOqSeemhU6mO9_n7XSW6_puAvIvi4gsotoyerffXwUHj2OjQyxbfBnf5xTyEvqW5-7Zg1g"
+    private func beginDownloadingFile() {
+        print("Attempting to download file")
+        
+        shapeLayer?.strokeEnd = 0
+        
+        let configuration = URLSessionConfiguration.default
+        let operationQueue = OperationQueue()
+        let urlSession = URLSession(configuration: configuration, delegate: self, delegateQueue: operationQueue)
+        
+        guard let url = URL(string: urlString) else { return }
+        let downloadTask = urlSession.downloadTask(with: url)
+        downloadTask.resume()
+    }
+    
+    //data of bytes while download is happening
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
+        
+        DispatchQueue.main.async {
+            self.percentageLabel?.text = "\(Int(percentage * 100))%"
+            self.shapeLayer?.strokeEnd = percentage
+        }
+        
+        print(percentage)
+    }
+    //protocol we must always have when download done
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("Finished downloading file")
     }
     override func viewWillAppear(_ animated: Bool) {
         print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
