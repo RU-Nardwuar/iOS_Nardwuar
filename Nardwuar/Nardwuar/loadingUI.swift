@@ -25,7 +25,8 @@ class loadingUI: UIViewController, URLSessionDownloadDelegate {
     public func returnPercentLabel() -> UILabel {
         percentageLabel.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         percentageLabel.center = view.center
-        
+        percentageLabel.textColor = UIColor.white
+        percentageLabel.font = UIFont(name: "Avenir", size: 14.0)
         return percentageLabel
         
     }
@@ -33,7 +34,7 @@ class loadingUI: UIViewController, URLSessionDownloadDelegate {
     public func returnTrackLayer() -> CAShapeLayer{
         trackLayer.path = circularPath.cgPath
         trackLayer.strokeColor = UIColor.lightGray.cgColor
-        trackLayer.lineWidth = 10
+        trackLayer.lineWidth = 7
         trackLayer.fillColor = UIColor.clear.cgColor
         trackLayer.lineCap = CAShapeLayerLineCap.round
         trackLayer.position = view.center
@@ -43,8 +44,8 @@ class loadingUI: UIViewController, URLSessionDownloadDelegate {
 
     public func returnShapeLayer() -> CAShapeLayer{
         shapeLayer.path = circularPath.cgPath
-        shapeLayer.strokeColor = UIColor.red.cgColor
-        shapeLayer.lineWidth = 10
+        shapeLayer.strokeColor = UIColor.white.cgColor
+        shapeLayer.lineWidth = 7
         shapeLayer.fillColor = UIColor.clear.cgColor
         shapeLayer.lineCap = CAShapeLayerLineCap.round
         shapeLayer.position = view.center

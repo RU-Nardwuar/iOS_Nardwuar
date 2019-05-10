@@ -161,26 +161,24 @@
                                     <action selector="logoutButtonTapped:" destination="SVU-PD-7mp" eventType="touchUpInside" id="QBX-Mo-IfZ"/>
                                 </connections>
                             </button>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zYC-J0-cpN">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fsa-eg-vNz">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FzU-D6-ApB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <blurEffect style="light"/>
-                            </visualEffectView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.74325788021087646" green="0.96906036138534546" blue="0.94509929418563843" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstItem="zYC-J0-cpN" firstAttribute="bottom" secondItem="BGq-Z0-CUe" secondAttribute="bottom" id="0Dg-3h-oFq"/>
                             <constraint firstItem="HsT-Y2-vzT" firstAttribute="centerX" secondItem="U5d-1d-oEV" secondAttribute="centerX" id="0FE-XD-RAA"/>
                             <constraint firstItem="Kbi-Hw-pxw" firstAttribute="centerX" secondItem="U5d-1d-oEV" secondAttribute="centerX" id="1uo-VY-Tjl"/>
                             <constraint firstItem="BGq-Z0-CUe" firstAttribute="trailing" secondItem="9dn-XE-Psx" secondAttribute="trailing" constant="25" id="2bI-in-72c"/>
                             <constraint firstItem="HsT-Y2-vzT" firstAttribute="top" secondItem="M6F-Wb-ErE" secondAttribute="bottom" constant="13" id="435-cy-BOU"/>
+                            <constraint firstItem="Fsa-eg-vNz" firstAttribute="leading" secondItem="BGq-Z0-CUe" secondAttribute="leading" id="A29-Sk-hOA"/>
                             <constraint firstItem="HsT-Y2-vzT" firstAttribute="top" secondItem="RUi-Ha-2MV" secondAttribute="bottom" id="Cf0-nQ-GwS"/>
                             <constraint firstItem="BGq-Z0-CUe" firstAttribute="bottom" secondItem="9dn-XE-Psx" secondAttribute="bottom" constant="400" id="Eow-Oo-JSP"/>
                             <constraint firstAttribute="trailing" secondItem="Kbi-Hw-pxw" secondAttribute="trailing" id="GKC-40-3f8"/>
                             <constraint firstItem="rbf-Jk-tD8" firstAttribute="centerX" secondItem="U5d-1d-oEV" secondAttribute="centerX" id="NGW-uO-xkP"/>
+                            <constraint firstItem="Fsa-eg-vNz" firstAttribute="top" secondItem="U5d-1d-oEV" secondAttribute="top" id="NQh-fs-TRJ"/>
+                            <constraint firstItem="Fsa-eg-vNz" firstAttribute="trailing" secondItem="BGq-Z0-CUe" secondAttribute="trailing" id="Rnf-GX-v4R"/>
                             <constraint firstItem="Kbi-Hw-pxw" firstAttribute="top" secondItem="U5d-1d-oEV" secondAttribute="top" id="XmJ-bT-5bi"/>
                             <constraint firstItem="HsT-Y2-vzT" firstAttribute="bottom" secondItem="BGq-Z0-CUe" secondAttribute="bottom" id="ZjM-W6-6Bw"/>
                             <constraint firstItem="Kbi-Hw-pxw" firstAttribute="centerY" secondItem="U5d-1d-oEV" secondAttribute="centerY" id="acU-jA-RSH"/>
@@ -190,11 +188,9 @@
                             <constraint firstItem="Kbi-Hw-pxw" firstAttribute="leading" secondItem="U5d-1d-oEV" secondAttribute="leading" id="fp2-Rp-Fdk"/>
                             <constraint firstItem="M6F-Wb-ErE" firstAttribute="leading" secondItem="BGq-Z0-CUe" secondAttribute="leading" constant="25" id="hLH-0n-7xX"/>
                             <constraint firstAttribute="bottom" secondItem="Kbi-Hw-pxw" secondAttribute="bottom" id="kYr-hW-pQg"/>
-                            <constraint firstItem="zYC-J0-cpN" firstAttribute="leading" secondItem="BGq-Z0-CUe" secondAttribute="leading" id="mQY-FT-5V5"/>
                             <constraint firstItem="RUi-Ha-2MV" firstAttribute="top" secondItem="BGq-Z0-CUe" secondAttribute="top" id="mig-lU-Gzs"/>
-                            <constraint firstItem="zYC-J0-cpN" firstAttribute="trailing" secondItem="BGq-Z0-CUe" secondAttribute="trailing" id="rg9-Fb-5Yv"/>
+                            <constraint firstItem="Fsa-eg-vNz" firstAttribute="bottom" secondItem="BGq-Z0-CUe" secondAttribute="bottom" id="sRt-XU-EC4"/>
                             <constraint firstItem="HsT-Y2-vzT" firstAttribute="trailing" secondItem="BGq-Z0-CUe" secondAttribute="trailing" id="tOO-Xa-A7S"/>
-                            <constraint firstItem="zYC-J0-cpN" firstAttribute="top" secondItem="U5d-1d-oEV" secondAttribute="top" id="wSP-Rg-8ko"/>
                             <constraint firstItem="9dn-XE-Psx" firstAttribute="leading" secondItem="BGq-Z0-CUe" secondAttribute="leading" constant="25" id="wSp-Ae-gFX"/>
                             <constraint firstItem="RUi-Ha-2MV" firstAttribute="leading" secondItem="M6F-Wb-ErE" secondAttribute="trailing" constant="5" id="way-9w-c3s"/>
                         </constraints>
@@ -202,9 +198,8 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="3c6-OC-28G"/>
                     <connections>
-                        <outlet property="blurBackground" destination="zYC-J0-cpN" id="9Zl-gd-fzG"/>
-                        <outlet property="blurView" destination="FzU-D6-ApB" id="Zaa-nF-SJ9"/>
                         <outlet property="emptyTableText" destination="9dn-XE-Psx" id="3HF-HS-cMg"/>
+                        <outlet property="loadingView" destination="Fsa-eg-vNz" id="H4X-J9-cDV"/>
                         <outlet property="searchController" destination="RUi-Ha-2MV" id="dKr-Ht-zwk"/>
                         <outlet property="tableView" destination="HsT-Y2-vzT" id="Gz9-ve-ntx"/>
                         <segue destination="T4r-vr-thM" kind="show" identifier="fromHomeToArtist" id="hYX-YZ-FOv"/>

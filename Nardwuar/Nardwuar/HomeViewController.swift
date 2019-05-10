@@ -12,11 +12,12 @@ import GoogleSignIn
 import Alamofire
 
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate, URLSessionDownloadDelegate  {
-    @IBOutlet weak var blurView: UIView!
+
     
-    @IBOutlet weak var blurBackground: UIVisualEffectView!
+
     var artistKeyArray:[String]?
 //Load page
+    @IBOutlet weak var loadingView: UIView!
     var loader:loadingUI?
     var percentageLabel:UILabel?
     var trackLayer:CAShapeLayer?
@@ -26,6 +27,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         super.viewDidLoad()
         assignUserFromGoogle()
         
+        self.navigationController?.navigationBar.isHidden = true
         loader = loadingUI()
         percentageLabel = loader?.returnPercentLabel()
         trackLayer = loader?.returnTrackLayer()
@@ -33,48 +35,24 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         guard let perc = percentageLabel else {return}
         guard let track = trackLayer else {return}
         guard let shape = shapeLayer else {return}
-        blurView.addSubview(perc)
-        blurView.layer.addSublayer(track)
-        blurView.layer.addSublayer(shape)
-        beginDownloadingFile()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [Constants.DefaultUI.oxfordBlue, Constants.DefaultUI.princetonOrange]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.frame = view.bounds
+        loadingView.layer.addSublayer(gradientLayer)
+        loadingView.addSubview(perc)
+        loadingView.layer.addSublayer(track)
+        loadingView.layer.addSublayer(shape)
     }
     let urlString = "https://nardwuar.herokuapp.com/users?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjYxZDE5OWRkZDBlZTVlNzMzZGI0YTliN2FiNDAxZGRhMzgxNTliNjIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiWGF2aWVyIExhIFJvc2EiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1CazJ4M1hFSVJMZy9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBYy9QaWY4TFVWZDZjRS9zOTYtYy9waG90by5qcGciLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbmFyZHd1YXItN2U2ZmMiLCJhdWQiOiJuYXJkd3Vhci03ZTZmYyIsImF1dGhfdGltZSI6MTU1NzQ3MDUyMSwidXNlcl9pZCI6IjQwalZzYXdBUExma2lVdXZXdlF6WXVuTW5XdTEiLCJzdWIiOiI0MGpWc2F3QVBMZmtpVXV2V3ZRell1bk1uV3UxIiwiaWF0IjoxNTU3NDcwNTIxLCJleHAiOjE1NTc0NzQxMjEsImVtYWlsIjoieGF2aWVyLmEubGFyb3NhQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE2OTY3Mzc4NzU3NTEyMjcxNTI4Il0sImVtYWlsIjpbInhhdmllci5hLmxhcm9zYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.G2HUBkiv5luV7Xc5t0ah6l09HLcAYfcZUC_gN-lGBV6tzee7n9dJuVWraC0let64qGe_dDZq4l-XgDoC_Exfc40MDtCnkJmPeQZHy1GEwKuKidqj0tLhMJZKy3Gl6L_FlaoaMxXHH_eSupHSrSqANurr3ovNyIXIr03oKDjYsDGNw_iV_OWF2IzsOzkSwdPeuaOxFCmjVcQq-ra13-ToNsaO01MvmRmTV3nrwJlA6l_kMXXGK-pir7WPRDpQHJM0NfTwJeFuxUlv-r2tXOqSeemhU6mO9_n7XSW6_puAvIvi4gsotoyerffXwUHj2OjQyxbfBnf5xTyEvqW5-7Zg1g"
-    private func beginDownloadingFile() {
-        print("Attempting to download file")
-        
-        shapeLayer?.strokeEnd = 0
-        
-        let configuration = URLSessionConfiguration.default
-        let operationQueue = OperationQueue()
-        let urlSession = URLSession(configuration: configuration, delegate: self, delegateQueue: operationQueue)
-        
-        guard let url = URL(string: urlString) else { return }
-        let downloadTask = urlSession.downloadTask(with: url)
-        downloadTask.resume()
-    }
-    
-    //data of bytes while download is happening
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
-        
-        DispatchQueue.main.async {
-            self.percentageLabel?.text = "\(Int(percentage * 100))%"
-            self.shapeLayer?.strokeEnd = percentage
-        }
-        
-        print(percentage)
-    }
-    //protocol we must always have when download done
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("Finished downloading file")
-    }
     override func viewWillAppear(_ animated: Bool) {
         print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
         artistID = ""
         artistName = ""
         print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
         tableView.reloadData()
-        //blurBackground.isHidden = false
+        loadingView.isHidden = false
         self.startDispatch(route: "user")
     }
 //Post User / Get User
@@ -267,47 +245,95 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             case id
         }
     }
+//help
+    
+    //data of bytes while download is happening
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let myGroup = DispatchGroup()
+        let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
+        for _ in 0 ..< 3 {
 
+            let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
+            print("**** Home Controller: in user route with link ... \(urlString)****")
+            guard let url = URL(string: urlString) else { return }
+            print("**** Home Controller: in user route with link ... ")
+            myGroup.enter()
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    self.percentageLabel?.text = "\(Int(percentage * 100))%"
+                    self.shapeLayer?.strokeEnd = percentage
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    print("**** ARTIST PAGE DATA: \(data)")
+                    do {
+                        let decoder = JSONDecoder()
+                        self.currentUser = try decoder.decode(UserInfo.self, from: data)
+                        print("**** CURRENT ARTIST INFO: \(String(describing: self.currentUser))")
+                        self.tableView.reloadData()
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                myGroup.leave()
+                }.resume()
+        }
+        
+        myGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            self.setupTableView()
+            self.setupUI()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { // Change `2.0` to the desired number of seconds.
+                
+                self.percentageLabel?.text = "Welcome"
+                //self.animateLoad(view: self.loadingView, delay: 1.0)
+                self.navigationController?.navigationBar.isHidden = false
+                self.loadingView.isHidden = true
+            }
+        }
+        print(percentage)
+    }
+    //protocol we must always have when download done
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("Finished downloading file")
+    }
+    func animateLoad(view : UIView, delay: TimeInterval) {
+        
+        let animationDuration = 0.5
+        
+        // Fade in the view
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            view.alpha = 1
+        }) { (Bool) -> Void in
+            
+            // After the animation completes, fade out the view after a delay
+            
+            UIView.animate(withDuration: animationDuration, delay: delay, options: [], animations: { () -> Void in
+                view.alpha = 0
+            },
+                           completion: nil)
+        }
+    }
 //Get method
     func startDispatch(route:String){
         print("**** Home Controller: startDispatch() with route \(route)")
         let myGroup = DispatchGroup()
         
         if route == "user"{
-            for _ in 0 ..< 2 {
-                print("**** Home Controller: in user route with link ... ")
-                myGroup.enter()
-                let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
-                print("**** Home Controller: in user route with link ... \(urlString)****")
-                guard let url = URL(string: urlString) else { return }
-                URLSession.shared.dataTask(with: url) { (data, _, err) in
-                    DispatchQueue.main.async {
-                        if let err = err {
-                            print("Failed to get data from url:", err)
-                            return
-                        }
-                        
-                        guard let data = data else { return }
-                        print("**** ARTIST PAGE DATA: \(data)")
-                        do {
-                            let decoder = JSONDecoder()
-                            self.currentUser = try decoder.decode(UserInfo.self, from: data)
-                            print("**** CURRENT ARTIST INFO: \(String(describing: self.currentUser))")
-                            self.tableView.reloadData()
-                        } catch let jsonErr {
-                            print("Failed to decode:", jsonErr)
-                        }
-                    }
-                    myGroup.leave()
-                    }.resume()
-            }
+            shapeLayer?.strokeEnd = 0
             
-            myGroup.notify(queue: .main) {
-                print("Finished all requests.")
-                self.setupTableView()
-                self.setupUI()
-                //self.blurBackground.isHidden = true
-            }
+            let configuration = URLSessionConfiguration.default
+            let operationQueue = OperationQueue()
+            let urlSession = URLSession(configuration: configuration, delegate: self, delegateQueue: operationQueue)
+            let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
+            print("**** Home Controller: in user route with link ... \(urlString)****")
+            guard let url = URL(string: urlString) else { return }
+            let downloadTask = urlSession.downloadTask(with: url)
+            downloadTask.resume()
         } else if route == "artist"{
             for _ in 0 ..< 5 {
                 myGroup.enter()
