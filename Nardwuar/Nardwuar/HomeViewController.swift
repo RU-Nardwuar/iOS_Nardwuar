@@ -11,27 +11,33 @@ import Firebase
 import GoogleSignIn
 import Alamofire
 
-
-
-
-
 class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegate, UITableViewDelegate,UITableViewDataSource, GIDSignInUIDelegate, URLSessionDownloadDelegate  {
 
-    
-
     var artistKeyArray:[String]?
-//Load page
+//load page
+    override func viewDidLoad() {
+        print("**** Home Controller: viewDidLoad(), loading page")
+        super.viewDidLoad()
+        assignUserFromGoogle()
+
+        setupLoadUI()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
+        artistID = ""
+        artistName = ""
+        print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
+        tableView.reloadData()
+        loadingView.isHidden = false
+        self.startDispatch(route: "user")
+    }
+//load UI
     @IBOutlet weak var loadingView: UIView!
     var loader:loadingUI?
     var percentageLabel:UILabel?
     var trackLayer:CAShapeLayer?
     var shapeLayer:CAShapeLayer?
-    override func viewDidLoad() {
-        print("**** Home Controller: viewDidLoad(), loading page")
-        super.viewDidLoad()
-        assignUserFromGoogle()
-        
-        //self.navigationController?.navigationBar.isHidden = true
+    func setupLoadUI(){
         loader = loadingUI()
         percentageLabel = loader?.returnPercentLabel()
         trackLayer = loader?.returnTrackLayer()
@@ -49,17 +55,18 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         loadingView.layer.addSublayer(track)
         loadingView.layer.addSublayer(shape)
     }
-    let urlString = "https://nardwuar.herokuapp.com/users?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjYxZDE5OWRkZDBlZTVlNzMzZGI0YTliN2FiNDAxZGRhMzgxNTliNjIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiWGF2aWVyIExhIFJvc2EiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDYuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1CazJ4M1hFSVJMZy9BQUFBQUFBQUFBSS9BQUFBQUFBQUFBYy9QaWY4TFVWZDZjRS9zOTYtYy9waG90by5qcGciLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbmFyZHd1YXItN2U2ZmMiLCJhdWQiOiJuYXJkd3Vhci03ZTZmYyIsImF1dGhfdGltZSI6MTU1NzQ3MDUyMSwidXNlcl9pZCI6IjQwalZzYXdBUExma2lVdXZXdlF6WXVuTW5XdTEiLCJzdWIiOiI0MGpWc2F3QVBMZmtpVXV2V3ZRell1bk1uV3UxIiwiaWF0IjoxNTU3NDcwNTIxLCJleHAiOjE1NTc0NzQxMjEsImVtYWlsIjoieGF2aWVyLmEubGFyb3NhQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7Imdvb2dsZS5jb20iOlsiMTE2OTY3Mzc4NzU3NTEyMjcxNTI4Il0sImVtYWlsIjpbInhhdmllci5hLmxhcm9zYUBnbWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJnb29nbGUuY29tIn19.G2HUBkiv5luV7Xc5t0ah6l09HLcAYfcZUC_gN-lGBV6tzee7n9dJuVWraC0let64qGe_dDZq4l-XgDoC_Exfc40MDtCnkJmPeQZHy1GEwKuKidqj0tLhMJZKy3Gl6L_FlaoaMxXHH_eSupHSrSqANurr3ovNyIXIr03oKDjYsDGNw_iV_OWF2IzsOzkSwdPeuaOxFCmjVcQq-ra13-ToNsaO01MvmRmTV3nrwJlA6l_kMXXGK-pir7WPRDpQHJM0NfTwJeFuxUlv-r2tXOqSeemhU6mO9_n7XSW6_puAvIvi4gsotoyerffXwUHj2OjQyxbfBnf5xTyEvqW5-7Zg1g"
-    override func viewWillAppear(_ animated: Bool) {
-        print("**** Home Controller: viewWillAppear(), resetting tappedArtistID")
-        artistID = ""
-        artistName = ""
-        print("**** Home Controller: going to reload tableView in case any new follows/unfollows")
-        tableView.reloadData()
-        loadingView.isHidden = false
-        self.startDispatch(route: "user")
+//animate load
+    func animateLoad(view : UIView, delay: TimeInterval) {
+        let animationDuration = 0.5
+        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
+            view.alpha = 1
+        }) { (Bool) -> Void in
+            UIView.animate(withDuration: animationDuration, delay: delay, options: [], animations: { () -> Void in
+                view.alpha = 0
+            }, completion: nil)
+        }
     }
-//Post User / Get User
+//POST User with NetworkingClient() and call get user route
     func assignUserFromGoogle(){
         Constants.structUserData.globalEmail = (GIDSignIn.sharedInstance()?.currentUser.profile.email!)!
         Constants.structUserData.globalPhoto = (Auth.auth().currentUser?.photoURL!)!
@@ -89,6 +96,36 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             }
         })
     }
+//Setup UI
+    @IBOutlet weak var searchController: UISearchBar!
+    func setupUI(){
+        
+        self.view.backgroundColor = Constants.DefaultUI.primaryColor
+        navigationController?.navigationBar.barTintColor = Constants.DefaultUI.navBarBackground
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.navBarLabelPassive]
+        
+        searchController.showsScopeBar = true
+        searchController.delegate = self
+        searchController.tintColor = Constants.DefaultUI.primaryColor
+        searchController.barTintColor = Constants.DefaultUI.primaryColor
+        searchController.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
+            ])
+        
+        for subView in searchController.subviews {
+            for view in subView.subviews {
+                if view.isKind(of: NSClassFromString("UINavigationButton")!) {
+                    let cancelButton = view as! UIButton
+                    cancelButton.setTitleColor(Constants.DefaultUI.textColor, for: .normal)
+                }
+                if view.isKind(of: NSClassFromString("UISearchBarBackground")!) {
+                    let imageView = view as! UIImageView
+                    imageView.removeFromSuperview()
+                }
+            }
+        }
+        tableView.backgroundColor = UIColor.clear
+    }
 //Setup Tableview
     @IBOutlet weak var tableView: UITableView!
     func setupTableView(){
@@ -115,7 +152,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         if artistKeyArray?.append(id!) == nil {
             artistKeyArray = ([id] as! [String])
         }
-        print("**** Home Controller: current key array \(artistKeyArray)")
+        print("**** Home Controller: current key array \(String(describing: artistKeyArray))")
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -130,41 +167,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (currentUser?.followedArtists.count)!
     }
-//Setup UI
-    @IBOutlet weak var searchController: UISearchBar!
-    func setupUI(){
-        self.view.backgroundColor = Constants.DefaultUI.primaryColor
-        //emptyTableText.textColor = Constants.DefaultUI.textColor
-        searchController.showsScopeBar = true
-        searchController.delegate = self
-        searchController.tintColor = Constants.DefaultUI.primaryColor
-        searchController.barTintColor = Constants.DefaultUI.primaryColor
-        searchController.setImage(UIImage(named: "icons8-music-100"), for: UISearchBar.Icon.search, state: .normal)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = NSAttributedString(string: "Search for an Artist...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red:0.33, green:0.30, blue:0.34, alpha:1.0)
-            ])
-        navigationController?.navigationBar.barTintColor = Constants.DefaultUI.navBarBackground
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Constants.DefaultUI.navBarLabelPassive]
-        for subView in searchController.subviews {
-            for view in subView.subviews {
-                if view.isKind(of: NSClassFromString("UINavigationButton")!) {
-                    let cancelButton = view as! UIButton
-                    cancelButton.setTitleColor(Constants.DefaultUI.textColor, for: .normal)
-                }
-                if view.isKind(of: NSClassFromString("UISearchBarBackground")!) {
-                    let imageView = view as! UIImageView
-                    imageView.removeFromSuperview()
-                }
-            }
-        }
-        tableView.backgroundColor = UIColor.clear
-    }
-
 //Two ways to get to Artist Page, case i) user -> searchbar ... case ii) user -> tableview cell
-    var artistID = ""
-    var artistName = ""
-    var userToken = ""
-    var currentUser: HomeViewController.UserInfo?
-    var artistList: HomeViewController.ArtistQueryList?
+    var artistID = "", artistName = "", userToken = "", currentUser: HomeViewController.UserInfo?, artistList: HomeViewController.ArtistQueryList?
     //case i
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         print("**** Home Controller: in searchbar clicked ... \(searchBar.text!)")
@@ -174,7 +178,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         startDispatch(route: "artist") //after finish calls setQuery()
         searchBar.resignFirstResponder()
     }
-    
     //case ii
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         setQuery(ID: (currentUser?.followedArtists[indexPath.row].artistID)!)
@@ -193,7 +196,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
             
             print("**** Home Controller: checking if artist page will be someone they are already following")
-            print("**** Home Controller: what I am comparing ... \(artistKeyArray) ... and ... \(artistID)")
+            print("**** Home Controller: what I am comparing ... \(String(describing: artistKeyArray)) ... and ... \(artistID)")
             guard let isUserFollowingAlready = artistKeyArray?.contains(artistID) else { print("**** Home Controller: failed to return a bool for if artist is followed already");return}
             print("**** Home Controller: artist followed already? \(isUserFollowingAlready)")
             if(isUserFollowingAlready == true){
@@ -201,8 +204,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             }
         }
     }
-
-//Segue Page
+//Logout
     @IBAction func logoutButtonTapped(_ sender: Any) {
         print("**** Home Controller: logout button tapped")
         GIDSignIn.sharedInstance().signOut()
@@ -215,14 +217,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: signed out of google, performing segue to login page")
         performSegue(withIdentifier: "fromHomeToLogin", sender: self)
     }
-    func handleProfileSegue(){
-        print("**** Home Controller: performing segue to profile page")
-        performSegue(withIdentifier: "fromHomeToProfile", sender: self)
-    }
-    func handleSettingSegue(){
-        print("**** Home Controller: performing segue to settings page")
-        performSegue(withIdentifier: "fromHomeToSetting", sender: self)
-    }
+    
+//ROUTE RELATED
 //Struct for user info
     struct UserInfo: Codable {
         let followedArtists: [FollowedArtist]
@@ -235,7 +231,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             case id = "_id"
         }
     }
-    
     struct FollowedArtist: Codable {
         let artistID, artistName: String
         
@@ -248,7 +243,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
     struct ArtistQueryList: Codable {
         let artistQueryList: [ArtistQueryListElement]
     }
-    
     struct ArtistQueryListElement: Codable {
         let name, id: String
         
@@ -257,74 +251,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
             case id
         }
     }
-//help
-    
-    //data of bytes while download is happening
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        let myGroup = DispatchGroup()
-        let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
-        for _ in 0 ..< 3 {
-
-            let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
-            print("**** Home Controller: in user route with link ... \(urlString)****")
-            guard let url = URL(string: urlString) else { return }
-            print("**** Home Controller: in user route with link ... ")
-            myGroup.enter()
-            URLSession.shared.dataTask(with: url) { (data, _, err) in
-                DispatchQueue.main.async {
-                    self.percentageLabel?.text = "\(Int(percentage * 100))%"
-                    self.shapeLayer?.strokeEnd = percentage
-                    if let err = err {
-                        print("Failed to get data from url:", err)
-                        return
-                    }
-                    
-                    guard let data = data else { return }
-                    print("**** ARTIST PAGE DATA: \(data)")
-                    do {
-                        let decoder = JSONDecoder()
-                        self.currentUser = try decoder.decode(UserInfo.self, from: data)
-                        print("**** CURRENT ARTIST INFO: \(String(describing: self.currentUser))")
-                        self.tableView.reloadData()
-                    } catch let jsonErr {
-                        print("Failed to decode:", jsonErr)
-                    }
-                }
-                myGroup.leave()
-                }.resume()
-        }
-        
-        myGroup.notify(queue: .main) {
-            print("Finished all requests.")
-            self.setupTableView()
-            self.setupUI()
-            
-            
-        }
-        print(percentage)
-    }
-    //protocol we must always have when download done
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        print("Finished downloading file")
-    }
-    func animateLoad(view : UIView, delay: TimeInterval) {
-        
-        let animationDuration = 0.5
-        
-        // Fade in the view
-        UIView.animate(withDuration: animationDuration, animations: { () -> Void in
-            view.alpha = 1
-        }) { (Bool) -> Void in
-            
-            // After the animation completes, fade out the view after a delay
-            
-            UIView.animate(withDuration: animationDuration, delay: delay, options: [], animations: { () -> Void in
-                view.alpha = 0
-            },
-                           completion: nil)
-        }
-    }
-//Get method
+//Get method: case i) user route ... case ii) artist route
     func startDispatch(route:String){
         print("**** Home Controller: startDispatch() with route \(route)")
         let myGroup = DispatchGroup()
@@ -375,5 +302,50 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
                 self.setQuery(ID: self.artistID)
             }
         }
+    }
+//Get method: for user route with dynamic percent loader
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        let myGroup = DispatchGroup()
+        let percentage = CGFloat(totalBytesWritten) / CGFloat(totalBytesExpectedToWrite)
+        for _ in 0 ..< 3 {
+            
+            let urlString = "https://nardwuar.herokuapp.com/users?id_token=\(userToken)"
+            print("**** Home Controller: in user route with link ... \(urlString)****")
+            guard let url = URL(string: urlString) else { return }
+            print("**** Home Controller: in user route with link ... ")
+            myGroup.enter()
+            URLSession.shared.dataTask(with: url) { (data, _, err) in
+                DispatchQueue.main.async {
+                    self.percentageLabel?.text = "\(Int(percentage * 100))%"
+                    self.shapeLayer?.strokeEnd = percentage
+                    if let err = err {
+                        print("Failed to get data from url:", err)
+                        return
+                    }
+                    
+                    guard let data = data else { return }
+                    print("**** USER PAGE DATA: \(data)")
+                    do {
+                        let decoder = JSONDecoder()
+                        self.currentUser = try decoder.decode(UserInfo.self, from: data)
+                        print("**** CURRENT USER INFO: \(String(describing: self.currentUser))")
+                        self.tableView.reloadData()
+                    } catch let jsonErr {
+                        print("Failed to decode:", jsonErr)
+                    }
+                }
+                myGroup.leave()
+                }.resume()
+        }
+        myGroup.notify(queue: .main) {
+            print("Finished all requests.")
+            self.setupTableView()
+            self.setupUI()
+        }
+        print(percentage)
+    }
+    //protocol we must always have when download done for user route
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        print("Finished downloading file")
     }
 }
