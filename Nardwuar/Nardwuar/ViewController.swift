@@ -14,32 +14,18 @@ import GoogleSignIn
 
 class ViewController: UIViewController, GIDSignInUIDelegate {
 //Load page
-    @IBOutlet weak var gradientView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
     override func viewDidLoad() {
         print("**** View Controller: in load, going to setupUI() and checkAuth()")
         super.viewDidLoad()
         setupUI()
         checkAuth()
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [Constants.DefaultUI.oxfordBlue, Constants.DefaultUI.princetonOrange]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.frame = view.bounds
-        gradientView.layer.addSublayer(gradientLayer)
-        fadeViewInThenOut(view: self.stackView, delay: 1.5)
     }
     func fadeViewInThenOut(view : UIView, delay: TimeInterval) {
-        
         let animationDuration = 0.25
-        
-        // Fade in the view
+
         UIView.animate(withDuration: animationDuration, animations: { () -> Void in
             view.alpha = 0
         }) { (Bool) -> Void in
-            
-            // After the animation completes, fade out the view after a delay
-            
             UIView.animate(withDuration: animationDuration, delay: delay, options: [], animations: { () -> Void in
                 view.alpha = 1
             },
@@ -81,16 +67,23 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
 //Setup UI
     @IBOutlet weak var nameOfApp: UILabel!
     @IBOutlet weak var googleSignInButton: UIButton!
+    @IBOutlet weak var gradientView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
     func setupUI(){
         print("**** View Controller: setting up UI")
         
-
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [Constants.DefaultUI.oxfordBlue, Constants.DefaultUI.princetonOrange]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.frame = view.bounds
+        gradientView.layer.addSublayer(gradientLayer)
+        fadeViewInThenOut(view: self.stackView, delay: 1.5)
+        
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         let gradient = CAGradientLayer()
-        
         gradient.frame = view.bounds
         gradient.colors = [UIColor.white.cgColor, UIColor.black.cgColor]
-        
         view.layer.insertSublayer(gradient, at: 0)
         
         nameOfApp.layer.shadowColor = Constants.DefaultUI.buttonColor.cgColor
@@ -98,7 +91,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         nameOfApp.layer.masksToBounds = false
         nameOfApp.layer.shadowRadius = 0.80
         nameOfApp.layer.shadowOpacity = 0.50
-        
         nameOfApp.textColor = UIColor.white
         
         GIDSignIn.sharedInstance()?.uiDelegate = self
@@ -114,7 +106,6 @@ class ViewController: UIViewController, GIDSignInUIDelegate {
         googleSignInButton.layer.cornerRadius = 10
     }
 }
-
 //Google Sign In
 extension ViewController: GIDSignInDelegate {
     
