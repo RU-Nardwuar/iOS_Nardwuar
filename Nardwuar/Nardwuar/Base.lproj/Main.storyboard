@@ -464,19 +464,27 @@
                                     <constraint firstAttribute="bottom" secondItem="eXY-US-ikk" secondAttribute="bottom" id="va5-hR-8oJ"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NGL-75-C27">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="trailing" secondItem="YTx-TO-8uq" secondAttribute="trailing" id="9Ur-aU-fWO"/>
                             <constraint firstItem="cIM-0p-1wC" firstAttribute="top" secondItem="yC4-33-CGs" secondAttribute="top" id="AfZ-A1-NJV"/>
+                            <constraint firstItem="NGL-75-C27" firstAttribute="top" secondItem="Bmc-sj-mrh" secondAttribute="top" id="BDh-JV-tzp"/>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="trailing" secondItem="cIM-0p-1wC" secondAttribute="trailing" id="Fxy-Fw-txL"/>
                             <constraint firstItem="EvM-P6-1sg" firstAttribute="top" secondItem="Bmc-sj-mrh" secondAttribute="top" id="H14-JN-Npz"/>
                             <constraint firstItem="cIM-0p-1wC" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="IEb-t7-uD1"/>
                             <constraint firstItem="EvM-P6-1sg" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="Lcy-rc-Qoa"/>
                             <constraint firstItem="YTx-TO-8uq" firstAttribute="top" secondItem="yC4-33-CGs" secondAttribute="top" id="OCP-uQ-W9R"/>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="bottom" secondItem="cIM-0p-1wC" secondAttribute="bottom" id="QtR-Hk-08B"/>
+                            <constraint firstItem="NGL-75-C27" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="XbZ-B3-Cpq"/>
                             <constraint firstItem="YTx-TO-8uq" firstAttribute="leading" secondItem="yC4-33-CGs" secondAttribute="leading" id="ZBd-2A-Jn5"/>
+                            <constraint firstItem="NGL-75-C27" firstAttribute="bottom" secondItem="yC4-33-CGs" secondAttribute="bottom" id="a4t-rV-4Nr"/>
                             <constraint firstItem="EvM-P6-1sg" firstAttribute="trailing" secondItem="yC4-33-CGs" secondAttribute="trailing" id="a8g-ev-Y3W"/>
+                            <constraint firstItem="NGL-75-C27" firstAttribute="trailing" secondItem="yC4-33-CGs" secondAttribute="trailing" id="bPA-46-Ig7"/>
                             <constraint firstItem="yC4-33-CGs" firstAttribute="bottom" secondItem="YTx-TO-8uq" secondAttribute="bottom" id="bql-nK-WLL"/>
                             <constraint firstItem="EvM-P6-1sg" firstAttribute="bottom" secondItem="yC4-33-CGs" secondAttribute="bottom" id="wLd-KY-ekX"/>
                         </constraints>
@@ -489,6 +497,7 @@
                         <outlet property="genreLabel" destination="3F3-mW-Abo" id="fWr-Ps-NUL"/>
                         <outlet property="gradientView" destination="cIM-0p-1wC" id="vlV-cf-J2m"/>
                         <outlet property="loadingText" destination="pSy-Ms-LNn" id="bes-dc-QFm"/>
+                        <outlet property="loadingView" destination="NGL-75-C27" id="TjP-Fn-1ue"/>
                         <outlet property="profilePic" destination="StU-Bm-dCM" id="L97-tr-EPQ"/>
                         <outlet property="spotifyLabel" destination="2EW-w5-5lB" id="bDy-hA-5DV"/>
                         <outlet property="tableView" destination="eXY-US-ikk" id="7rl-Nn-ZV6"/>

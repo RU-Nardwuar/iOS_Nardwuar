@@ -19,7 +19,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         print("**** Home Controller: viewDidLoad(), loading page")
         super.viewDidLoad()
         assignUserFromGoogle()
-
         setupLoadUI()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -192,7 +191,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, UITabBarDelegat
         if segue.identifier == "fromHomeToArtist"{
             guard let destination = segue.destination as? ArtistViewController else {return}
             destination.artistID = artistID
-            destination.currentUserToken = currentUser?.id
+            guard let id = currentUser?.id else {return}
+            destination.currentUserToken = id
             print("**** Home Controller: destination.artistID = \(destination.artistID)")
             
             print("**** Home Controller: checking if artist page will be someone they are already following")
